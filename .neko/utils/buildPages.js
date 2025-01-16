@@ -27,13 +27,8 @@ async function generatePage(dirent) {
   const renderFrom = path.join(dirent.parentPath, dirent.name);
   const url = path.relative(pagesPath, renderFrom);
 
-  const metadataPath = replaceExtname(renderFrom, ".metadata.js");
-  const navigationPath = replaceExtname(renderFrom, ".navigation.js");
-
-  const [metadata, navigation] = await Promise.all([
-    loadModule(metadataPath, "utf-8"),
-    loadModule(navigationPath, "utf-8"),
-  ]);
+  const configPath = replaceExtname(renderFrom, ".config.js");
+  const { metadata, navigation } = await loadModule(configPath, "utf-8");
 
   const renderData = { metadata };
   const compiledHtml = await ejsRenderFile(renderFrom, renderData); // TODO: integrate 'minifier' to reduce file sizes
@@ -51,7 +46,7 @@ function replaceExtname(nameOrPath, extension) {
 async function loadModule(absolutePath) {
   try {
     const moduleNamespace = await import(absolutePath);
-    return moduleNamespace.default;
+    return moduleNamespace;
   } catch (err) {
     if (err.code === "ERR_MODULE_NOT_FOUND") {
       return {};
