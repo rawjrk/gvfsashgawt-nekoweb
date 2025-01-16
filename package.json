@@ -4,9 +4,13 @@
   "version": "0.0.1",
   "license": "MIT",
   "scripts": {
-    "build": "node .neko/build.js"
+    "build": "node .neko/build.js",
+    "format": "prettier . -w"
   },
   "dependencies": {
     "ejs": "^3.1.10"
+  },
+  "devDependencies": {
+    "prettier": "3.4.2"
   }
 }
