@@ -1,4 +1,4 @@
-const buildPages = require("./utils/buildPages");
+import buildPages from "./utils/buildPages.js";
 
 (async () => {
   await buildPages();

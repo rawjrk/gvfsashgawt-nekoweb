@@ -1,12 +1,12 @@
-const fsPromises = require("node:fs/promises");
-const path = require("node:path");
-const ejs = require("ejs");
-const appDir = require("./appDir");
-const scanDirectory = require("./scanDirectory");
+import fsPromises from "node:fs/promises";
+import path from "node:path";
+import ejs from "ejs";
+import appDir from "./appDir.js";
+import scanDirectory from "./scanDirectory.js";
 
 const pagesPath = path.join(appDir, "src/pages");
 
-module.exports = async function buildPages() {
+export default async function buildPages() {
   const pagesContent = await scanDirectory(pagesPath, ".ejs");
 
   const endpointsMap = new Map();
@@ -21,7 +21,7 @@ module.exports = async function buildPages() {
   }
 
   return endpointsMap;
-};
+}
 
 async function generatePage(dirent) {
   const renderFrom = path.join(dirent.parentPath, dirent.name);

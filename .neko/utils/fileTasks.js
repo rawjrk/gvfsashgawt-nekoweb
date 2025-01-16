@@ -1,6 +1,6 @@
-const path = require("node:path");
-const fsPromises = require("node:fs/promises");
-const appDir = require("./appDir");
+import path from "node:path";
+import fsPromises from "node:fs/promises";
+import appDir from "./appDir";
 
 // async function clearBuildDir() {}
 // async function copyStaticFiles() {}

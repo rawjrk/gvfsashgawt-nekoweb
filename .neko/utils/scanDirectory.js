@@ -1,7 +1,7 @@
-const path = require("node:path");
-const fsPromises = require("node:fs/promises");
+import path from "node:path";
+import fsPromises from "node:fs/promises";
 
-module.exports = async function scanDirectory(dirPath, allowedExtension) {
+export default async function scanDirectory(dirPath, allowedExtension) {
   const dirContent = await fsPromises.readdir(dirPath, {
     recursive: true,
     withFileTypes: true,
@@ -9,6 +9,6 @@ module.exports = async function scanDirectory(dirPath, allowedExtension) {
 
   return dirContent.filter(
     (dirent) =>
-      dirent.isFile() && path.extname(dirent.name) === allowedExtension,
+      dirent.isFile() && path.extname(dirent.name) === allowedExtension
   );
-};
+}
