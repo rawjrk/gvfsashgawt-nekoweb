@@ -102,6 +102,11 @@ minimatch@^5.0.1:
   dependencies:
     brace-expansion "^2.0.1"
 
+prettier-plugin-ejs@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/prettier-plugin-ejs/-/prettier-plugin-ejs-1.0.3.tgz#e17fcecca29396cd9b5fc284a0558efc14e9aed3"
+  integrity sha512-wTL4U/ou6dHHp1ZTfS67SHVb/dRgVhpIOTgCvkgdqF/Lw6A472W90dxFtsWSXIR7GmLZRgZb2PdArR9ozxX7cg==
+
 prettier@3.4.2:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-3.4.2.tgz#a5ce1fb522a588bf2b78ca44c6e6fe5aa5a2b13f"
