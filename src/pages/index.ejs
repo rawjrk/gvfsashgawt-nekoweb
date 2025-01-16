@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>F*ck it! Nothing...</title>
+    <%- include('/partials/fonts') %>
+    <link rel="stylesheet" src="/css/global.css" />
+    <%- include('/partials/metadata', { metadata: metadata }) %>
+  </head>
+  <body>
+    <%- include('/partials/header') %>
+
+    <main>
+      <p>
+        Oops! Sorry, but the page you have requested contains complete
+        <span class="gib-fill"></span>
+        <a class="gib-link" id="gallery" href="/gallery.html">gallery</a>
+        <span class="gib-fill"></span>
+        <a class="gib-link" id="about" href="/about.html">about</a>
+        <span class="gib-fill"></span>.
+      </p>
+    </main>
+
+    <script src="/js/gib-core.js"></script>
+    <script src="/js/gib-events.js"></script>
+  </body>
+</html>

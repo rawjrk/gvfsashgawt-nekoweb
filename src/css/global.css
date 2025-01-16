@@ -1,0 +1,106 @@
+:root {
+  --pink: #e100bd;
+}
+
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+  cursor: url("/static/cursor.png"), auto;
+}
+
+body {
+  font-family: "VT323", monospace;
+  background-color: blue;
+  background-image: url("/static/images/apple-tree-256px.jpg");
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+h1,
+p,
+nav,
+button {
+  text-align: center;
+  background-color: black;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+h1 {
+  font-weight: 400;
+}
+
+p,
+nav {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+h1,
+nav {
+  width: 50%;
+  max-width: 500px;
+}
+
+nav {
+  width: 40%;
+  max-width: 350px;
+}
+
+p {
+  width: 60%;
+  max-width: 660px;
+}
+
+a {
+  color: var(--pink);
+  text-decoration: none;
+}
+a:hover {
+  color: black;
+  background-color: yellow;
+  padding: 0.1rem 0.2rem;
+}
+a:active {
+  color: red;
+  text-decoration: line-through;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.upper {
+  text-transform: uppercase;
+}
+
+.remove-background {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+h1 .normal-word:hover {
+  color: var(--pink);
+}
+
+#reset-seizure-warning:hover {
+  background-color: yellow;
+  color: black;
+}
+#reset-seizure-warning:active {
+  background-color: var(--pink);
+  color: blue;
+}
