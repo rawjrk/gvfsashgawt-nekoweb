@@ -11,6 +11,12 @@ const PORT = 4200;
 const server = http.createServer();
 
 server.on("request", async (req, res) => {
+  if (req.method !== "GET") {
+    res.statusCode = 405;
+    res.end();
+    return;
+  }
+
   try {
     const filePath = requestUrlToFilePath(req.url);
     const fileExtension = path.extname(filePath);
