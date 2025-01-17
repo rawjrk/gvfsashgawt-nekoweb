@@ -1,0 +1,72 @@
+a:hover {
+  color: black;
+  background-color: var(--pink);
+}
+a:active {
+  color: black;
+  background-color: grey;
+}
+
+a:hover[target="_blank"] {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+body {
+  background-color: var(--pink);
+  background-image: url("/static/images/apple-tree-two-256px.jpeg");
+  animation: animate 5s linear infinite;
+}
+
+@keyframes animate {
+  0% {
+    filter: hue-rotate(0deg);
+    backdrop-filter: hue-rotate(0deg);
+  }
+
+  25% {
+    filter: hue-rotate(40deg);
+    backdrop-filter: hue-rotate(40deg);
+  }
+
+  50% {
+    filter: hue-rotate(0deg);
+    backdrop-filter: hue-rotate(0deg);
+  }
+
+  75% {
+    filter: hue-rotate(-90deg);
+    backdrop-filter: hue-rotate(-90deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+    backdrop-filter: hue-rotate(0deg);
+  }
+}
+
+video {
+  animation: cancel 5s linear infinite;
+}
+
+@keyframes cancel {
+  0% {
+    filter: hue-rotate(0deg);
+  }
+
+  25% {
+    filter: hue-rotate(-40deg);
+  }
+
+  50% {
+    filter: hue-rotate(0deg);
+  }
+
+  75% {
+    filter: hue-rotate(90deg);
+  }
+
+  100% {
+    filter: hue-rotate(0deg);
+  }
+}

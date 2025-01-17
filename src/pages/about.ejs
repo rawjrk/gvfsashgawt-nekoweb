@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('/partials/head', { title }) %>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/pages/about.css" />
+    <%- include('/partials/metadata', { metadata }) %>
+  </head>
+
+  <body>
+    <%- include('/partials/pageH1') %>
+
+    <main>
+      <p>
+        <span class="gib-word titlecase">Raw,st</span>
+        <span class="gib-word titlecase">J$rk</span>
+        in t8e WoRld l1ves h@re.
+        <br />
+        <br />
+        <video width="200" height="232" autoplay loop muted>
+          <source src="/static/animated/smonks.mp4" type="video/mp4" />
+        </video>
+        <br />
+        <br />
+        Links? Yae, thanks.
+        <br />
+
+        <%- include('/partials/extlinks', { navigation }) %>
+      </p>
+    </main>
+
+    <%- include('/partials/navigation', { navigation }) %>
+
+    <script src="/scripts/gib-core.js"></script>
+    <script src="/scripts/gib-events.js"></script>
+  </body>
+</html>

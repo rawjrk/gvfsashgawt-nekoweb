@@ -30,6 +30,7 @@ main {
   justify-content: center;
   width: 60%;
   max-width: 660px;
+  background-color: black;
 }
 
 h1,

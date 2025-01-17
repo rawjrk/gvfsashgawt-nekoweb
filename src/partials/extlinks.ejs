@@ -1,0 +1,19 @@
+<% const extLinks = [
+// instagram
+  { href: "https://instagram.com/gvfsashgawt", text: "in", separator: '<' }, 
+
+// flick
+  { href: "https://flic.kr/gvfsashgawt", text: "fl", separator: '*' },
+  
+// github
+  { href: "https://github.com/rawjrk/gvfsashgawt-nekoweb", text: "gh", separator: '*' },
+
+] %>
+
+<span class="uppercase">
+  <% extLinks.forEach((link, index) => { %>
+  <%= link.separator %>
+  <a class="gib-link" target="_blank" href="<%= link.href %>"><%= link.text %></a>
+  <% }) %>
+  >
+</span>
