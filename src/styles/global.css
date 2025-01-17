@@ -12,7 +12,7 @@ body {
 body {
   font-family: "VT323", monospace;
   background-color: blue;
-  background-image: url("/static/images/apple-tree-256px.jpg");
+  background-image: url("/static/images/apple-tree-color-256px.jpeg");
   color: white;
 
   display: flex;

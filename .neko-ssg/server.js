@@ -1,9 +1,9 @@
 import http from "node:http";
 import path from "node:path";
 import fsPromises from "node:fs/promises";
-import appDir from "./utils/appDir.js";
 import buildPages from "./utils/buildPages.js";
 import { clearBuildDir, symlinkStatics } from "./utils/fileTasks.js";
+import { FILE_TYPE, getFilePath, getFileType, getMimeType } from "./utils/serveFiles.js";
 
 const HOST = "localhost";
 const PORT = 4200;
@@ -21,41 +21,43 @@ server.on("request", async (req, res) => {
   }
 
   try {
-    const filePath = requestUrlToFilePath(req.url);
+    const filePath = getFilePath(req.url);
     const fileExtension = path.extname(filePath);
+
+    const fileType = getFileType(fileExtension);
+
+    if (fileType === FILE_TYPE.INVALID) {
+      res.statusCode = 415;
+      res.end("Unsupported Media Type");
+      return;
+    }
 
     res.statusCode = 200;
 
-    switch (fileExtension) {
-      case ".html":
-        const htmlContent = await fsPromises.readFile(filePath, "utf-8");
-        res.setHeader("Content-Type", "text/html; charset=utf-8");
-        res.end(htmlContent);
-        return;
+    const isTextFile = Boolean(fileType); // if text: 1 -> true, if bin: 0 -> false;
+    const encoding = isTextFile ? "utf-8" : null;
+    const fileContent = await fsPromises.readFile(filePath, { encoding });
 
-      case ".css":
-        const cssContent = await fsPromises.readFile(filePath, "utf-8");
-        res.setHeader("Content-Type", "text/css; charset=utf-8");
-        res.end(cssContent);
-        return;
-
-      case ".js":
-        const jsContent = await fsPromises.readFile(filePath, "utf-8");
-        res.setHeader("Content-Type", "application/javascript; charset=utf-8");
-        res.end(jsContent);
-        return;
-
-      default:
-        res.end("Hello world!");
+    let contentType = getMimeType(fileExtension);
+    if (encoding) {
+      contentType += `; charset=${encoding}`;
     }
+
+    res.setHeader("Content-Type", contentType);
+    res.end(fileContent);
   } catch (err) {
     if (err.code === "ENOENT") {
       res.statusCode = 404;
-      res.end("404: NOT FOUND");
+      res.end("Not Found");
       return;
     }
     throw err;
   }
+});
+
+server.on("error", (req, res) => {
+  res.statusCode = 500;
+  res.end("Internal Server Error");
 });
 
 server.listen(PORT, HOST, async () => {
@@ -66,16 +68,6 @@ server.listen(PORT, HOST, async () => {
   console.log("Completed fresh development build");
   console.log(`Listening at http://${HOST}:${PORT}`);
 });
-
-function requestUrlToFilePath(url) {
-  const isExtensionSpecified = path.extname(url);
-  const addExtension = isExtensionSpecified ? "" : ".html";
-
-  const relativePath = url === "/" ? "index.html" : `${url}${addExtension}`;
-  const absolutePath = path.join(appDir, "build", relativePath);
-
-  return absolutePath;
-}
 
 const dtFormatter = new Intl.DateTimeFormat("en-GB", {
   timeStyle: "medium",
