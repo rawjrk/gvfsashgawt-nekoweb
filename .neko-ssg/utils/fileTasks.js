@@ -11,9 +11,22 @@ export async function clearBuildDir() {
 
 export async function copyStaticFiles() {
   const staticPath = path.join(appDir, "static");
-  const buildPath = path.join(appDir, "build");
-
+  const buildPath = path.join(appDir, "build/static");
   await fsPromises.cp(staticPath, buildPath, { recursive: true });
+}
+
+export async function copyFaviconIco() {
+  try {
+    const staticFaviconPath = path.join(appDir, "static", "favicon.ico");
+    const buildFaviconPath = path.join(appDir, "build", "favicon.ico");
+    await fsPromises.cp(staticFaviconPath, buildFaviconPath);
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      console.warn("File /static/favicon.ico not found");
+      return;
+    }
+    throw err;
+  }
 }
 
 export async function copyStyles() {
