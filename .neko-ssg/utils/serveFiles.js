@@ -1,7 +1,7 @@
 import path from "node:path";
 import appDir from "./appDir.js";
 
-const SUPPORTED_BIN_FORMATS = [".jpg", ".jpeg", ".png", ".gif"];
+const SUPPORTED_BIN_FORMATS = [".jpg", ".jpeg", ".png", ".gif", ".ico"];
 const SUPPORTED_TEXT_FORMATS = [".html", ".css", ".js"];
 
 export const FILE_TYPE = {
@@ -28,10 +28,15 @@ export function getMimeType(extname) {
   switch (extname) {
     case ".js":
       return "application/javascript";
+
     case ".css":
       return "text/css";
+
     case ".html":
       return "text/html";
+
+    case ".ico":
+      return "image/x-icon";
 
     case ".jpg":
       return "image/jpeg";
