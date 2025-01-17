@@ -9,6 +9,20 @@ export async function clearBuildDir() {
   await fsPromises.rm(buildPath, { recursive: true, force: true });
 }
 
+export async function symlinkStatics() {
+  await symlinkRelPath("static/favicon.ico", "build/favicon.ico");
+  await symlinkRelPath("static", "build/static");
+  await symlinkRelPath("src/styles", "build/styles");
+  await symlinkRelPath("src/scripts", "build/scripts");
+}
+
+async function symlinkRelPath(fromRel, toRel) {
+  const copyFromPath = path.join(appDir, fromRel);
+  const copyToPath = path.join(appDir, toRel);
+
+  await fsPromises.symlink(copyFromPath, copyToPath, { recursive: true, force: true });
+}
+
 export async function copyStaticFiles() {
   const staticPath = path.join(appDir, "static");
   const buildPath = path.join(appDir, "build/static");

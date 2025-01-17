@@ -1,0 +1,4 @@
+{
+  "watch": ["src", ".neko-ssg"],
+  "ext": "html, ejs, css, js"
+}
