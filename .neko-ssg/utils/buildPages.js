@@ -7,13 +7,13 @@ import scanDirectory from "./scanDirectory.js";
 
 const pagesPath = path.join(appDir, "src/pages");
 
-export default async function buildPages() {
+export default async function buildPages({ skipMinification = false } = {}) {
   const pagesContent = await scanDirectory(pagesPath, ".ejs");
 
   const endpointsMap = new Map();
 
   for (const dirent of pagesContent) {
-    const { url, compiledHtml, writeTo } = await generatePage(dirent);
+    const { url, compiledHtml, writeTo } = await generatePage(dirent, skipMinification);
 
     await fsPromises.mkdir(path.dirname(writeTo), { recursive: true });
     await fsPromises.writeFile(writeTo, compiledHtml, "utf-8");
@@ -24,7 +24,7 @@ export default async function buildPages() {
   return endpointsMap;
 }
 
-async function generatePage(dirent) {
+async function generatePage(dirent, skipMinification = false) {
   const renderFrom = path.join(dirent.parentPath, dirent.name);
   const url = path.relative(pagesPath, renderFrom);
 
@@ -32,7 +32,11 @@ async function generatePage(dirent) {
   const { title, metadata, navigation } = await loadModule(configPath, "utf-8");
 
   const renderData = { title, metadata, navigation };
-  const compiledHtml = await ejsRenderFile(renderFrom, renderData).then(minify.html);
+  let compiledHtml = await ejsRenderFile(renderFrom, renderData);
+
+  if (!skipMinification) {
+    compiledHtml = await minify.html(compiledHtml);
+  }
 
   const htmlFilename = replaceExtname(dirent.name, ".html");
   const writeTo = path.join(appDir, "build", htmlFilename);

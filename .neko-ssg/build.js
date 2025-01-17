@@ -7,14 +7,17 @@ import {
   copyStyles,
 } from "./utils/fileTasks.js";
 
+const cliArguments = process.argv.slice(2);
+const skipMinification = cliArguments.includes("--skip-minify");
+
 (async () => {
   await clearBuildDir();
-  await buildPages();
+  await buildPages({ skipMinification });
 
   await copyFaviconIco();
   await copyStaticFiles();
-  await copyStyles();
-  await copyScripts();
+  await copyStyles({ skipMinification });
+  await copyScripts({ skipMinification });
 
   console.log("Successfully completed fresh build");
 })();

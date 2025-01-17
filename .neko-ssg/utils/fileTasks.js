@@ -43,7 +43,7 @@ export async function copyFaviconIco() {
   }
 }
 
-export async function copyStyles() {
+export async function copyStyles({ skipMinification = false } = {}) {
   const stylesPath = path.join(appDir, "src/styles");
   const buildPath = path.join(appDir, "build/styles");
 
@@ -52,7 +52,10 @@ export async function copyStyles() {
   for (const dirent of stylesContent) {
     const { copyFrom, copyTo } = generateCopyPath(dirent, stylesPath, buildPath);
 
-    const textContent = await fsPromises.readFile(copyFrom, "utf-8").then(minify.css);
+    let textContent = await fsPromises.readFile(copyFrom, "utf-8");
+    if (!skipMinification) {
+      textContent = await minify.css(textContent);
+    }
 
     const destParentDir = copyTo.slice(0, dirent.name.length * -1);
     await fsPromises.mkdir(destParentDir, { recursive: true });
@@ -60,7 +63,7 @@ export async function copyStyles() {
   }
 }
 
-export async function copyScripts() {
+export async function copyScripts({ skipMinification = false } = {}) {
   const scriptsPath = path.join(appDir, "src/scripts");
   const buildPath = path.join(appDir, "build/scripts");
 
@@ -69,7 +72,10 @@ export async function copyScripts() {
   for (const dirent of scriptsContent) {
     const { copyFrom, copyTo } = generateCopyPath(dirent, scriptsPath, buildPath);
 
-    const textContent = await fsPromises.readFile(copyFrom, "utf-8").then(minify.js);
+    let textContent = await fsPromises.readFile(copyFrom, "utf-8");
+    if (!skipMinification) {
+      textContent = await minify.js(textContent);
+    }
 
     const destParentDir = copyTo.slice(0, dirent.name.length * -1);
     await fsPromises.mkdir(destParentDir, { recursive: true });

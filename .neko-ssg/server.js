@@ -62,7 +62,7 @@ server.on("error", (req, res) => {
 
 server.listen(PORT, HOST, async () => {
   await clearBuildDir();
-  await buildPages();
+  await buildPages({ skipMinification: true });
   await symlinkStatics();
 
   console.log("Completed fresh development build");
