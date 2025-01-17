@@ -1,28 +1,36 @@
-document.getElementsByClassName("gib-fill").forEach((elem) => {
+const gibFills = document.getElementsByClassName("gib-fill");
+
+for (const elem of gibFills) {
   elem.innerText = gibberishSentence();
-});
+}
 
-document.getElementsByClassName("gib-link").forEach((elem) => {
+const gibLinks = document.getElementsByClassName("gib-link");
+
+for (const elem of gibLinks) {
   const originalText = elem.innerText;
-  elem.innerText = gibberishWord();
+  elem.innerText = gibberishWord(originalText.length);
+
+  const onmouseoutHandler = () => {
+    elem.innerText = gibberishWord(originalText.length);
+  };
 
   elem.onmouseover = () => {
     elem.innerText = originalText;
+    elem.addEventListener("mouseout", onmouseoutHandler, { once: true });
   };
+}
 
-  elem.onmouseout = () => {
-    elem.innerText = gibberishWord();
-  };
-});
+const gibWords = document.getElementsByClassName("gib-word");
 
-document.getElementsByClassName("gib-word").forEach((elem) => {
+for (const elem of gibWords) {
   const originalText = elem.innerText;
 
-  elem.onmouseover = () => {
-    elem.innerText = gibberishWord();
+  const onmouseoutHandler = (event) => {
+    event.target.innerText = originalText;
   };
 
-  elem.onmouseout = () => {
-    elem.innerText = originalText;
+  elem.onmouseover = (event) => {
+    event.target.innerText = gibberishWord(originalText.length);
+    event.target.addEventListener("mouseout", onmouseoutHandler, { once: true });
   };
-});
+}
