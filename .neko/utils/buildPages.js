@@ -1,6 +1,7 @@
 import fsPromises from "node:fs/promises";
 import path from "node:path";
 import ejs from "ejs";
+import { minify } from "minify";
 import appDir from "./appDir.js";
 import scanDirectory from "./scanDirectory.js";
 
@@ -31,7 +32,8 @@ async function generatePage(dirent) {
   const { metadata, navigation } = await loadModule(configPath, "utf-8");
 
   const renderData = { metadata };
-  const compiledHtml = await ejsRenderFile(renderFrom, renderData); // TODO: integrate 'minifier' to reduce file sizes
+  const compiledHtml = await ejsRenderFile(renderFrom, renderData).then(minify.html);
+
   const htmlFilename = replaceExtname(dirent.name, ".html");
   const writeTo = path.join(appDir, "build", htmlFilename);
 
