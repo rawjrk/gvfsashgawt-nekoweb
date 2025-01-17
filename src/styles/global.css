@@ -14,9 +14,13 @@ body {
   background-color: blue;
   background-image: url("/static/images/apple-tree-256px.jpg");
   color: white;
+
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
 }
 
 main {
@@ -24,8 +28,8 @@ main {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  width: 100vw;
+  width: 60%;
+  max-width: 660px;
 }
 
 h1,
@@ -59,11 +63,6 @@ nav {
   max-width: 350px;
 }
 
-p {
-  width: 60%;
-  max-width: 660px;
-}
-
 a {
   color: var(--pink);
   text-decoration: none;
@@ -74,8 +73,13 @@ a:hover {
   padding: 0.1rem 0.2rem;
 }
 a:active {
-  color: red;
-  text-decoration: line-through;
+  color: white;
+  background-color: blue;
+  padding: 0.1rem 0.2rem;
+}
+
+.gib-word:hover {
+  color: var(--pink);
 }
 
 button {
@@ -84,8 +88,14 @@ button {
   font-weight: inherit;
 }
 
-.upper {
+.uppercase {
   text-transform: uppercase;
+}
+.titlecase {
+  text-transform: capitalize;
+}
+.lowercase {
+  text-transform: lowercase;
 }
 
 .remove-background {
@@ -94,13 +104,4 @@ button {
 
 h1 .normal-word:hover {
   color: var(--pink);
-}
-
-#reset-seizure-warning:hover {
-  background-color: yellow;
-  color: black;
-}
-#reset-seizure-warning:active {
-  background-color: var(--pink);
-  color: blue;
 }
