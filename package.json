@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node .neko-ssg/build.js",
-    "format": "prettier --plugin=prettier-plugin-ejs . --write"
+    "format": "prettier . --write"
   },
   "dependencies": {
     "ejs": "^3.1.10",

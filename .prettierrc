@@ -1,3 +1,11 @@
 {
+  "overrides": [
+    {
+      "files": ["*.ejs"],
+      "options": {
+        "plugins": ["prettier-plugin-ejs"]
+      }
+    }
+  ],
   "printWidth": 100
 }
