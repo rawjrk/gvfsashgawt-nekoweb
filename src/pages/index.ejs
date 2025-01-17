@@ -1,15 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>F*ck it! Nothing...</title>
-    <%- include('/partials/fonts') %>
+    <%- include('/partials/head', { title: 'F*ck it! Nothing...' }) %>
     <link rel="stylesheet" href="/styles/global.css" />
-    <%- include('/partials/metadata', { metadata: metadata }) %>
+    <%- include('/partials/metadata', { metadata }) %>
   </head>
+
   <body>
-    <%- include('/partials/header') %>
+    <%- include('/partials/pageH1') %>
 
     <main>
       <p>

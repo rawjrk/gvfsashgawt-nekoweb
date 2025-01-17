@@ -1,6 +1,7 @@
+import sharedMetadata from "../sharedMetadata.js";
+
 export const metadata = {
-  "og:title": "GVFSASHGWAT's PAGE",
-  "og:description": "Digiart enjoyer, glitch enthusiast",
+  ...sharedMetadata,
 };
 
 export const navigation = null;
