@@ -1,6 +1,8 @@
 import path from "node:path";
 import fsPromises from "node:fs/promises";
+import scanDirectory from "./scanDirectory.js";
 import appDir from "./appDir.js";
+import { minify } from "minify";
 
 export async function clearBuildDir() {
   const buildPath = path.join(appDir, "build");
@@ -18,12 +20,41 @@ export async function copyStyles() {
   const stylesPath = path.join(appDir, "src/styles");
   const buildPath = path.join(appDir, "build/styles");
 
-  await fsPromises.cp(stylesPath, buildPath, { recursive: true });
+  const stylesContent = await scanDirectory(stylesPath, ".css");
+
+  for (const dirent of stylesContent) {
+    const { copyFrom, copyTo } = generateCopyPath(dirent, stylesPath, buildPath);
+
+    const textContent = await fsPromises.readFile(copyFrom, "utf-8").then(minify.css);
+
+    const destParentDir = copyTo.slice(0, dirent.name.length * -1);
+    await fsPromises.mkdir(destParentDir, { recursive: true });
+    await fsPromises.writeFile(copyTo, textContent, "utf-8");
+  }
 }
 
 export async function copyScripts() {
   const scriptsPath = path.join(appDir, "src/scripts");
   const buildPath = path.join(appDir, "build/scripts");
 
-  await fsPromises.cp(scriptsPath, buildPath, { recursive: true });
+  const scriptsContent = await scanDirectory(scriptsPath, ".js");
+
+  for (const dirent of scriptsContent) {
+    const { copyFrom, copyTo } = generateCopyPath(dirent, scriptsPath, buildPath);
+
+    const textContent = await fsPromises.readFile(copyFrom, "utf-8").then(minify.js);
+
+    const destParentDir = copyTo.slice(0, dirent.name.length * -1);
+    await fsPromises.mkdir(destParentDir, { recursive: true });
+    await fsPromises.writeFile(copyTo, textContent, "utf-8");
+  }
+}
+
+function generateCopyPath(dirent, srcPath, destPath) {
+  const relativePath = dirent.parentPath.slice(srcPath.length);
+
+  const copyFrom = path.join(dirent.parentPath, dirent.name);
+  const copyTo = path.join(destPath, relativePath, dirent.name);
+
+  return { copyFrom, copyTo };
 }

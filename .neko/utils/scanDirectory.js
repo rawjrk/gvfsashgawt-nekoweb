@@ -8,7 +8,6 @@ export default async function scanDirectory(dirPath, allowedExtension) {
   });
 
   return dirContent.filter(
-    (dirent) =>
-      dirent.isFile() && path.extname(dirent.name) === allowedExtension
+    (dirent) => dirent.isFile() && path.extname(dirent.name) === allowedExtension,
   );
 }

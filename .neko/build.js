@@ -1,20 +1,13 @@
 import buildPages from "./utils/buildPages.js";
-import {
-  clearBuildDir,
-  copyScripts,
-  copyStaticFiles,
-  copyStyles,
-} from "./utils/fileTasks.js";
+import { clearBuildDir, copyScripts, copyStaticFiles, copyStyles } from "./utils/fileTasks.js";
 
 (async () => {
   await clearBuildDir();
+  await buildPages();
 
-  await Promise.all([
-    buildPages(),
-    copyStaticFiles(),
-    copyStyles(),
-    copyScripts(),
-  ]);
+  await copyStaticFiles();
+  await copyStyles();
+  await copyScripts();
 
   console.log("Build successful!");
 })();
