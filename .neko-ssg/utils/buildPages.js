@@ -51,6 +51,7 @@ async function loadModule(absolutePath) {
     return moduleNamespace;
   } catch (err) {
     if (err.code === "ERR_MODULE_NOT_FOUND") {
+      console.error("Error on exporting config from", absolutePath);
       return {};
     }
     throw err;
