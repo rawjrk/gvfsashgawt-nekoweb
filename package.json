@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "node .neko-ssg/build.js",
+    "clear": "node .neko-ssg/clear.js",
     "format": "prettier . --write"
   },
   "dependencies": {
