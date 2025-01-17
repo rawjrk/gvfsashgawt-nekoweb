@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('/partials/head', { title }) %>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/pages/gallery.css" />
+    <%- include('/partials/metadata', { metadata }) %>
+  </head>
+
+  <body>
+    <%- include('/partials/pageH1') %>
+
+    <main>
+      <p class="uppercase" style="margin-top: 0">
+        \art\ gallery >>>>>>>>> UNDER CONSTRUCTION.. >>>>>>>>>>
+      </p>
+
+      <div id="gallery-container"></div>
+    </main>
+
+    <%- include('/partials/navigation', { navigation: [] }) %>
+
+    <script src="/scripts/gib-core.js"></script>
+    <script src="/scripts/gib-events.js"></script>
+    <script src="/scripts/pages/gallery.js"></script>
+  </body>
+</html>
