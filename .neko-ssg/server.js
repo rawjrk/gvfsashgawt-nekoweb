@@ -11,6 +11,9 @@ const PORT = 4200;
 const server = http.createServer();
 
 server.on("request", async (req, res) => {
+  const dt = formatDate(new Date());
+  console.log(`[ ${dt} ] ${req.method} ${req.url}`);
+
   if (req.method !== "GET") {
     res.statusCode = 405;
     res.end();
@@ -72,4 +75,13 @@ function requestUrlToFilePath(url) {
   const absolutePath = path.join(appDir, "build", relativePath);
 
   return absolutePath;
+}
+
+const dtFormatter = new Intl.DateTimeFormat("en-GB", {
+  timeStyle: "medium",
+  hour12: false,
+});
+
+function formatDate(dateObj) {
+  return dtFormatter.format(dateObj);
 }
