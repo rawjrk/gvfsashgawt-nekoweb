@@ -1,7 +1,7 @@
 import path from "node:path";
 import appDir from "./appDir.js";
 
-const SUPPORTED_BIN_FORMATS = [".jpg", ".jpeg", ".png", ".gif", ".ico"];
+const SUPPORTED_BIN_FORMATS = [".jpg", ".jpeg", ".png", ".gif", ".ico", ".mp4"];
 const SUPPORTED_TEXT_FORMATS = [".html", ".css", ".js"];
 
 export const FILE_TYPE = {
@@ -45,6 +45,9 @@ export function getMimeType(extname) {
     case ".png":
     case ".gif":
       return `image/${extname.slice(1)}`;
+
+    case ".mp4":
+      return `video/${extname.slice(1)}`;
   }
 }
 
