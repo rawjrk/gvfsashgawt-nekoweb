@@ -31,7 +31,7 @@ async function generatePage(dirent) {
   const configPath = replaceExtname(renderFrom, ".config.js");
   const { title, metadata, navigation } = await loadModule(configPath, "utf-8");
 
-  const renderData = { title, metadata };
+  const renderData = { title, metadata, navigation };
   const compiledHtml = await ejsRenderFile(renderFrom, renderData).then(minify.html);
 
   const htmlFilename = replaceExtname(dirent.name, ".html");

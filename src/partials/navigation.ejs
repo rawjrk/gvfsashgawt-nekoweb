@@ -1,1 +1,12 @@
-<!-- NAVIGATION_GOES_HERE -->
+<nav>
+  <span class="uppercase">
+    go to <% navigation.forEach((link, index) => { %>
+    <% if (index === 0) { %>
+    >>
+    <% } else { %>
+    ||
+    <% } %>
+    <a href="<%= link.href %>"><%= link.text %></a>
+    <% }) %>
+  </span>
+</nav>
