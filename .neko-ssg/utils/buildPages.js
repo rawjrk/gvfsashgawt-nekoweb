@@ -10,23 +10,16 @@ const pagesPath = path.join(appDir, "src/pages");
 export default async function buildPages({ skipMinification = false } = {}) {
   const pagesContent = await scanDirectory(pagesPath, ".ejs");
 
-  const endpointsMap = new Map();
-
   for (const dirent of pagesContent) {
-    const { url, compiledHtml, writeTo } = await generatePage(dirent, skipMinification);
+    const { compiledHtml, writeTo } = await generatePage(dirent, skipMinification);
 
     await fsPromises.mkdir(path.dirname(writeTo), { recursive: true });
     await fsPromises.writeFile(writeTo, compiledHtml, "utf-8");
-
-    endpointsMap.set(url, writeTo);
   }
-
-  return endpointsMap;
 }
 
 async function generatePage(dirent, skipMinification = false) {
   const renderFrom = path.join(dirent.parentPath, dirent.name);
-  const url = path.relative(pagesPath, renderFrom);
 
   const configPath = replaceExtname(renderFrom, ".config.js");
   const { title, metadata, navigation } = await loadModule(configPath, "utf-8");
@@ -41,7 +34,7 @@ async function generatePage(dirent, skipMinification = false) {
   const htmlFilename = replaceExtname(dirent.name, ".html");
   const writeTo = path.join(appDir, "build", htmlFilename);
 
-  return { url, compiledHtml, writeTo };
+  return { compiledHtml, writeTo };
 }
 
 function replaceExtname(nameOrPath, extension) {
@@ -51,7 +44,7 @@ function replaceExtname(nameOrPath, extension) {
 
 async function loadModule(absolutePath) {
   try {
-    const moduleNamespace = await import(absolutePath);
+    const moduleNamespace = await import(`file://${absolutePath}`);
     return moduleNamespace;
   } catch (err) {
     if (err.code === "ERR_MODULE_NOT_FOUND") {
