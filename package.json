@@ -8,6 +8,7 @@
     "build": "node .neko-ssg/build.js",
     "clear": "node .neko-ssg/clear.js",
     "dev": "nodemon .neko-ssg/server.js",
+    "lint": "eslint",
     "format": "prettier . --write"
   },
   "dependencies": {
@@ -15,6 +16,8 @@
     "minify": "^12.0.1"
   },
   "devDependencies": {
+    "eslint": "^9.18.0",
+    "eslint-config-prettier": "^10.0.1",
     "nodemon": "^3.1.9",
     "prettier": "3.4.2",
     "prettier-plugin-ejs": "^1.0.3"
