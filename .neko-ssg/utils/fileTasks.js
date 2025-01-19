@@ -46,7 +46,7 @@ async function symlinkRelPath(fromRel, toRel) {
   const copyFromPath = path.join(appDir, fromRel);
   const copyToPath = path.join(appDir, toRel);
 
-  await fsPromises.symlink(copyFromPath, copyToPath, { recursive: true, force: true });
+  await fsPromises.symlink(copyFromPath, copyToPath, "junction");
 }
 
 /**
