@@ -3,12 +3,20 @@ import path from "node:path";
 import fsPromises from "node:fs/promises";
 import buildPages from "./utils/buildPages.js";
 import { clearBuildDir, copyFaviconIco, symlinkStatics } from "./utils/fileTasks.js";
-import { FILE_TYPE, getFilePath, getFileType, getMimeType } from "./utils/serveFiles.js";
+import {
+  checkNotFoundPageExists,
+  FILE_TYPE,
+  getFilePath,
+  getFileType,
+  getMimeType,
+  getNotFoundPageHtml,
+} from "./utils/serveFiles.js";
 
 const HOST = "localhost";
 const PORT = 4200;
 
 const server = http.createServer();
+let isNotFoundPageExists = false;
 
 server.on("request", async (req, res) => {
   const dt = formatDate(new Date());
@@ -48,6 +56,13 @@ server.on("request", async (req, res) => {
   } catch (err) {
     if (err.code === "ENOENT") {
       res.statusCode = 404;
+
+      if (isNotFoundPageExists) {
+        res.setHeader("Content-Type", getMimeType(".html"));
+        res.end(await getNotFoundPageHtml());
+        return;
+      }
+
       res.end("Not Found");
       return;
     }
@@ -65,6 +80,11 @@ server.listen(PORT, HOST, async () => {
   await buildPages({ skipMinification: true });
   await symlinkStatics();
   await copyFaviconIco();
+
+  isNotFoundPageExists = await checkNotFoundPageExists();
+  if (!isNotFoundPageExists) {
+    console.warn("Missing /not_found page");
+  }
 
   console.log("Completed fresh development build");
   console.log(`Listening at http://${HOST}:${PORT}`);

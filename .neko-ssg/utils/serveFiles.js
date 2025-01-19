@@ -1,4 +1,5 @@
 import path from "node:path";
+import fsPromises from "node:fs/promises";
 import appDir from "./appDir.js";
 
 const SUPPORTED_BIN_FORMATS = [".jpg", ".jpeg", ".png", ".gif", ".ico", ".mp4"];
@@ -81,4 +82,30 @@ export function getFilePath(url) {
   const absolutePath = path.join(appDir, "build", relativePath);
 
   return absolutePath;
+}
+
+const notFoundPagePath = path.join(appDir, "build", "not_found.html");
+
+/**
+ * Checks whether `build/not_found.html` file exists.
+ * @returns {Promise<boolean>} HTML content
+ */
+export async function checkNotFoundPageExists() {
+  try {
+    await fsPromises.access(notFoundPagePath);
+    return true;
+  } catch (err) {
+    if (err.code === "ENOENT") {
+      return false;
+    }
+    throw err;
+  }
+}
+
+/**
+ * Reads the content of `build/not_found.html` file.
+ * @returns {Promise<string>} HTML content
+ */
+export async function getNotFoundPageHtml() {
+  return fsPromises.readFile(notFoundPagePath, { encoding: "utf-8" });
 }
