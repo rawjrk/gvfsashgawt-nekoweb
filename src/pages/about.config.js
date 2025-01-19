@@ -1,7 +1,7 @@
 import sharedMetadata from "../sharedMetadata.js";
 import navLinks from "../navLinks.js";
 
-export const title = "Be&U@#f^/ Girly Smonks";
+export const title = "Cvte Girly Smonks";
 
 export const metadata = {
   ...sharedMetadata,
