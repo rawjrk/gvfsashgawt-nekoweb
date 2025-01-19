@@ -34,7 +34,7 @@ main {
 }
 
 h1,
-p,
+main,
 nav,
 button {
   text-align: center;
@@ -43,11 +43,17 @@ button {
   margin: 1rem;
 }
 
+p {
+  margin: 0;
+}
+
 h1 {
+  font-size: 2rem;
   font-weight: 400;
 }
 
 p,
+main,
 nav {
   font-size: 1.5rem;
   font-weight: 500;
