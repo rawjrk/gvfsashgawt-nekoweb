@@ -1,35 +1,47 @@
-/**
- * TBD: planned for refactoring... use class ??
- * @param {string} imagePath URL of image to be fetched
- * @returns {Promise<Function>} `datamoshBackground` function
- */
-async function createDatamoshBackgroundFn(imagePath) {
-  const imageBlob = await fetchBlob(imagePath);
-  const imageContent = await blobToBase64(imageBlob);
+/** Class representing interface to load an image and generate its datamoshed version. */
+class DatamoshedJpeg {
+  _imageUrl;
+  _imageData_base64;
+  _datamoshRange; // TODO: very unclear and crypting, need to specify range based on bits position
 
-  const injectFrom = 460;
-  const injectTo = 500;
+  /**
+   * Creates
+   * @param {string} imageUrl fetch location
+   * @param {[number, number]} datamoshRange position [from, to] at which values are randomized
+   */
+  constructor(imageUrl, datamoshRange = [0, 0]) {
+    this._imageUrl = imageUrl;
+    this._datamoshRange = datamoshRange;
+  }
 
-  const injectWith_ascii = window.atob(imageContent.slice(injectFrom, injectTo));
+  /**
+   * Fetches image from specified URL, and saves its content as Base64 string.
+   * @returns {Promise<void>}
+   */
+  async fetchImage() {
+    const imageBlob = await fetchBlob(this._imageUrl);
+    this._imageData_base64 = await blobToBase64(imageBlob);
+  }
 
-  const getDataMoshedContent = () => {
-    let randomized = "";
+  /**
+   * Genarates a datamoshed version (i.e. with randomized bits) of the image.
+   * @returns {string} Base64 string
+   */
+  generateMoshedBase64() {
+    const [injectFrom, injectTo] = this._datamoshRange;
+
+    // TODO: get rid of unnecessary coersions between ASCII and Base64 encodings.
+    const injectWith_ascii = window.atob(this._imageData_base64.slice(injectFrom, injectTo));
+
+    let randomized_ascii = "";
 
     for (let i = 0; i < injectWith_ascii.length; i++) {
-      randomized += randomASCII();
+      randomized_ascii += randomASCII();
     }
 
-    const randomized_base64 = window.btoa(randomized);
-    return injectString(imageContent, injectFrom, randomized_base64);
-  };
-
-  const datamoshBackground = () => {
-    const content = getDataMoshedContent();
-    const imageData = `url("data:image/jpeg;base64,${content}")`;
-    document.body.style.background = imageData;
-  };
-
-  return datamoshBackground;
+    const randomized_base64 = window.btoa(randomized_ascii);
+    return injectString(this._imageData_base64, injectFrom, randomized_base64);
+  }
 }
 
 /**
