@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('/partials/head', { title }) %>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <link rel="stylesheet" href="/styles/pages/not_found.css" />
+    <%- include('/partials/metadata', { metadata }) %>
+  </head>
+
+  <body>
+    <%- include('/partials/pageH1') %>
+
+    <main>
+      <p id="not-found-message">
+        <span class="gib-word titlecase">Page</span>
+        <span class="gib-word">not</span>
+        <span class="gib-word">found</span>.
+        <span class="gib-word titlecase">Like</span>
+        <span class="gib-word">fr</span>.
+      </p>
+    </main>
+
+    <%- include('/partials/navigation', { navigation }) %>
+
+    <script src="/scripts/gib-core.js"></script>
+    <script src="/scripts/gib-events.js"></script>
+    <script src="/scripts/datamosh-bg.js"></script>
+    <script src="/scripts/pages/not-found.js"></script>
+  </body>
+</html>
