@@ -10,9 +10,9 @@ function randomRange(min, max) {
 }
 
 /**
- * Returns string of randomly generated chars.
+ * Generates a string of random chars (gibberish word).
  * @param {number} len string length
- * @returns {string}
+ * @returns {string} gibberish word
  */
 function gibberishWord(len) {
   let gib = "";
@@ -27,8 +27,9 @@ function gibberishWord(len) {
 }
 
 /**
- * Returns string filled with sequence of gibberish words.
- * @returns {string}
+ * Generates a sequence of gibberish words (random number: 3 to 9, random length: 5 to 9).
+ * "Words" are separated by spaces, could be also separated by comma + splace (10% chance).
+ * @returns {string} gibberish sentence
  */
 function gibberishSentence() {
   const numberOfWords = randomRange(3, 9);

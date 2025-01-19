@@ -74,6 +74,13 @@ const dtFormatter = new Intl.DateTimeFormat("en-GB", {
   hour12: false,
 });
 
+/**
+ * Formats Date object as `hh:mm:ss` string.
+ * @param {Date} dateObj instance of `Date`
+ * @returns {string} formatted string
+ * @example
+ * formatDate(new Date()) -> '15:19:29'
+ */
 function formatDate(dateObj) {
   return dtFormatter.format(dateObj);
 }

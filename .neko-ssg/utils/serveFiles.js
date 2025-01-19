@@ -10,6 +10,15 @@ export const FILE_TYPE = {
   TEXT: 1,
 };
 
+/**
+ * Checks whether given `extname` corresponds to any of our formats.
+ * @param {string} extname file extension
+ * @returns {number} file type code
+ * @example
+ * getFileType('.png') -> 0 // e.i. binary
+ * getFileType('.css') -> 1 // e.i. text
+ * getFileType('.wrg') -> -1 // e.i. invalid
+ */
 export function getFileType(extname) {
   const isTextFile = SUPPORTED_TEXT_FORMATS.includes(extname);
   if (isTextFile) {
@@ -24,6 +33,14 @@ export function getFileType(extname) {
   return FILE_TYPE.INVALID;
 }
 
+/**
+ * Gets MIME-type.
+ * @param {string} extname file extension
+ * @returns {string} MIME-type corresponding to file's format
+ * @example
+ * getMimeType('.html') -> 'text/html'
+ * getMimeType('.jpeg') -> 'image/jpeg'
+ */
 export function getMimeType(extname) {
   switch (extname) {
     case ".js":
@@ -51,6 +68,11 @@ export function getMimeType(extname) {
   }
 }
 
+/**
+ * Transforms web url to file path.
+ * @param {string} url request URL (from the website)
+ * @returns {string} file location (inside `build` directory)
+ */
 export function getFilePath(url) {
   const isExtensionSpecified = path.extname(url);
   const addExtension = isExtensionSpecified ? "" : ".html";

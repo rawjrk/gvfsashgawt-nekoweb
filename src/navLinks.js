@@ -1,8 +1,8 @@
 /**
  * @typedef NavLink
  * @type {object}
- * @property {string} href
- * @property {string} text
+ * @property {string} href link's URL
+ * @property {string} text link's title
  */
 
 /**

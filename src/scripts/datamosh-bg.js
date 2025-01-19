@@ -1,3 +1,8 @@
+/**
+ * TBD: planned for refactoring... use class ??
+ * @param {string} imagePath URL of image to be fetched
+ * @returns {Promise<Function>} `datamoshBackground` function
+ */
 async function createDatamoshBackgroundFn(imagePath) {
   const imageBlob = await fetchBlob(imagePath);
   const imageContent = await blobToBase64(imageBlob);
@@ -11,7 +16,7 @@ async function createDatamoshBackgroundFn(imagePath) {
     let randomized = "";
 
     for (let i = 0; i < injectWith_ascii.length; i++) {
-      randomized += getRandomASCII();
+      randomized += randomASCII();
     }
 
     const randomized_base64 = window.btoa(randomized);
@@ -27,6 +32,11 @@ async function createDatamoshBackgroundFn(imagePath) {
   return datamoshBackground;
 }
 
+/**
+ * Transforms blob interface into a string.
+ * @param {Blob} blob image reference
+ * @returns {Promise<string>} image encoded in base64
+ */
 async function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -40,25 +50,41 @@ async function blobToBase64(blob) {
   });
 }
 
+/**
+ * Fetches image and returns it in a form of blob interface.
+ * @param {string} path URL of image to be loaded
+ * @returns {Promise<Blob>} blob interface
+ */
 async function fetchBlob(path) {
   const response = await fetch(`${window.location.origin}/${path}`);
   return response.blob();
 }
 
+/**
+ * Places `injectedStr` inside `orinalStr` at a given `from` position.
+ * String length is retained.
+ * @param {string} originalStr initial value
+ * @param {number} from position to start overriding
+ * @param {string} injectedStr value to override with
+ * @returns {string} modified string
+ * @example
+ * injectString('ABCDEFGH', 2, '__'); // 'AB__EFGH'
+ * injectString('ABCDEFGH', 3, '__'); // 'ABC__FGH'
+ */
 function injectString(originalStr, from, injectedStr) {
   const to = from + injectedStr.length;
 
   const before = originalStr.slice(0, from);
   const after = originalStr.slice(to);
 
-  return before + injectedStr + after;
+  return `${before}${injectedStr}${after}`;
 }
 
-function getRandomASCII() {
-  const charCode = getRandomNumber(256);
+/**
+ * Generates value within ASCII (0 through 255 code) range.
+ * @returns {string} random char
+ */
+function randomASCII() {
+  const charCode = Math.floor(Math.random() * 256);
   return String.fromCharCode(charCode);
-}
-
-function getRandomNumber(max) {
-  return Math.floor(Math.random() * max);
 }
