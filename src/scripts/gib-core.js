@@ -1,12 +1,12 @@
 /**
- * Returns random number within specified range (inclusive boundaries).
- * @param {number} from min possible value
- * @param {number} upto max possible value
- * @returns {number}
+ * Generates number within specified range.
+ * @param {number} min lower boundary (inclusive)
+ * @param {number} max upper boundary (inclusive)
+ * @returns {number} random integer
  */
-function randomRange(from, upto) {
-  const range = from + 1 - upto;
-  return Math.floor(Math.random() * range) + upto;
+function randomRange(min, max) {
+  const range = max + 1 - min;
+  return Math.floor(Math.random() * range) + min;
 }
 
 /**
