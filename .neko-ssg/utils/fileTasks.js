@@ -30,7 +30,6 @@ export async function clearBuildDir() {
  * @returns {Promise<void>}
  */
 export async function symlinkStatics() {
-  await symlinkRelPath("static/favicon.ico", "build/favicon.ico");
   await symlinkRelPath("static", "build/static");
   await symlinkRelPath("src/styles", "build/styles");
   await symlinkRelPath("src/scripts", "build/scripts");

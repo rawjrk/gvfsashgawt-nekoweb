@@ -2,7 +2,7 @@ import http from "node:http";
 import path from "node:path";
 import fsPromises from "node:fs/promises";
 import buildPages from "./utils/buildPages.js";
-import { clearBuildDir, symlinkStatics } from "./utils/fileTasks.js";
+import { clearBuildDir, copyFaviconIco, symlinkStatics } from "./utils/fileTasks.js";
 import { FILE_TYPE, getFilePath, getFileType, getMimeType } from "./utils/serveFiles.js";
 
 const HOST = "localhost";
@@ -64,6 +64,7 @@ server.listen(PORT, HOST, async () => {
   await clearBuildDir();
   await buildPages({ skipMinification: true });
   await symlinkStatics();
+  await copyFaviconIco();
 
   console.log("Completed fresh development build");
   console.log(`Listening at http://${HOST}:${PORT}`);
