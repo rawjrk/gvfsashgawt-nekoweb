@@ -12,7 +12,7 @@ import scanDirectory from "./scanDirectory.js";
 
 /**
  * @typedef CopyOptions
- * @type {import('./fileTasks.js').CopyOptions}
+ * @type {import('./runBuild.js').CopyOptions}
  */
 
 const pagesPath = path.join(appDir, "src/pages");
