@@ -1,8 +1,9 @@
 import path from "node:path";
 import fsPromises from "node:fs/promises";
+import { minify } from "minify";
+import minifyJs from "./minifyJs.js";
 import scanDirectory from "./scanDirectory.js";
 import appDir from "./appDir.js";
-import { minify } from "minify";
 
 /**
  * @typedef Dirent
@@ -92,7 +93,7 @@ export async function copyScripts({ skipMinification = false } = {}) {
 
     let textContent = await fsPromises.readFile(copyFrom, "utf-8");
     if (!skipMinification) {
-      textContent = await minify.js(textContent);
+      textContent = minifyJs(textContent);
     }
 
     const destParentDir = copyTo.slice(0, dirent.name.length * -1);
