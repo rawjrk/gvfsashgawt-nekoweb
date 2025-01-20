@@ -1,8 +1,7 @@
 import http from "node:http";
 import path from "node:path";
 import fsPromises from "node:fs/promises";
-import buildPages from "./utils/buildPages.js";
-import { clearBuildDir, copyFaviconIco, symlinkStatics } from "./utils/fileTasks.js";
+import runBuild from "./utils/runBuild.js";
 import {
   checkNotFoundPageExists,
   FILE_TYPE,
@@ -11,6 +10,10 @@ import {
   getMimeType,
   getNotFoundPageHtml,
 } from "./utils/serveFiles.js";
+
+const cliArguments = process.argv.slice(2);
+const skipMinification = cliArguments.includes("--skip-minify");
+const skipBuild = cliArguments.includes("--skip-build");
 
 const HOST = "localhost";
 const PORT = 4200;
@@ -76,17 +79,17 @@ server.on("error", (req, res) => {
 });
 
 server.listen(PORT, HOST, async () => {
-  await clearBuildDir();
-  await buildPages({ skipMinification: true });
-  await symlinkStatics();
-  await copyFaviconIco();
+  if (!skipBuild) {
+    await runBuild({ skipMinification });
+  } else {
+    console.log("Skipping fresh build (using existing)");
+  }
 
   isNotFoundPageExists = await checkNotFoundPageExists();
   if (!isNotFoundPageExists) {
     console.warn("Missing /not_found page");
   }
 
-  console.log("Completed fresh development build");
   console.log(`Listening at http://${HOST}:${PORT}`);
 });
 

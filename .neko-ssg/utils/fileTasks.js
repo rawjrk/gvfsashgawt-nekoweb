@@ -11,9 +11,7 @@ import { minify } from "minify";
 
 /**
  * @typedef CopyOptions
- * @type {object}
- * @property {boolean} skipMinification specifies whether to skip minification step
- * while coppying file's content, defaults to `false`
+ * @type {import('./runBuild.js').CopyOptions}
  */
 
 /**
@@ -23,29 +21,6 @@ import { minify } from "minify";
 export async function clearBuildDir() {
   const buildPath = path.join(appDir, "build");
   await fsPromises.rm(buildPath, { recursive: true, force: true });
-}
-
-/**
- * Creates symbolic links for: `static`, `src/scripts`, and `src/styles` inside `build` directory.
- * @returns {Promise<void>}
- */
-export async function symlinkStatics() {
-  await symlinkRelPath("static", "build/static");
-  await symlinkRelPath("src/styles", "build/styles");
-  await symlinkRelPath("src/scripts", "build/scripts");
-}
-
-/**
- * Gets absolute path for `fromRel`, `toRel` and creates symbolic link.
- * @param {string} fromRel relative to `appDir`
- * @param {string} toRel relative to `appDir`
- * @returns {Promise<void>}
- */
-async function symlinkRelPath(fromRel, toRel) {
-  const copyFromPath = path.join(appDir, fromRel);
-  const copyToPath = path.join(appDir, toRel);
-
-  await fsPromises.symlink(copyFromPath, copyToPath, "junction");
 }
 
 /**
