@@ -1,8 +1,9 @@
 window.onload = async () => {
   const imageUrl = "static/images/apple-tree-color-256px.jpeg";
 
-  const datamoshedJpeg = new DatamoshedJpeg(imageUrl, [460, 500]);
-  await datamoshedJpeg.fetchImage();
+  const datamoshedJpeg = new DatamoshedJpeg();
+  await datamoshedJpeg.fetchImage(imageUrl);
+  datamoshedJpeg.setDatamoshRange(115, 125);
 
   const datamoshBackground = () => {
     const content = datamoshedJpeg.generateMoshedBase64();

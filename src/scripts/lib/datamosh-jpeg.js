@@ -1,26 +1,33 @@
 /** Class representing interface to load an image and generate its datamoshed version. */
 class DatamoshedJpeg {
-  _imageUrl;
-  _imageData_base64;
-  _datamoshRange; // TODO: very unclear and crypting, need to specify range based on bits position
+  _imageBase64;
+  _datamoshChunks; // 1 chunk = 4 chars (base64) = 3 raw bytes
+
+  /** Creates an instance for JPEG image datamosh. */
+  constructor() {}
 
   /**
-   * Creates
-   * @param {string} imageUrl fetch location
-   * @param {[number, number]} datamoshRange position [from, to] at which values are randomized
+   * Fetches image from previously specified URL, and saves its content as Base64 string.
+   * @param {string} imageUrl
+   * @returns {Promise<void>}
    */
-  constructor(imageUrl, datamoshRange = [0, 0]) {
-    this._imageUrl = imageUrl;
-    this._datamoshRange = datamoshRange;
+  async fetchImage(imageUrl) {
+    const imageBlob = await fetchBlob(imageUrl);
+    this._imageBase64 = await blobToBase64(imageBlob);
   }
 
   /**
-   * Fetches image from specified URL, and saves its content as Base64 string.
-   * @returns {Promise<void>}
+   * Sets range of positions when image values are randomized.
+   * Each chunk represents 3 bytes (chars) when decoded.
+   * Which corresponds to 4 chars sequence after encoded in base64.
+   * @param {number} fromChunk starting position
+   * @param {number} toChunk ending position
    */
-  async fetchImage() {
-    const imageBlob = await fetchBlob(this._imageUrl);
-    this._imageData_base64 = await blobToBase64(imageBlob);
+  setDatamoshRange(fromChunk, toChunk) {
+    if (!fromChunk || !toChunk) {
+      return;
+    }
+    this._datamoshChunks = [fromChunk, toChunk];
   }
 
   /**
@@ -28,19 +35,17 @@ class DatamoshedJpeg {
    * @returns {string} Base64 string
    */
   generateMoshedBase64() {
-    const [injectFrom, injectTo] = this._datamoshRange;
+    const [fromChunk, toChunk] = this._datamoshChunks;
 
-    // TODO: get rid of unnecessary coersions between ASCII and Base64 encodings.
-    const injectWith_ascii = window.atob(this._imageData_base64.slice(injectFrom, injectTo));
+    const injectedAsciiLength = (toChunk - fromChunk) * 3;
+    let randomizedAscii = "";
 
-    let randomized_ascii = "";
-
-    for (let i = 0; i < injectWith_ascii.length; i++) {
-      randomized_ascii += randomASCII();
+    for (let i = 0; i < injectedAsciiLength; i++) {
+      randomizedAscii += randomASCII();
     }
 
-    const randomized_base64 = window.btoa(randomized_ascii);
-    return injectString(this._imageData_base64, injectFrom, randomized_base64);
+    const randomizedBase64 = window.btoa(randomizedAscii);
+    return injectString(this._imageBase64, fromChunk * 4, randomizedBase64);
   }
 }
 
@@ -57,7 +62,7 @@ async function blobToBase64(blob) {
       const [, bareContent] = contentWithDataPrefix.split(",");
       resolve(bareContent);
     };
-    reader.onerror = (error) => console.error(error);
+    reader.onerror = (error) => reject(error);
     reader.readAsDataURL(blob);
   });
 }
