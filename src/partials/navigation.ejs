@@ -1,12 +1,10 @@
-<nav>
-  <span class="uppercase">
-    go <% navigation.forEach((link, index) => { %>
-    <% if (index === 0) { %>
-    >>
-    <% } else { %>
-    ||
-    <% } %>
-    <a class="gib-link" href="<%= link.href %>"><%= link.text %></a>
-    <% }) %>
-  </span>
+<nav class="uppercase">
+  go <% navigation.forEach((link, index) => { %>
+  <% if (index === 0) { %>
+  >>
+  <% } else { %>
+  ||
+  <% } %>
+  <a class="gib-link" href="<%= link.href %>"><%= link.text %></a>
+  <% }) %>
 </nav>
