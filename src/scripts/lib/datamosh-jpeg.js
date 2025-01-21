@@ -7,12 +7,21 @@ class DatamoshedJpeg {
   constructor() {}
 
   /**
-   * Fetches image from previously specified URL, and saves its content as Base64 string.
+   * Fetches file content from `imageUrl`, and saves its content as Base64 string.
    * @param {string} imageUrl
    * @returns {Promise<void>}
    */
   async fetchImage(imageUrl) {
     const imageBlob = await fetchBlob(imageUrl);
+    await this.loadFromBlob(imageBlob);
+  }
+
+  /**
+   * Loads file content from `imageBlob`, and saves its content as Base64 string.
+   * @param {Blob} imageBlob
+   * @returns {Promise<void>}
+   */
+  async loadFromBlob(imageBlob) {
     this._imageBase64 = await blobToBase64(imageBlob);
   }
 
