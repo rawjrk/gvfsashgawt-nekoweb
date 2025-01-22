@@ -11,6 +11,9 @@ body {
 
 body {
   font-family: "VT323", monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+
   background-color: blue;
   background-image: url("/static/images/apple-tree-mosh-256px.jpeg");
   color: white;
@@ -40,6 +43,7 @@ button {
   text-align: center;
   background-color: black;
   padding: 1rem;
+  border: none;
   margin: 1rem;
 }
 
@@ -50,13 +54,6 @@ p {
 h1 {
   font-size: 2rem;
   font-weight: 400;
-}
-
-p,
-main,
-nav {
-  font-size: 1.5rem;
-  font-weight: 500;
 }
 
 h1,
