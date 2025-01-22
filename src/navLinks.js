@@ -10,7 +10,7 @@
  */
 const navLinks = [
   { href: "/", text: "home" },
-  { href: "/gallery", text: "gallery" },
+  { href: "/gallery", text: "gall" },
   { href: "/about", text: "about" },
 ];
 
