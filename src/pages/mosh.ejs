@@ -7,11 +7,63 @@
   </head>
 
   <body>
-    <!-- <aside></aside> -->
+    <menu>
+      <section id="menu-inputs-container">
+        <div>
+          <p>datamoshed chunks(*)</p>
 
-    <form class="file-picker">
-      <input type="file" accept=".jpg, .jpeg" />
-    </form>
+          <input id="from" type="range" step="1" value="0" min="0" max="1" />
+          <label for="from">from : <span id="from-value">X</span></label>
+
+          <br />
+
+          <input id="to" type="range" step="1" value="5" min="2" max="5" />
+          <label for="to">to : <span id="to-value">X</span></label>
+
+          <!-- 
+            min/max validation:
+
+            from.min = 0
+            from.max = to.value - 1
+
+            to.min = from.value + 1
+            to.max = file.size (chunks)
+        --></div>
+
+        <label for="tile-mode">tile mode</label>
+        <select id="tile-mode">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+
+        <div>
+          <input id="animated" type="checkbox" checked />
+          <label for="animated">animated</label>
+        </div>
+
+        <label for="image-picker">source image (.jpeg only!)</label>
+        <div>
+          <form><input id="image-picker" type="file" accept=".jpg, .jpeg" /></form>
+        </div>
+
+        <div>
+          <p>tips</p>
+          <p>* press "H" or "Esc" to hide menu</p>
+          <p>* datamoshed chunks sets range</p>
+          <p>\ where values are randomized</p>
+          <p>* each chunk = 3 bytes</p>
+        </div>
+      </section>
+
+      <nav>
+        navigate
+        <!-- nav links -->
+        <% navigation.forEach((link) => { %>
+        <a href="<%= link.href %>"><%= link.text %></a>
+        <% }) %>
+      </nav>
+    </menu>
 
     <script src="/scripts/lib/datamosh-jpeg.js"></script>
     <script src="/scripts/pages/mosh.js"></script>
