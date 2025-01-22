@@ -7,4 +7,4 @@ export const metadata = {
   ...sharedMetadata,
 };
 
-export const navigation = navLinks.filter((l) => l.text !== "gallery");
+export const navigation = navLinks.filter((l) => l.text !== "gall");
