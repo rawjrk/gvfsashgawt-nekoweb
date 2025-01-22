@@ -1,0 +1,67 @@
+html,
+body {
+  margin: 0;
+  box-sizing: border-box;
+  cursor: url("/static/cursor.png"), auto;
+}
+
+body {
+  font-family: "VT323", monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  background-color: white;
+  color: black;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+}
+
+.hidden {
+  display: none;
+}
+
+form {
+  height: 3rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+form:hover ::file-selector-button {
+  border-color: lightskyblue;
+  background-color: white;
+  color: lightskyblue;
+}
+
+form:active ::file-selector-button {
+  border-color: lightskyblue;
+  background-color: lightskyblue;
+  color: white;
+}
+
+input[type="file"],
+::file-selector-button {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+input[type="file"],
+::file-selector-button {
+  text-transform: lowercase;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+::file-selector-button {
+  margin: 0.75rem;
+  border: 2px solid black;
+  background-color: white;
+}
