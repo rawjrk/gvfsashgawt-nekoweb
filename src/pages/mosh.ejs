@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('/partials/head', { title }) %>
+    <link rel="stylesheet" href="/styles/pages/mosh.css" />
+    <%- include('/partials/metadata', { metadata }) %>
+  </head>
+
+  <body>
+    <!-- <aside></aside> -->
+
+    <form class="file-picker">
+      <input type="file" accept=".jpg, .jpeg" />
+    </form>
+
+    <script src="/scripts/lib/datamosh-jpeg.js"></script>
+    <script src="/scripts/pages/mosh.js"></script>
+  </body>
+</html>
