@@ -12,10 +12,11 @@
     <main>
       <p>
         Oops! Sorry, but the page you have requested contains complete
+        <!-- navigation links -->
+        <% navigation.forEach((link) => { %>
         <span class="gib-fill"></span>
-        <a class="gib-link" id="gallery" href="/gallery">gallery</a>
-        <span class="gib-fill"></span>
-        <a class="gib-link" id="about" href="/about">about</a>
+        <a class="gib-link" href="<%= link.href %>"><%= link.text %></a>
+        <% }) %>
         <span class="gib-fill"></span>.
       </p>
     </main>
