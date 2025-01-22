@@ -13,11 +13,12 @@ import {
 
 const cliArguments = process.argv.slice(2);
 const skipMinification = cliArguments.includes("--skip-minify");
-const skipBuild = cliArguments.includes("--skip-build");
+const skipBuild = cliArguments.includes("--skip-build"); // TODO: replace with --dev, --prod flag
 
 const HOST = "localhost";
 const PORT = 4200;
 
+// TODO: try HTTP/2 server
 const server = http.createServer();
 let isNotFoundPageExists = false;
 
@@ -27,7 +28,7 @@ server.on("request", async (req, res) => {
 
   if (req.method !== "GET") {
     res.statusCode = 405;
-    res.end();
+    res.end("Method Not Allowed"); // TODO: add message 405/Method Not Allowed
     return;
   }
 
@@ -69,13 +70,18 @@ server.on("request", async (req, res) => {
       res.end("Not Found");
       return;
     }
-    throw err;
+
+    console.error(err);
+    res.statusCode = 500;
+    res.end("Internal Server Error");
+    // TODO: replace with response 500/Internal Server Error
+    // throw err;
   }
 });
 
-server.on("error", (req, res) => {
-  res.statusCode = 500;
-  res.end("Internal Server Error");
+server.on("error", (err) => {
+  // TODO: replace callback with loggin error (server failed to init)
+  console.error(err);
 });
 
 server.listen(PORT, HOST, async () => {

@@ -112,12 +112,12 @@ export async function copyScripts({ skipMinification = false } = {}) {
  * @returns {[string, string]} absolute paths (`copyFrom` and `copyTo`)
  * @example
  * generateCopyPath(
- *   { parenthPath: '/home/user/project/src/folders/inside', name: 'file.js' },
- *   '/home/user/project/src',
- *   '/home/user/project/build',
+ *   { parenthPath: '~/project/src/folders/inside', name: 'file.js' },
+ *   '~/project/src',
+ *   '~/project/build',
  * ) -> [
- *    '/home/user/project/src/folders/inside/file.js',
- *    '/home/user/project/build/folders/inside/file.js',
+ *    '~/project/src/folders/inside/file.js',
+ *    '~/project/build/folders/inside/file.js',
  * ]
  */
 function generateCopyPath(dirent, srcPath, destPath) {
