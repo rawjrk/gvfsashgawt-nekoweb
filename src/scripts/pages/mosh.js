@@ -1,28 +1,13 @@
 // TODO: read query param `?url={imageUrl}` -> fetch image for datamosh if present
 
 const imagePicker = document.getElementById("image-picker");
-const pickerContainer = document.getElementById("picker-container");
 
 const datamoshedJpeg = new DatamoshedJpeg();
 
-// TODO: configuration
-/**
- *
- * from/to: number inputs (+/-)
- *
- * chunks: range input [-----]
- *
- * change: file input <choose>
- *
- * tile mode: dropdown .control props:
- *   background-repeat (repeat/no-repeate)
- *   background-size (contain/cover/[n]%/[x]px [y]px)
- *
- * animated: checkbox [x]
- *
- * goto: navigation links
- *
- */
+// TODO: hide <menu> by pressing "H" or "Esc"
+
+// TODO: implement configuration via form inputs
+
 imagePicker.onchange = async (event) => {
   const file = event.target.files[0];
   await datamoshedJpeg.loadFromBlob(file);
@@ -38,7 +23,6 @@ imagePicker.onchange = async (event) => {
     document.body.style.background = imageData;
   };
 
-  pickerContainer.classList.add("hidden");
   datamoshBackground();
   // document.body.onclick = datamoshBackground;
   setInterval(datamoshBackground, 90);

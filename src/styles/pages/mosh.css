@@ -1,3 +1,8 @@
+:root {
+  --pink: #e100bd;
+  --margin: 2rem;
+}
+
 html,
 body {
   margin: 0;
@@ -9,9 +14,6 @@ body {
   font-family: "VT323", monospace;
   font-size: 1.5rem;
   font-weight: 500;
-
-  background-color: white;
-  color: black;
 
   display: flex;
   flex-direction: column;
@@ -25,6 +27,33 @@ body {
   display: none;
 }
 
+menu {
+  position: absolute;
+  right: 0;
+
+  padding: 0;
+  height: 100vh;
+
+  background-color: black;
+  color: white;
+}
+
+#menu-inputs-container {
+  display: flex;
+  flex-direction: column;
+  margin: var(--margin);
+}
+
+#menu-inputs-container > label {
+  margin-bottom: 0.5rem;
+}
+
+#menu-inputs-container > input,
+#menu-inputs-container > select,
+#menu-inputs-container > div {
+  margin-bottom: 1rem;
+}
+
 form {
   height: 3rem;
   display: flex;
@@ -34,14 +63,12 @@ form {
 }
 
 form:hover ::file-selector-button {
-  border-color: lightskyblue;
-  background-color: white;
-  color: lightskyblue;
+  background-color: yellow;
+  color: black;
 }
 
 form:active ::file-selector-button {
-  border-color: lightskyblue;
-  background-color: lightskyblue;
+  background-color: blue;
   color: white;
 }
 
@@ -54,14 +81,39 @@ input[type="file"],
 input[type="file"],
 ::file-selector-button {
   text-transform: lowercase;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
+  padding: 0.25rem 0.75rem;
 }
 
 ::file-selector-button {
   margin: 0.75rem;
-  border: 2px solid black;
+  border: none;
   background-color: white;
+}
+
+p {
+  margin: 0;
+}
+
+nav {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  margin-left: var(--margin);
+  margin-bottom: var(--margin);
+}
+
+a {
+  text-decoration: none;
+  color: var(--pink);
+}
+a:hover {
+  color: black;
+  background-color: var(--pink);
+  transform: scale(1.1);
+  padding-left: 0.5rem;
+}
+a:active {
+  color: white;
+  background-color: blue;
 }
