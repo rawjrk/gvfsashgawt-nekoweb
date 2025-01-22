@@ -4,6 +4,8 @@
  * @returns {string} comressed code
  */
 export default function minifyJs(code) {
+  // TODO: add variables shortening
+
   let isInlineComment = false;
   let isMultilineComment = false;
   let isTabulation = true;
@@ -15,6 +17,7 @@ export default function minifyJs(code) {
 
     if (isMultilineComment && char === "*") {
       const nextChar = code[i + 1];
+
       if (nextChar === "/") {
         i++;
         isTabulation = false;
@@ -33,6 +36,7 @@ export default function minifyJs(code) {
         continue;
       }
       if (nextChar === "*") {
+        isTabulation = false;
         isMultilineComment = true;
         i++;
         continue;
