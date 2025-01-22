@@ -27,6 +27,11 @@ body {
   display: none;
 }
 
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
 menu {
   position: absolute;
   right: 0;
@@ -72,10 +77,19 @@ form:active ::file-selector-button {
   color: white;
 }
 
+select,
 input[type="file"],
 ::file-selector-button {
   font-family: inherit;
   font-size: inherit;
+  font-weight: inherit;
+  padding: 0.2rem 0.5rem;
+}
+
+input[type="checkbox"] {
+  height: 1.2rem;
+  width: 1.2rem;
+  margin-right: 0.5rem;
 }
 
 input[type="file"],
