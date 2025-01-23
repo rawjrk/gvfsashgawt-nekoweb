@@ -30,16 +30,21 @@
             to.max = file.size (chunks)
         --></div>
 
-        <label for="tile-mode">tile mode</label>
-        <select id="tile-mode">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-        </select>
-
         <div class="row">
-          <input id="animated" type="checkbox" checked />
-          <label for="animated">animated</label>
+          <input id="animate" type="checkbox" checked />
+          <label for="animate">&nbsp;animate</label>
+        </div>
+
+        <label for="tile-mode">tile mode</label>
+        <div>
+          <input name="tile-mode" id="tile-mode-1" type="radio" checked />
+          <label for="tile-mode-1">&nbsp;one</label>&nbsp;
+
+          <input name="tile-mode" id="tile-mode-2" type="radio" />
+          <label for="tile-mode-2">&nbsp;two</label>&nbsp;
+
+          <input name="tile-mode" id="tile-mode-3" type="radio" />
+          <label for="tile-mode-3">&nbsp;tre</label>
         </div>
 
         <label for="image-picker">source image (.jpeg only!)</label>
