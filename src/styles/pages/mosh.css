@@ -23,6 +23,11 @@ body {
   width: 100vw;
 }
 
+::selection {
+  background-color: blue;
+  color: white;
+}
+
 .hidden {
   display: none;
 }
@@ -101,7 +106,8 @@ input[type="file"],
 ::file-selector-button {
   margin: 0.75rem;
   border: none;
-  background-color: white;
+  background-color: var(--pink);
+  color: white;
 }
 
 p {
@@ -123,7 +129,7 @@ a {
 }
 a:hover {
   color: black;
-  background-color: var(--pink);
+  background-color: yellow;
   transform: scale(1.1);
   padding-left: 0.5rem;
 }
