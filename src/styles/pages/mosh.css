@@ -32,6 +32,16 @@ body {
   display: none;
 }
 
+.highlight {
+  background-color: blue;
+  color: white;
+}
+
+.highlight::selection {
+  background-color: yellow;
+  color: black;
+}
+
 .row {
   display: flex;
   flex-direction: row;
