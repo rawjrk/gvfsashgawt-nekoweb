@@ -91,10 +91,40 @@ input[type="file"],
   padding: 0.2rem 0.5rem;
 }
 
+input[type="checkbox"] + label:before {
+  content: "[ ]";
+  background-color: var(--pink);
+  color: white;
+}
+input[type="checkbox"]:checked + label:before {
+  content: "[x]";
+  background-color: blue;
+  color: white;
+}
+input[type="checkbox"]:hover:not(:checked) + label:before {
+  background-color: yellow;
+  color: black;
+}
 input[type="checkbox"] {
-  height: 1.2rem;
-  width: 1.2rem;
-  margin-right: 0.5rem;
+  display: none;
+}
+
+input[type="radio"] + label:before {
+  content: "[ ]";
+  background-color: white;
+  color: black;
+}
+input[type="radio"]:checked + label:before {
+  content: "[o]";
+  background-color: blue;
+  color: white;
+}
+input[type="radio"]:hover:not(:checked) + label:before {
+  background-color: yellow;
+  color: black;
+}
+input[type="radio"] {
+  display: none;
 }
 
 input[type="file"],
