@@ -15,11 +15,8 @@ body {
   font-size: 1.5rem;
   font-weight: 500;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
+  margin: 0;
+  height: 100vh;
   width: 100vw;
 }
 
@@ -36,7 +33,6 @@ body {
   background-color: blue;
   color: white;
 }
-
 .highlight::selection {
   background-color: yellow;
   color: black;
@@ -45,33 +41,36 @@ body {
 .row {
   display: flex;
   flex-direction: row;
+  align-items: center;
+}
+
+.transparent {
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 menu {
-  position: absolute;
-  right: 0;
-
-  padding: 0;
-  height: 100vh;
+  margin: 0;
+  padding: 2rem;
+  width: calc(100% - 4rem);
+  height: calc(100% - 4rem);
 
   background-color: black;
   color: white;
-}
 
-#menu-inputs-container {
   display: flex;
   flex-direction: column;
-  margin: var(--margin);
 }
 
-#menu-inputs-container > label {
-  margin-bottom: 0.5rem;
+@media screen and (min-width: 420px) {
+  menu {
+    position: absolute;
+    right: 0;
+    max-width: calc(400px - 4rem);
+  }
 }
 
-#menu-inputs-container > input,
-#menu-inputs-container > select,
-#menu-inputs-container > div {
-  margin-bottom: 1rem;
+section {
+  margin: 0.5rem 0;
 }
 
 form {
@@ -92,8 +91,8 @@ form:active ::file-selector-button {
   color: white;
 }
 
-select,
-input[type="file"],
+button,
+input,
 ::file-selector-button {
   font-family: inherit;
   font-size: inherit;
@@ -101,13 +100,62 @@ input[type="file"],
   padding: 0.2rem 0.5rem;
 }
 
+#range-inputs-container > .row {
+  padding-bottom: 0.5rem;
+}
+
+input#from,
+input#to {
+  margin: 0;
+  margin-left: 0.5rem;
+  border: 1px solid black;
+  padding: 0;
+  max-width: 10rem;
+
+  text-align: center;
+  background-color: white;
+  color: black;
+}
+
+label[for="from"],
+label[for="to"] {
+  padding-right: 0.2rem;
+}
+
+button {
+  border: 1px solid black;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--pink);
+  color: white;
+}
+
+input:focus {
+  background-color: blue;
+  color: white;
+}
+
+button:hover {
+  background-color: yellow;
+  color: black;
+}
+
+button:active {
+  background-color: blue;
+  color: white;
+}
+
 input[type="checkbox"] + label:before {
-  content: "[ ]";
+  content: "[N]";
   background-color: var(--pink);
   color: white;
 }
 input[type="checkbox"]:checked + label:before {
-  content: "[x]";
+  content: "[Y]";
   background-color: blue;
   color: white;
 }
@@ -121,11 +169,11 @@ input[type="checkbox"] {
 
 input[type="radio"] + label:before {
   content: "[ ]";
-  background-color: white;
-  color: black;
+  background-color: var(--pink);
+  color: white;
 }
 input[type="radio"]:checked + label:before {
-  content: "[o]";
+  content: "[@]";
   background-color: blue;
   color: white;
 }
@@ -154,15 +202,6 @@ p {
   margin: 0;
 }
 
-nav {
-  position: absolute;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  margin-left: var(--margin);
-  margin-bottom: var(--margin);
-}
-
 a {
   text-decoration: none;
   color: var(--pink);
@@ -171,7 +210,7 @@ a:hover {
   color: black;
   background-color: yellow;
   transform: scale(1.1);
-  padding-left: 0.5rem;
+  padding: 0 0.5rem;
 }
 a:active {
   color: white;

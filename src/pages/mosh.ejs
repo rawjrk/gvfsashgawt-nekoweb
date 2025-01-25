@@ -8,19 +8,27 @@
 
   <body>
     <menu>
-      <section id="menu-inputs-container">
-        <div>
-          <p>datamoshed chunks(*)</p>
+      <section>
+        <!-- TODO:
+          tooltips for explaining (tile modes) -->
 
-          <input id="from" type="range" step="1" value="0" min="0" max="1" />
-          <label for="from">from : <span id="from-value">X</span></label>
+        <p class="row">datamoshed chunks</p>
 
-          <br />
+        <div class="row">
+          <label for="from">&nbsp;* from</label>
+          <input id="from" type="text" value="NN" />
+          <button>[-]</button>
+          <button>[+]</button>
+        </div>
 
-          <input id="to" type="range" step="1" value="5" min="2" max="5" />
-          <label for="to">..to : <span id="to-value">X</span></label>
+        <div class="row">
+          <label for="to">&nbsp;* ..to</label>
+          <input id="to" type="text" value="NN" />
+          <button>[-]</button>
+          <button>[+]</button>
+        </div>
 
-          <!-- 
+        <!-- TODO:
             min/max validation:
 
             from.min = 0
@@ -28,13 +36,15 @@
 
             to.min = from.value + 1
             to.max = file.size (chunks)
-        --></div>
+        -->
+      </section>
 
-        <div class="row">
-          <input id="animate" type="checkbox" checked />
-          <label for="animate">&nbsp;animate</label>
-        </div>
+      <section class="row">
+        <input id="animate" type="checkbox" checked />
+        <label for="animate">&nbsp;animate</label>
+      </section>
 
+      <section>
         <label for="tile-mode">tile mode</label>
         <div>
           <input name="tile-mode" id="tile-mode-1" type="radio" checked />
@@ -46,35 +56,45 @@
           <input name="tile-mode" id="tile-mode-3" type="radio" />
           <label for="tile-mode-3">&nbsp;tre</label>
         </div>
+      </section>
 
+      <section>
         <label for="image-picker">source image (.jpeg only!)</label>
         <div>
           <form><input id="image-picker" type="file" accept=".jpg, .jpeg" /></form>
         </div>
+      </section>
 
-        <div>
-          <p>\ tips \</p>
-          <p>&nbsp;</p>
-          <p>
-            &nbsp;* press <span class="highlight">&nbsp;H&nbsp;</span> or
-            <span class="highlight">&nbsp;Esc&nbsp;</span> to hide menu
-          </p>
-          <p>&nbsp;</p>
-          <p>&nbsp;* datamoshed chunks sets range</p>
-          <p>&nbsp;&nbsp; where values are randomized</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;* each chunk = 3 bytes</p>
-          <p>&nbsp;</p>
-          <p>&nbsp;* don`t use firefox :3</p>
-          <p>&nbsp;&nbsp; it has flickering bug</p>
-        </div>
+      <section>
+        <p>tips</p>
+        <p>&nbsp;* datamoshed chunks sets range</p>
+        <p>&nbsp;\ where values are randomized</p>
+        <p>&nbsp;* each chunk = 3 bytes</p>
+        <p>&nbsp;* don`t use firefox :3</p>
+        <p>&nbsp;\ it has flickering bug</p>
+      </section>
+
+      <section>
+        <p>controls</p>
+        <p>
+          &nbsp;* press <span class="highlight">&nbsp;H&nbsp;</span> or
+          <span class="highlight">&nbsp;Esc&nbsp;</span> to hide menu
+        </p>
+        <!-- TODO:
+          key controls:
+            F (choose file)
+            A (animate)
+            1,2,3 (tile mode)
+            9 / 0 (from)
+            - / + (to)
+        -->
       </section>
 
       <nav>
-        navigate
+        <p>navigate</p>
         <!-- nav links -->
         <% navigation.forEach((link) => { %>
-        <a href="<%= link.href %>"><%= link.text %></a>
+        <p>&nbsp;* <a href="<%= link.href %>"><%= link.text %></a></p>
         <% }) %>
       </nav>
     </menu>
