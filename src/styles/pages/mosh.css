@@ -73,6 +73,10 @@ section {
   margin: 0.5rem 0;
 }
 
+section:has(input[type="file"]) {
+  margin-bottom: 0;
+}
+
 form {
   height: 3rem;
   display: flex;
@@ -185,10 +189,16 @@ input[type="radio"] {
   display: none;
 }
 
+input[type="file"] {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  left: -1rem;
+}
+
 input[type="file"],
 ::file-selector-button {
   text-transform: lowercase;
-  padding: 0.25rem 0.75rem;
 }
 
 ::file-selector-button {
