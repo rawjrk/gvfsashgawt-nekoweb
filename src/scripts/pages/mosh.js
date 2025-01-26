@@ -2,11 +2,11 @@ const menuBar = document.querySelector("menu");
 let isMenuBarHidden = false;
 
 const datamoshedJpeg = new DatamoshedJpeg();
-const imagePicker = document.getElementById("image-picker");
+const filePicker = document.getElementById("file-picker");
 // TODO: implement configuration via form inputs
 // TODO: read query param `?url={imageUrl}` -> fetch image for datamosh if present
 
-imagePicker.onchange = async (event) => {
+filePicker.onchange = async (event) => {
   const file = event.target.files[0];
   await datamoshedJpeg.loadFromBlob(file);
 
