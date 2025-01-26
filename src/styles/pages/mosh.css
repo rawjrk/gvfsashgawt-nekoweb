@@ -108,17 +108,25 @@ input,
   padding-bottom: 0.5rem;
 }
 
-input#from,
-input#to {
+input[type="number"] {
   margin: 0;
-  margin-left: 0.5rem;
   border: 1px solid black;
-  padding: 0;
-  max-width: 10rem;
+  padding: 0 0.5rem;
+  width: 5rem;
 
-  text-align: center;
-  background-color: white;
-  color: black;
+  text-align: right;
+  background-color: black;
+  color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 label[for="from"],
