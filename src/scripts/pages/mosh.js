@@ -1,3 +1,6 @@
+const menuBar = document.querySelector("menu");
+let isMenuBarHidden = false;
+
 const datamoshedJpeg = new DatamoshedJpeg();
 const imagePicker = document.getElementById("image-picker");
 // TODO: implement configuration via form inputs
@@ -19,12 +22,10 @@ imagePicker.onchange = async (event) => {
   };
 
   datamoshBackground();
+  menuBar.classList.add("transparent");
   // document.body.onclick = datamoshBackground;
   setInterval(datamoshBackground, 90);
 };
-
-const menuBar = document.querySelector("menu");
-let isMenuBarHidden = false;
 
 window.onkeydown = (event) => {
   if (event.ctrlKey || event.altKey) {
