@@ -1,19 +1,33 @@
+const datamoshedJpeg = new DatamoshedJpeg();
+
 const menuBar = document.querySelector("menu");
 let isMenuBarHidden = false;
+let controlsDisabled = true;
 
-const datamoshedJpeg = new DatamoshedJpeg();
+const controls = {
+  chunks: new NumericInputRange("from", "to", () => {
+    datamoshedJpeg.setDatamoshRange(...controls.chunks.getRange());
+  }),
+  // TODO: animated
+  // TODO: tileMode
+};
+
 const filePicker = document.getElementById("file-picker");
-// TODO: implement configuration via form inputs
 // TODO: read query param `?url={imageUrl}` -> fetch image for datamosh if present
 
 filePicker.onchange = async (event) => {
   const file = event.target.files[0];
   await datamoshedJpeg.loadFromBlob(file);
 
-  const numberOfChunks = file.size / 3;
-  const moshFrom = 20 + Math.floor(numberOfChunks / 163);
-  const moshTo = 20 + Math.floor(numberOfChunks / 150);
-  datamoshedJpeg.setDatamoshRange(moshFrom, moshTo);
+  const numberOfChunks = Math.floor(file.size / 3);
+  controls.chunks.setRangeMax(numberOfChunks);
+
+  const moshFrom = 115; // TODO: calculate based on file's binary
+  const moshTo = 120; // TODO: calculate based on file's binary
+
+  controls.chunks.setTo(moshTo);
+  controls.chunks.setFrom(moshFrom);
+  enableAllControls();
 
   const datamoshBackground = () => {
     const content = datamoshedJpeg.generateMoshedBase64();
@@ -35,6 +49,16 @@ window.onkeydown = (event) => {
   if (event.code === "KeyH" || event.code === "Escape") {
     toogleMenuBar();
   }
+
+  // TODO: choose file
+
+  if (controlsDisabled) {
+    return;
+  }
+
+  // TODO: from/to
+  // TODO: animated
+  // TODO: tile mode
 };
 
 // TODO: think how to handle on touchscreens
@@ -45,5 +69,17 @@ function toogleMenuBar() {
     menuBar.classList.add("hidden");
   } else {
     menuBar.classList.remove("hidden");
+  }
+}
+
+function enableAllControls() {
+  controlsDisabled = false;
+
+  for (const [name, elem] of Object.entries(controls)) {
+    try {
+      elem.disabled = false;
+    } catch {
+      console.error(`Element "${name}" not found`);
+    }
   }
 }

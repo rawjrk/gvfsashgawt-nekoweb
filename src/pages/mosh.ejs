@@ -17,15 +17,15 @@
         <div class="row">
           <label for="from">&nbsp;* from</label>
           <input id="from" type="number" value="0" min="0" />
-          <button>[-]</button>
-          <button>[+]</button>
+          <button id="decrement-from">[-]</button>
+          <button id="increment-from">[+]</button>
         </div>
 
         <div class="row">
           <label for="to">&nbsp;* ..to</label>
           <input id="to" type="number" value="1" min="0" />
-          <button>[-]</button>
-          <button>[+]</button>
+          <button id="decrement-to">[-]</button>
+          <button id="increment-to">[+]</button>
         </div>
 
         <!-- TODO:
@@ -115,6 +115,7 @@
       </nav>
     </menu>
 
+    <script src="/scripts/lib/controls.js"></script>
     <script src="/scripts/lib/datamosh-jpeg.js"></script>
     <script src="/scripts/pages/mosh.js"></script>
   </body>
