@@ -8,6 +8,10 @@ class NumericInput {
     this._inputElem.onchange = onChange;
   }
 
+  enable() {
+    this._inputElem.disabled = false;
+  }
+
   getValue() {
     return Number(this._inputElem.value);
   }
@@ -23,6 +27,11 @@ class NumericInputRange {
   _toInput;
   _rangeMax = 1;
 
+  _incrementFromBtn;
+  _decrementFromBtn;
+  _incrementToBtn;
+  _decrementToBtn;
+
   constructor(fromId, toId, onChange) {
     this._fromInput = new NumericInput(fromId, (event) => {
       event.target.value = this._validateFrom(event.target.value);
@@ -34,21 +43,24 @@ class NumericInputRange {
       onChange();
     });
 
-    document.getElementById(`increment-${fromId}`).onclick = () => {
-      this.setFrom(this._fromInput.getValue() + 1);
-    };
+    this._incrementFromBtn = document.getElementById(`increment-${fromId}`);
+    this._decrementFromBtn = document.getElementById(`decrement-${fromId}`);
+    this._incrementToBtn = document.getElementById(`increment-${toId}`);
+    this._decrementToBtn = document.getElementById(`decrement-${toId}`);
 
-    document.getElementById(`decrement-${fromId}`).onclick = () => {
-      this.setFrom(this._fromInput.getValue() - 1);
-    };
+    this._incrementFromBtn.onclick = () => this.setFrom(this._fromInput.getValue() + 1);
+    this._decrementFromBtn.onclick = () => this.setFrom(this._fromInput.getValue() - 1);
+    this._incrementToBtn.onclick = () => this.setTo(this._toInput.getValue() + 1);
+    this._decrementToBtn.onclick = () => this.setTo(this._toInput.getValue() - 1);
+  }
 
-    document.getElementById(`increment-${toId}`).onclick = () => {
-      this.setTo(this._toInput.getValue() + 1);
-    };
-
-    document.getElementById(`decrement-${toId}`).onclick = () => {
-      this.setTo(this._toInput.getValue() - 1);
-    };
+  enable() {
+    this._fromInput.enable();
+    this._toInput.enable();
+    this._incrementFromBtn.disabled = false;
+    this._decrementFromBtn.disabled = false;
+    this._incrementToBtn.disabled = false;
+    this._decrementToBtn.disabled = false;
   }
 
   _withinBoundaries(value, min, max) {

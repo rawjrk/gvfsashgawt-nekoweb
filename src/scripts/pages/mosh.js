@@ -2,7 +2,7 @@ const datamoshedJpeg = new DatamoshedJpeg();
 
 const menuBar = document.querySelector("menu");
 let isMenuBarHidden = false;
-let controlsDisabled = true;
+let controlsDisabled = true; // TODO: check if needed at all
 
 const controls = {
   chunks: new NumericInputRange("from", "to", () => {
@@ -74,12 +74,5 @@ function toogleMenuBar() {
 
 function enableAllControls() {
   controlsDisabled = false;
-
-  for (const [name, elem] of Object.entries(controls)) {
-    try {
-      elem.disabled = false;
-    } catch {
-      console.error(`Element "${name}" not found`);
-    }
-  }
+  controls.chunks.enable();
 }

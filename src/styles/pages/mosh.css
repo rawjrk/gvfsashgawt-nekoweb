@@ -1,5 +1,7 @@
 :root {
   --pink: #e100bd;
+  --gray: #222;
+  --light-gray: #888;
   --margin: 2rem;
 }
 
@@ -205,6 +207,18 @@ input[type="radio"]:hover:not(:checked) + label:before {
 }
 input[type="radio"] {
   display: none;
+}
+
+button:disabled,
+input[type="checkbox"]:disabled + label:before,
+input[type="radio"]:disabled + label:before {
+  background-color: var(--gray);
+  color: var(--light-gray);
+}
+
+input[type="number"]:disabled {
+  background-color: black;
+  color: var(--light-gray);
 }
 
 input[type="file"] {
