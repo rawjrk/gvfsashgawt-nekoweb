@@ -81,6 +81,12 @@ section:has(input[type="file"]) {
   margin-bottom: 0;
 }
 
+fieldset {
+  margin: 0;
+  border: none;
+  padding: 0;
+}
+
 form {
   height: 3rem;
   display: flex;

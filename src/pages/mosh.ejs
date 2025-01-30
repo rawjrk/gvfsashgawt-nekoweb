@@ -16,16 +16,16 @@
 
         <div class="row">
           <label for="from">&nbsp;* from</label>
-          <input id="from" type="number" value="0" min="0" />
-          <button id="decrement-from">[-]</button>
-          <button id="increment-from">[+]</button>
+          <input id="from" type="number" value="0" min="0" disabled />
+          <button id="decrement-from" disabled>[-]</button>
+          <button id="increment-from" disabled>[+]</button>
         </div>
 
         <div class="row">
           <label for="to">&nbsp;* ..to</label>
-          <input id="to" type="number" value="1" min="0" />
-          <button id="decrement-to">[-]</button>
-          <button id="increment-to">[+]</button>
+          <input id="to" type="number" value="1" min="0" disabled />
+          <button id="decrement-to" disabled>[-]</button>
+          <button id="increment-to" disabled>[+]</button>
         </div>
 
         <!-- TODO:
@@ -40,13 +40,13 @@
       </section>
 
       <section class="row">
-        <input id="animate" type="checkbox" checked />
-        <label for="animate">&nbsp;animate</label>
+        <input id="animated" type="checkbox" checked disabled />
+        <label for="animated">&nbsp;animated</label>
       </section>
 
       <section>
         <label for="tile-mode">tile mode</label>
-        <div>
+        <fieldset disabled>
           <input name="tile-mode" id="tile-mode-1" type="radio" checked />
           <label for="tile-mode-1">&nbsp;one</label>&nbsp;
 
@@ -55,7 +55,7 @@
 
           <input name="tile-mode" id="tile-mode-3" type="radio" />
           <label for="tile-mode-3">&nbsp;tre</label>
-        </div>
+        </fieldset>
       </section>
 
       <section>
