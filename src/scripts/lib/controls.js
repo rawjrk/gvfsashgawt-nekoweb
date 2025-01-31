@@ -25,6 +25,7 @@ class NumericInput {
 class NumericInputRange {
   _fromInput;
   _toInput;
+  _rangeMin = 0;
   _rangeMax = 1;
 
   _incrementFromBtn;
@@ -73,7 +74,13 @@ class NumericInputRange {
   }
 
   setFrom(value) {
-    const newValue = this._validateFrom(value);
+    const newValue = this._withinBoundaries(value, this._rangeMin, this._rangeMax - 1);
+
+    const currentToValue = this._toInput.getValue();
+    if (newValue >= currentToValue) {
+      this._toInput.setValue(newValue + 1);
+    }
+
     this._fromInput.setValue(newValue);
   }
 
@@ -84,7 +91,13 @@ class NumericInputRange {
   }
 
   setTo(value) {
-    const newValue = this._validateTo(value);
+    const newValue = this._withinBoundaries(value, this._rangeMin + 1, this._rangeMax);
+
+    const currentFromValue = this._fromInput.getValue();
+    if (newValue <= currentFromValue) {
+      this._fromInput.setValue(newValue - 1);
+    }
+
     this._toInput.setValue(newValue);
   }
 
