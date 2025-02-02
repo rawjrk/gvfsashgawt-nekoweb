@@ -7,19 +7,47 @@
   </head>
 
   <body>
-    <%- include('/partials/pageH1') %>
+    <!-- div containers added to fill 3x3 grid -->
 
-    <main>
-      <p>
-        Oops! Sorry, but the page you have requested contains complete
-        <!-- navigation links -->
-        <% navigation.forEach((link) => { %>
-        <span class="gib-fill"></span>
-        <a class="gib-link" href="<%= link.href %>"><%= link.text %></a>
-        <% }) %>
-        <span class="gib-fill"></span>.
-      </p>
-    </main>
+    <!-- row #1 -->
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <!-- row #2  -->
+    <div></div>
+    <svg viewBox="10 0 230 80" xmlns="http://www.w3.org/2000/svg">
+      <mask id="gvfsashgawt">
+        <rect x="10" y="0" width="230" height="80" fill="white" />
+        <path d="M10 0 L30 0 L30 20 L40 20 L40 40 L30 40 L30 60 L40 60 L40 80 L10 80 Z" />
+        <path d="M40 40 L50 40 L50 80 L80 80 L80 60 L40 60 Z" />
+        <path d="M50 0 L80 0 L80 40 L60 40 L60 20 L50 20 Z" />
+        <path d="M90 0 L120 0 L120 20 L110 20 L110 60 L120 60 L120 80 L90 80 Z" />
+        <path d="M130 0 L150 0 L150 40 L130 40 L130 80 L140 80 L140 60 L160 60 L160 20 L130 20 Z" />
+        <path d="M170 0 L190 0 L190 20 L200 20 L200 40 L190 40 L190 60 L170 60 Z" />
+        <path d="M210 0 L230 0 L230 20 L240 20 L240 60 L230 60 L230 40 L220 40 L220 20 L210 20 Z" />
+      </mask>
+      <rect x="10" y="0" width="230" height="80" fill="black" mask="url(#gvfsashgawt)" />
+    </svg>
+    <div></div>
+
+    <!-- row #3 -->
+    <div></div>
+    <div></div>
+    <div></div>
+
+    <nav class="uppercase">
+      <% navigation.forEach((link, index) => { %>
+
+      <!-- separator -->
+      <% if (index > 0) { %>&nbsp;*
+      <% } %>
+
+      <!-- link -->
+      <a class="gib-link" href="<%= link.href %>"><%= link.text %></a>
+
+      <% }) %>
+    </nav>
 
     <%- include('/partials/scripts', { scripts }) %>
   </body>
