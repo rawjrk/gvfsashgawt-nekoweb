@@ -46,7 +46,7 @@ window.onkeydown = (event) => {
     return;
   }
 
-  if (event.code === "KeyH" || event.code === "Escape") {
+  if (event.code === "KeyH") {
     toogleMenuBar();
   }
 
