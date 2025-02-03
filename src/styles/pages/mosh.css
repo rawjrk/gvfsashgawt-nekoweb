@@ -91,10 +91,6 @@ fieldset {
 
 form {
   height: 3rem;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
 }
 
 form:hover ::file-selector-button {
@@ -225,7 +221,7 @@ input[type="file"] {
   margin: 0;
   padding: 0;
   position: relative;
-  left: -1rem;
+  left: -0.7rem;
 }
 
 input[type="file"],
