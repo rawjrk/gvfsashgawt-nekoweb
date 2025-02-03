@@ -16,9 +16,12 @@ class NumericInput {
     return Number(this._inputElem.value);
   }
 
-  setValue(newValue) {
+  setValue(newValue, ignoreDispatch = false) {
     this._inputElem.value = newValue;
-    this._inputElem.dispatchEvent(new Event("change"));
+
+    if (!ignoreDispatch) {
+      this._inputElem.dispatchEvent(new Event("change"));
+    }
   }
 
   isFocused() {
@@ -39,12 +42,12 @@ class NumericInputRange {
 
   constructor(fromId, toId, onChange) {
     this._fromInput = new NumericInput(fromId, (event) => {
-      event.target.value = this._validateFrom(event.target.value);
+      this.setFrom(event.target.value, true);
       onChange(event);
     });
 
     this._toInput = new NumericInput(toId, (event) => {
-      event.target.value = this._validateTo(event.target.value);
+      this.setTo(event.target.value, true);
       onChange(event);
     });
 
@@ -92,37 +95,20 @@ class NumericInputRange {
     return Math.min(Math.max(min, value), max);
   }
 
-  _validateFrom(value) {
-    const max = this._toInput.getValue() - 1;
-    return this._withinBoundaries(value, 0, max);
+  setFrom(value, ignoreDispatch = false) {
+    const from = this._withinBoundaries(value, this._rangeMin, this._rangeMax - 1);
+    const to = Math.max(from + 1, this._toInput.getValue());
+
+    this._fromInput.setValue(from, ignoreDispatch);
+    this._toInput.setValue(to, ignoreDispatch);
   }
 
-  setFrom(value) {
-    const newValue = this._withinBoundaries(value, this._rangeMin, this._rangeMax - 1);
+  setTo(value, ignoreDispatch) {
+    const to = this._withinBoundaries(value, this._rangeMin + 1, this._rangeMax);
+    const from = Math.min(to - 1, this._fromInput.getValue());
 
-    const currentToValue = this._toInput.getValue();
-    if (newValue >= currentToValue) {
-      this._toInput.setValue(newValue + 1);
-    }
-
-    this._fromInput.setValue(newValue);
-  }
-
-  _validateTo(value) {
-    const min = this._fromInput.getValue() + 1;
-    const max = this._rangeMax;
-    return this._withinBoundaries(value, min, max);
-  }
-
-  setTo(value) {
-    const newValue = this._withinBoundaries(value, this._rangeMin + 1, this._rangeMax);
-
-    const currentFromValue = this._fromInput.getValue();
-    if (newValue <= currentFromValue) {
-      this._fromInput.setValue(newValue - 1);
-    }
-
-    this._toInput.setValue(newValue);
+    this._toInput.setValue(to, ignoreDispatch);
+    this._fromInput.setValue(from, ignoreDispatch);
   }
 
   setRangeMax(newValue) {
