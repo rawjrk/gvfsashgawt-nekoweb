@@ -19,7 +19,6 @@ const controls = {
       animation.stop();
     }
   }),
-  // TODO: tileMode
 };
 
 const filePicker = document.getElementById("file-picker");
@@ -106,8 +105,6 @@ window.onkeydown = (event) => {
     case "Equal":
       controls.chunks.incrementTo();
       return;
-
-    // TODO: tile mode
   }
 };
 
