@@ -40,12 +40,12 @@ class NumericInputRange {
   constructor(fromId, toId, onChange) {
     this._fromInput = new NumericInput(fromId, (event) => {
       event.target.value = this._validateFrom(event.target.value);
-      onChange();
+      onChange(event);
     });
 
     this._toInput = new NumericInput(toId, (event) => {
       event.target.value = this._validateTo(event.target.value);
-      onChange();
+      onChange(event);
     });
 
     this._incrementFromBtn = document.getElementById(`increment-${fromId}`);
