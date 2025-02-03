@@ -7,9 +7,10 @@ let isMenuBarHidden = false;
 let controlsDisabled = true; // TODO: check if needed at all
 
 const controls = {
-  chunks: new NumericInputRange("from", "to", () => {
+  chunks: new NumericInputRange("from", "to", (event) => {
     datamoshedJpeg.setDatamoshRange(...controls.chunks.getRange());
     animation.runOnce();
+    event.target.blur();
   }),
   animated: new Checkbox("animated", (event) => {
     if (event.target.checked) {
