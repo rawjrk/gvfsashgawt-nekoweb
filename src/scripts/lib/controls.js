@@ -20,6 +20,10 @@ class NumericInput {
     this._inputElem.value = newValue;
     this._inputElem.dispatchEvent(new Event("change"));
   }
+
+  isFocused() {
+    return document.activeElement === this._inputElem;
+  }
 }
 
 class NumericInputRange {
@@ -78,6 +82,10 @@ class NumericInputRange {
     this._decrementFromBtn.disabled = false;
     this._incrementToBtn.disabled = false;
     this._decrementToBtn.disabled = false;
+  }
+
+  isFocused() {
+    return this._fromInput.isFocused() || this._toInput.isFocused();
   }
 
   _withinBoundaries(value, min, max) {

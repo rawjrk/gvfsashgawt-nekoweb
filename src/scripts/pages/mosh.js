@@ -80,11 +80,16 @@ window.onkeydown = (event) => {
     return;
   }
 
-  switch (event.code) {
-    case "KeyG":
-      animation.runOnce();
-      return;
+  if (event.code === "KeyG") {
+    animation.runOnce();
+    return;
+  }
 
+  if (controls.chunks.isFocused()) {
+    return;
+  }
+
+  switch (event.code) {
     case "Digit9":
       controls.chunks.decrementFrom();
       return;
