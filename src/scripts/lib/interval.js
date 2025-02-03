@@ -4,7 +4,7 @@ class Interval {
   _intervalMs;
   _active;
 
-  constructor({ onIntervalFn = null, intervalMs = 1000, initActive = true }) {
+  constructor({ onIntervalFn = (f) => f, intervalMs = 1000, initActive = true }) {
     this._onIntervalFn = onIntervalFn;
     this._intervalMs = intervalMs;
 
