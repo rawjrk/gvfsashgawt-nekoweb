@@ -49,10 +49,26 @@ class NumericInputRange {
     this._incrementToBtn = document.getElementById(`increment-${toId}`);
     this._decrementToBtn = document.getElementById(`decrement-${toId}`);
 
-    this._incrementFromBtn.onclick = () => this.setFrom(this._fromInput.getValue() + 1);
-    this._decrementFromBtn.onclick = () => this.setFrom(this._fromInput.getValue() - 1);
-    this._incrementToBtn.onclick = () => this.setTo(this._toInput.getValue() + 1);
-    this._decrementToBtn.onclick = () => this.setTo(this._toInput.getValue() - 1);
+    this._incrementFromBtn.onclick = () => this.incrementFrom();
+    this._decrementFromBtn.onclick = () => this.decrementFrom();
+    this._incrementToBtn.onclick = () => this.incrementTo();
+    this._decrementToBtn.onclick = () => this.decrementTo();
+  }
+
+  incrementFrom() {
+    this.setFrom(this._fromInput.getValue() + 1);
+  }
+
+  decrementFrom() {
+    this.setFrom(this._fromInput.getValue() - 1);
+  }
+
+  incrementTo() {
+    this.setTo(this._toInput.getValue() + 1);
+  }
+
+  decrementTo() {
+    this.setTo(this._toInput.getValue() - 1);
   }
 
   enable() {
