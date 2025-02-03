@@ -28,7 +28,7 @@ server.on("request", async (req, res) => {
 
   if (req.method !== "GET") {
     res.statusCode = 405;
-    res.end("Method Not Allowed"); // TODO: add message 405/Method Not Allowed
+    res.end("Method Not Allowed");
     return;
   }
 
@@ -74,13 +74,10 @@ server.on("request", async (req, res) => {
     console.error(err);
     res.statusCode = 500;
     res.end("Internal Server Error");
-    // TODO: replace with response 500/Internal Server Error
-    // throw err;
   }
 });
 
 server.on("error", (err) => {
-  // TODO: replace callback with loggin error (server failed to init)
   console.error(err);
 });
 
