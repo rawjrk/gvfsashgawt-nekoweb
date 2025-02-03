@@ -125,3 +125,29 @@ class NumericInputRange {
     return [this._fromInput.getValue(), this._toInput.getValue()];
   }
 }
+
+class Checkbox {
+  _inputElem;
+
+  constructor(elemId, onChange) {
+    this._inputElem = document.getElementById(elemId);
+    this._inputElem.onchange = onChange;
+  }
+
+  enable() {
+    this._inputElem.disabled = false;
+  }
+
+  getValue() {
+    return this._inputElem.checked;
+  }
+
+  setValue(newValue) {
+    this._inputElem.checked = newValue;
+    this._inputElem.dispatchEvent(new Event("change"));
+  }
+
+  toggle() {
+    this.setValue(!this.getValue());
+  }
+}

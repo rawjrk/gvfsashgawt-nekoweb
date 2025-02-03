@@ -1,5 +1,7 @@
 const datamoshedJpeg = new DatamoshedJpeg();
+const animation = new Interval({ intervalMs: 90, initActive: true });
 
+const docBody = document.querySelector("body");
 const menuBar = document.querySelector("menu");
 let isMenuBarHidden = false;
 let controlsDisabled = true; // TODO: check if needed at all
@@ -8,7 +10,13 @@ const controls = {
   chunks: new NumericInputRange("from", "to", () => {
     datamoshedJpeg.setDatamoshRange(...controls.chunks.getRange());
   }),
-  // TODO: animated
+  animated: new Checkbox("animated", (event) => {
+    if (event.target.checked) {
+      animation.run();
+    } else {
+      animation.stop();
+    }
+  }),
   // TODO: tileMode
 };
 
@@ -37,8 +45,15 @@ filePicker.onchange = async (event) => {
 
   datamoshBackground();
   menuBar.classList.add("transparent");
-  // document.body.onclick = datamoshBackground;
-  setInterval(datamoshBackground, 90);
+  animation.setOnIntervalFn(datamoshBackground);
+};
+
+window.onclick = (event) => {
+  if (controlsDisabled || event.target !== docBody) {
+    return;
+  }
+
+  animation.runOnce();
 };
 
 window.onkeydown = (event) => {
@@ -46,23 +61,51 @@ window.onkeydown = (event) => {
     return;
   }
 
-  if (event.code === "KeyH") {
-    toogleMenuBar();
-  }
+  switch (event.code) {
+    case "KeyH":
+      toggleMenuBar();
+      return;
 
-  // TODO: choose file
+    case "KeyF":
+      filePicker.click();
+      return;
+
+    case "KeyA":
+      controls.animated.toggle();
+      return;
+  }
 
   if (controlsDisabled) {
     return;
   }
 
-  // TODO: from/to
-  // TODO: animated
-  // TODO: tile mode
+  switch (event.code) {
+    case "KeyG":
+      animation.runOnce();
+      return;
+
+    case "Digit9":
+      controls.chunks.decrementFrom();
+      return;
+
+    case "Digit0":
+      controls.chunks.incrementFrom();
+      return;
+
+    case "Minus":
+      controls.chunks.decrementTo();
+      return;
+
+    case "Equal":
+      controls.chunks.incrementTo();
+      return;
+
+    // TODO: tile mode
+  }
 };
 
 // TODO: think how to handle on touchscreens
-function toogleMenuBar() {
+function toggleMenuBar() {
   isMenuBarHidden = !isMenuBarHidden;
 
   if (isMenuBarHidden) {
@@ -74,5 +117,12 @@ function toogleMenuBar() {
 
 function enableAllControls() {
   controlsDisabled = false;
-  controls.chunks.enable();
+
+  for (const [key, elem] of Object.entries(controls)) {
+    if (elem) {
+      elem.enable();
+    } else {
+      console.error(`Missing "${key}" element`);
+    }
+  }
 }
