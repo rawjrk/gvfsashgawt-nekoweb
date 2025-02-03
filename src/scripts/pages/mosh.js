@@ -9,6 +9,7 @@ let controlsDisabled = true; // TODO: check if needed at all
 const controls = {
   chunks: new NumericInputRange("from", "to", () => {
     datamoshedJpeg.setDatamoshRange(...controls.chunks.getRange());
+    animation.runOnce();
   }),
   animated: new Checkbox("animated", (event) => {
     if (event.target.checked) {
