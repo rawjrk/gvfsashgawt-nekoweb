@@ -1,10 +1,30 @@
+/**
+ * @typedef DatamoshedJpeg
+ * @type {import ('../lib/datamosh-jpeg.js').DatamoshedJpeg}
+ */
+
+/**
+ * @typedef Interval
+ * @type {import ('../lib/interval.js').Interval}
+ */
+
+/**
+ * @typedef NumericInputRange
+ * @type {import ('../lib/controls.js').NumericInputRange}
+ */
+
+/**
+ * @typedef Checkbox
+ * @type {import ('../lib/controls.js').Checkbox}
+ */
+
 const datamoshedJpeg = new DatamoshedJpeg();
 const animation = new Interval({ intervalMs: 90, initActive: true });
 
 const docBody = document.querySelector("body");
 const menuBar = document.querySelector("menu");
 let isMenuBarHidden = false;
-let controlsDisabled = true; // TODO: check if needed at all
+let controlsDisabled = true;
 
 const controls = {
   chunks: new NumericInputRange("from", "to", (event) => {
@@ -108,8 +128,13 @@ window.onkeydown = (event) => {
   }
 };
 
-// TODO: think how to handle on touchscreens
+/**
+ * Switches `<menu>` element visibility.
+ * @returns {void}
+ */
 function toggleMenuBar() {
+  // TODO: think how to handle on touchscreens
+
   isMenuBarHidden = !isMenuBarHidden;
 
   if (isMenuBarHidden) {
@@ -119,6 +144,10 @@ function toggleMenuBar() {
   }
 }
 
+/**
+ * Marking controles prop disabled as false.
+ * @returns {void}
+ */
 function enableAllControls() {
   controlsDisabled = false;
 
