@@ -8,7 +8,7 @@ class DatamoshedJpeg {
 
   /**
    * Fetches file content from `imageUrl`, and saves its content as Base64 string.
-   * @param {string} imageUrl
+   * @param {string} imageUrl web location
    * @returns {Promise<void>}
    */
   async fetchImage(imageUrl) {
@@ -18,7 +18,7 @@ class DatamoshedJpeg {
 
   /**
    * Loads file content from `imageBlob`, and saves its content as Base64 string.
-   * @param {Blob} imageBlob
+   * @param {Blob} imageBlob file interface
    * @returns {Promise<void>}
    */
   async loadFromBlob(imageBlob) {
