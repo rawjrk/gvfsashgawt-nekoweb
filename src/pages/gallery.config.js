@@ -1,7 +1,7 @@
 import { HOST_URL } from "../sharedMetadata.js";
 import navLinks from "../navLinks.js";
 
-export const title = "R.A.W's Gallery";
+export const title = "GVFSASHGAWT's GALLERY";
 
 export const metadata = {
   "og:title": title,
