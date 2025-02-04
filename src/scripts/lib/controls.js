@@ -29,11 +29,11 @@ class NumericInput {
 
   /**
    * Changes input value. Dispatches the change event by default.
-   * @param {number} newValue value to be set
+   * @param {number} value new value to be set
    * @param {boolean} ignoreDispatch allows to skip event dispatch
    */
-  setValue(newValue, ignoreDispatch = false) {
-    this._inputElem.value = newValue;
+  setValue(value, ignoreDispatch = false) {
+    this._inputElem.value = value;
 
     if (!ignoreDispatch) {
       this._inputElem.dispatchEvent(new Event("change"));
@@ -152,7 +152,7 @@ class NumericInputRange {
   /**
    * Changes input value of "from" input (overrides "to" if overlappin).
    * Dispatches the change event by default.
-   * @param {number} value value to be set
+   * @param {number} value new value to be set
    * @param {boolean} ignoreDispatch allows to skip event dispatch
    */
   setFrom(value, ignoreDispatch = false) {
@@ -166,7 +166,7 @@ class NumericInputRange {
   /**
    * Changes input value of "to" input (overrides "from" if overlappin).
    * Dispatches the change event by default.
-   * @param {number} value value to be set
+   * @param {number} value new value to be set
    * @param {boolean} ignoreDispatch allows to skip event dispatch
    */
   setTo(value, ignoreDispatch) {
@@ -179,10 +179,10 @@ class NumericInputRange {
 
   /**
    * Sets an upper boundary of the range.
-   * @param {number} newValue value to be set
+   * @param {number} value new value to be set
    */
-  setRangeMax(newValue) {
-    this._rangeMax = newValue;
+  setRangeMax(value) {
+    this._rangeMax = value;
   }
 
   /**
@@ -225,10 +225,10 @@ class Checkbox {
 
   /**
    * Changes input value (checked). Dispatches the change event.
-   * @param {boolean} newValue value to be set
+   * @param {boolean} value new value to be set
    */
-  setValue(newValue) {
-    this._inputElem.checked = newValue;
+  setValue(value) {
+    this._inputElem.checked = value;
     this._inputElem.dispatchEvent(new Event("change"));
   }
 
