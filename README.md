@@ -73,9 +73,18 @@ Development server handles requests this way:
 
 > \* _404 resolved to `build/not_found.html` (if exists)_
 
-### site deployment
+## commands
 
-Find more at [deploy2nekoweb](https://deploy.nekoweb.org/).
+- `yarn build` -- run build from source
+- `yarn clear` -- clears build folder
+- `yarn start` -- run local server with existing build
+- `yarn dev` -- run development server (overrides previous build)
+
+## deployment
+
+Run build, pack `build` folder into `.zip` file and use `Import [ZIP]` option from Dashboard on Nekoweb.
+
+Find more at [deploy2nekoweb](https://deploy.nekoweb.org/) to automate this process.
 
 ### site configuration
 
