@@ -8,6 +8,14 @@
 
 Built using custom `neko-ssg` bundler.
 
+## destroy data, not people
+
+Webtooling for creating animated glitch from static images.
+
+- available at: [`/mosh`](https://gvfsashgawt.nekoweb.org/mosh)
+- promo video: [`/demo`](https://youtu.be/oIumCl0mnGw)
+- introduction: [`/manual`](doc/MOSH_MANUAL.md)
+
 ## core technologies
 
 - [EJS](https://ejs.co/) — HTML templating
