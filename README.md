@@ -8,24 +8,6 @@
 
 Built using custom `neko-ssg` bundler.
 
-## but why? O-o
-
-_Because zere're no thero-cost abstractions._
-
-<details>
-
-  <summary>
-    <b>INCOHERENT RANT ABOUT FRAMEWORKS</b>
-  </summary>
-
-Every framework is designed to get rid of some routine steps. It is simple to start a development, but it also constraints your end results. And it's not what I want for an artistic project like this.
-
-Besides, I have already built this website with plain HTML/CSS/JS. And it was so much fun!! Although, main drawbacks of this approach are: 1 - that it's hard to structure JS code this way, and 2 - that I also needed to duplicate some HTML elements across different pages (which is pain in the ass to support).
-
-Therefore, I've decided to put an effort into writing a basic tooling to suit my needs.
-
-</details>
-
 ## core technologies
 
 - [EJS](https://ejs.co/) — HTML templating
