@@ -15,24 +15,49 @@ import scanDirectory from "./scanDirectory.js";
  * @type {import('./runBuild.js').CopyOptions}
  */
 
+/**
+ * @typedef CopyResult
+ * @type {import('./runBuild.js').CopyResult}
+ */
+
 const pagesPath = path.join(appDir, "src/pages");
 
 /**
  * Builds HTML pages from EJS templates inside `src/pages` directory.
  * Compiled files are saved into `build` directory.
  * @param {CopyOptions} options configuration object
- * @returns {Promise<void>}
+ * @returns {Promise<CopyResult>} stats on `[original, compressed]` file sizes
  */
 export default async function buildPages({ skipMinification = false } = {}) {
   const pagesContent = await scanDirectory(pagesPath, ".ejs");
 
+  let originalSize_bytes = 0;
+  let compressedSize_bytes = 0;
+
   for (const dirent of pagesContent) {
-    const { compiledHtml, writeTo } = await generatePage(dirent, skipMinification);
+    const { compiledHtml, writeTo, originalLength, compressedLength } = await generatePage(
+      dirent,
+      skipMinification,
+    );
+
+    originalSize_bytes += originalLength;
+    compressedSize_bytes += compressedLength;
 
     await fsPromises.mkdir(path.dirname(writeTo), { recursive: true });
     await fsPromises.writeFile(writeTo, compiledHtml, "utf-8");
   }
+
+  return [originalSize_bytes, compressedSize_bytes];
 }
+
+/**
+ * @typedef GeneratePageObj
+ * @type {object}
+ * @property {string} compiledHtml page content
+ * @property {string} writeTo build file directory
+ * @property {number} originalLength size before compression
+ * @property {number?} compressedLength size after compression
+ */
 
 /**
  * Generates `<page_name>.html` content from `<page_name>.ejs` template.
@@ -40,7 +65,7 @@ export default async function buildPages({ skipMinification = false } = {}) {
  * (e.i. to get exact values for vars inside templates).
  * @param {Dirent} dirent interface corresponding to source EJS template
  * @param {boolean} skipMinification specifies whether to skip minification step
- * @returns {Promise<{ compiledHtml: string, writeTo: string }>} page's content and absolute path
+ * @returns {Promise<GeneratePageObj>} page's content, absolute path, sizes (before/after compression)
  */
 async function generatePage(dirent, skipMinification = false) {
   const renderFrom = path.join(dirent.parentPath, dirent.name);
@@ -51,14 +76,18 @@ async function generatePage(dirent, skipMinification = false) {
   const renderData = { title, metadata, navigation };
   let compiledHtml = await ejsRenderFile(renderFrom, renderData);
 
+  let originalLength = compiledHtml.length;
+  let compressedLength = null;
+
   if (!skipMinification) {
     compiledHtml = await minify.html(compiledHtml);
+    compressedLength = compiledHtml.length;
   }
 
   const htmlFilename = replaceExtname(dirent.name, ".html");
   const writeTo = path.join(appDir, "build", htmlFilename);
 
-  return { compiledHtml, writeTo };
+  return { compiledHtml, writeTo, originalLength, compressedLength };
 }
 
 /**

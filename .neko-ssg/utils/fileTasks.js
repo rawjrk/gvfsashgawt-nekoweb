@@ -16,6 +16,11 @@ import appDir from "./appDir.js";
  */
 
 /**
+ * @typedef CopyResult
+ * @type {import('./runBuild.js').CopyResult}
+ */
+
+/**
  * Removes `build` directory.
  * @returns {Promise<void>}
  */
@@ -55,51 +60,65 @@ export async function copyFaviconIco() {
 /**
  * Creates a transformed copy of all files from `src/styles` inside `build/styles` directory.
  * @param {CopyOptions} options configuration object
- * @returns {Promise<void>}
+ * @returns {Promise<CopyResult>} stats on `[original, compressed]` file sizes
  */
 export async function copyStyles({ skipMinification = false } = {}) {
   const stylesPath = path.join(appDir, "src/styles");
   const buildPath = path.join(appDir, "build/styles");
 
   const stylesContent = await scanDirectory(stylesPath, ".css");
+  let originalSize = 0;
+  let compressedSize = 0;
 
   for (const dirent of stylesContent) {
     const [copyFrom, copyTo] = generateCopyPath(dirent, stylesPath, buildPath);
 
     let textContent = await fsPromises.readFile(copyFrom, "utf-8");
+    originalSize += textContent.length;
+
     if (!skipMinification) {
       textContent = await minify.css(textContent);
+      compressedSize += textContent.length;
     }
 
     const destParentDir = copyTo.slice(0, dirent.name.length * -1);
     await fsPromises.mkdir(destParentDir, { recursive: true });
     await fsPromises.writeFile(copyTo, textContent, "utf-8");
   }
+
+  return [originalSize, compressedSize];
 }
 
 /**
  * Creates a transformed copy of all files from `src/scripts` inside `build/scripts` directory.
  * @param {CopyOptions} options configuration object
- * @returns {Promise<void>}
+ * @returns {Promise<CopyResult>} stats on `[original, compressed]` file sizes
  */
 export async function copyScripts({ skipMinification = false } = {}) {
   const scriptsPath = path.join(appDir, "src/scripts");
   const buildPath = path.join(appDir, "build/scripts");
 
   const scriptsContent = await scanDirectory(scriptsPath, ".js");
+  let originalSize = 0;
+  let compressedSize = 0;
 
   for (const dirent of scriptsContent) {
     const [copyFrom, copyTo] = generateCopyPath(dirent, scriptsPath, buildPath);
 
     let textContent = await fsPromises.readFile(copyFrom, "utf-8");
+    originalSize += textContent.length;
+
     if (!skipMinification) {
       textContent = minifyJs(textContent);
+      compressedSize += textContent.length;
     }
 
     const destParentDir = copyTo.slice(0, dirent.name.length * -1);
     await fsPromises.mkdir(destParentDir, { recursive: true });
     await fsPromises.writeFile(copyTo, textContent, "utf-8");
   }
+
+  return [originalSize, compressedSize];
 }
 
 /**
