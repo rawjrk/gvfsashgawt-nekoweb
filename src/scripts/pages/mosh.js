@@ -23,8 +23,13 @@ const animation = new Interval({ intervalMs: 90, initActive: true });
 
 const docBody = document.querySelector("body");
 const menuBar = document.querySelector("menu");
-let isMenuBarHidden = false;
 let controlsDisabled = true;
+
+const helpModal = document.querySelector("aside");
+const openModal = document.getElementById("open-modal");
+const closeModal = document.getElementById("close-modal");
+openModal.onclick = () => toggleHidden(helpModal);
+closeModal.onclick = () => toggleHidden(helpModal);
 
 const controls = {
   chunks: new NumericInputRange("from", "to", (event) => {
@@ -82,9 +87,19 @@ window.onkeydown = (event) => {
     return;
   }
 
+  if (event.code === "KeyQ") {
+    toggleHidden(helpModal);
+    return;
+  }
+
+  const helpModalHidden = helpModal.classList.contains("hidden");
+  if (!helpModalHidden) {
+    return;
+  }
+
   switch (event.code) {
     case "KeyH":
-      toggleMenuBar();
+      toggleHidden(menuBar);
       return;
 
     case "KeyF":
@@ -129,19 +144,12 @@ window.onkeydown = (event) => {
 };
 
 /**
- * Switches `<menu>` element visibility.
+ * Switches `elem` visibility.
+ * @param {HTMLElement} elem to be manipulated
  * @returns {void}
  */
-function toggleMenuBar() {
-  // TODO: think how to handle on touchscreens
-
-  isMenuBarHidden = !isMenuBarHidden;
-
-  if (isMenuBarHidden) {
-    menuBar.classList.add("hidden");
-  } else {
-    menuBar.classList.remove("hidden");
-  }
+function toggleHidden(elem) {
+  elem.classList.toggle("hidden");
 }
 
 /**
