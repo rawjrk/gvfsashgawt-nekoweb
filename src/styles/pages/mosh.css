@@ -2,6 +2,7 @@
   --pink: #e100bd;
   --gray: #222;
   --light-gray: #888;
+  --ghost-black: var(--ghost-black);
   --margin: 2rem;
 }
 
@@ -106,7 +107,7 @@ aside > div {
   display: inline-block;
   padding: 0 0.5rem;
   text-decoration: none;
-  background-color: black;
+  background-color: var(--ghost-black);
   color: var(--pink);
 }
 #open-modal:hover {
@@ -190,12 +191,12 @@ input,
 
 input[type="number"] {
   margin: 0;
-  border: 1px solid black;
+  border: 1px solid var(--ghost-black);
   padding: 0 0.5rem;
   width: 5rem;
 
   text-align: right;
-  background-color: rgba(0, 0, 0, 0);
+  background-color: var(--ghost-black);
   color: white;
 }
 
@@ -314,7 +315,7 @@ p {
 }
 
 a {
-  background-color: black;
+  background-color: var(--ghost-black);
   color: var(--pink);
   text-decoration: none;
 }
