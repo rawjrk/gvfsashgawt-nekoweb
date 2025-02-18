@@ -46,6 +46,30 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
 }
 
+.scrollable {
+  overflow-block: scroll;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@media (hover: hover) {
+  @supports selector(::-webkit-scrollbar) {
+    ::-webkit-scrollbar {
+      width: 0.5em;
+    }
+
+    ::-webkit-scrollbar-track {
+      border: 0.2em solid black;
+      background-color: white;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border: 0.1em solid black;
+      background-color: white;
+    }
+  }
+}
+
 aside {
   z-index: 99;
   position: absolute;
@@ -63,6 +87,8 @@ aside {
 }
 
 aside > div {
+  max-height: calc(100vh - 5rem);
+  max-width: calc(100vw - 5rem);
   position: relative;
   padding: 1.5rem;
   background-color: black;
