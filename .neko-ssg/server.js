@@ -83,7 +83,7 @@ server.on("error", (err) => {
 
 server.listen(PORT, HOST, async () => {
   if (!skipBuild) {
-    await runBuild({ skipMinification });
+    await runBuild({ skipMinification, hideStats: true });
   } else {
     console.log("Skipping fresh build (using existing)");
   }
