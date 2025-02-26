@@ -26,10 +26,20 @@ const menuBar = document.querySelector("menu");
 let controlsDisabled = true;
 
 const helpModal = document.querySelector("aside");
-const openModal = document.getElementById("open-modal");
-const closeModal = document.getElementById("close-modal");
-openModal.onclick = () => toggleHidden(helpModal);
-closeModal.onclick = () => toggleHidden(helpModal);
+const helpModalDiv = helpModal.querySelector("div");
+const openModalBtn = document.getElementById("open-modal");
+const closeModalBtn = document.getElementById("close-modal");
+openModalBtn.onclick = () => toggleHidden(helpModal);
+closeModalBtn.onclick = () => toggleHidden(helpModal);
+
+helpModal.onclick = (event) => {
+  const modalHidden = checkIfHidden(helpModal);
+  const clickedInsideDiv = helpModalDiv.contains(event.target);
+
+  if (!modalHidden && !clickedInsideDiv) {
+    toggleHidden(helpModal);
+  }
+};
 
 const controls = {
   chunks: new NumericInputRange("from", "to", (event) => {
@@ -144,12 +154,21 @@ window.onkeydown = (event) => {
 };
 
 /**
- * Switches `elem` visibility.
+ * Switches `elem` visibility (based on "hidden" class).
  * @param {HTMLElement} elem to be manipulated
  * @returns {void}
  */
 function toggleHidden(elem) {
   elem.classList.toggle("hidden");
+}
+
+/**
+ * Checks `elem` visibility (based on "hidden" class).
+ * @param {HTMLElement} elem to be manipulated
+ * @returns {boolean} if `true`, element is not visible
+ */
+function checkIfHidden(elem) {
+  return elem.classList.contains("hidden");
 }
 
 /**
