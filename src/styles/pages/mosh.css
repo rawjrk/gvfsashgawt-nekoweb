@@ -96,6 +96,10 @@ aside > div {
   color: white;
 }
 
+aside section {
+  padding-left: 0.6rem;
+}
+
 #close-modal {
   position: absolute;
   top: 1.3rem;
