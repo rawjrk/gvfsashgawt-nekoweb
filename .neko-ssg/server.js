@@ -24,7 +24,10 @@ let isNotFoundPageExists = false;
 
 server.on("request", async (req, res) => {
   const dt = formatDate(new Date());
-  console.log(`[ ${dt} ] ${req.method} ${req.url}`);
+
+  res.on("close", () => {
+    console.log(`[ ${dt} ] ${res.statusCode}: ${req.method} ${req.url}`);
+  });
 
   if (req.method !== "GET") {
     res.statusCode = 405;
