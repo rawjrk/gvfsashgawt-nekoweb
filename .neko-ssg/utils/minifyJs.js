@@ -4,7 +4,7 @@
  * @returns {string} comressed code
  */
 export default function minifyJs(code) {
-  // TODO: add variables shortening
+  // TODO: replace with package, e.g. "uglify-js"
 
   let isInlineComment = false;
   let isMultilineComment = false;
