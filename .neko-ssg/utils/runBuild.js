@@ -9,15 +9,13 @@ import {
 import { formatSize, roundNumber } from "./formatSize.js";
 
 /**
- * @typedef CopyOptions
- * @type {object}
+ * @typedef {object} CopyOptions
  * @property {boolean} skipMinification specifies whether to skip minification step
  * while coppying file's content, defaults to `false`
  */
 
 /**
- * @typedef CopyResult
- * @type {[number, number]} original/compressed file sizes
+ * @typedef {[number, number]} CopyResult
  */
 
 /**

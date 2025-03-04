@@ -1,24 +1,14 @@
+/**
+ * @typedef {import('node:fs').Dirent} Dirent
+ * @typedef {import('./runBuild.js').CopyOptions} CopyOptions
+ * @typedef {import('./runBuild.js').CopyResult} CopyResult
+ */
 import path from "node:path";
 import fsPromises from "node:fs/promises";
 import { minify } from "minify";
 import minifyJs from "./minifyJs.js";
 import scanDirectory from "./scanDirectory.js";
 import appDir from "./appDir.js";
-
-/**
- * @typedef Dirent
- * @type {import('node:fs').Dirent}
- */
-
-/**
- * @typedef CopyOptions
- * @type {import('./runBuild.js').CopyOptions}
- */
-
-/**
- * @typedef CopyResult
- * @type {import('./runBuild.js').CopyResult}
- */
 
 /**
  * Removes `build` directory.

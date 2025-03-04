@@ -1,10 +1,8 @@
+/**
+ * @typedef {import('node:fs').Dirent} Dirent
+ */
 import path from "node:path";
 import fsPromises from "node:fs/promises";
-
-/**
- * @typedef Dirent
- * @type {import('node:fs').Dirent}
- */
 
 /**
  * Gets a recursive list of files inside `dirPath`.

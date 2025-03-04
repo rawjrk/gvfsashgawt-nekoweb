@@ -1,21 +1,8 @@
 /**
- * @typedef DatamoshedJpeg
- * @type {import ('../lib/datamosh-jpeg.js').DatamoshedJpeg}
- */
-
-/**
- * @typedef Interval
- * @type {import ('../lib/interval.js').Interval}
- */
-
-/**
- * @typedef NumericInputRange
- * @type {import ('../lib/controls.js').NumericInputRange}
- */
-
-/**
- * @typedef Checkbox
- * @type {import ('../lib/controls.js').Checkbox}
+ * @typedef {import ('../lib/datamosh-jpeg.js').DatamoshedJpeg} DatamoshedJpeg
+ * @typedef {import ('../lib/controls.js').NumericInputRange} NumericInputRange
+ * @typedef {import ('../lib/controls.js').Checkbox} Checkbox
+ * @typedef {import ('../lib/interval.js').Interval} Interval
  */
 
 const datamoshedJpeg = new DatamoshedJpeg();
