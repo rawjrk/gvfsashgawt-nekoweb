@@ -1,12 +1,13 @@
-const LABELS = ["bytes", "KB", "MB", "GB"];
+export const LABELS = ["bytes", "KB", "MB", "GB", "TB", "PB"];
 
 /**
  * Calculates closest allowed exponent
  * @param {number} num size in bytes
  * @returns {number} exponent
  */
-function calculateExponent(num) {
-  const log1024 = Math.floor(Math.log2(num) / 10);
+export function calculateExponent(num) {
+  if (!num) return 0;
+  const log1024 = Math.floor(Math.log2(Math.abs(num)) / 10);
   return Math.min(log1024, LABELS.length);
 }
 
@@ -39,5 +40,3 @@ export function formatSize(bytes) {
 
   return `${size} ${measure}`;
 }
-
-// TODO: test cases (see jsdoc @example)
