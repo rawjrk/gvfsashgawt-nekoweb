@@ -1,24 +1,14 @@
+/**
+ * @typedef {import('node:fs').Dirent} Dirent
+ * @typedef {import('./runBuild.js').CopyOptions} CopyOptions
+ * @typedef {import('./runBuild.js').CopyResult} CopyResult
+ */
 import fsPromises from "node:fs/promises";
 import path from "node:path";
 import ejs from "ejs";
 import { minify } from "minify";
 import appDir from "./appDir.js";
 import scanDirectory from "./scanDirectory.js";
-
-/**
- * @typedef Dirent
- * @type {import('node:fs').Dirent}
- */
-
-/**
- * @typedef CopyOptions
- * @type {import('./runBuild.js').CopyOptions}
- */
-
-/**
- * @typedef CopyResult
- * @type {import('./runBuild.js').CopyResult}
- */
 
 const pagesPath = path.join(appDir, "src/pages");
 

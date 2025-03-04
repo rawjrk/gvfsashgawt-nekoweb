@@ -1,13 +1,10 @@
 /**
- * @typedef NavLink
- * @type {object}
+ * @typedef {object} NavLink
  * @property {string} href link's URL
  * @property {string} text link's title
  */
 
-/**
- * @type {NavLink[]}
- */
+/** @type {NavLink[]} */
 const navLinks = [
   { href: "/", text: "home" },
   { href: "/gallery", text: "gall" },
