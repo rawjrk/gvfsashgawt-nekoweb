@@ -7,7 +7,7 @@ const SUPPORTED_TEXT_FORMATS = [".html", ".css", ".js"];
 
 export const FILE_TYPE = {
   INVALID: -1,
-  BIN: 0,
+  BINARY: 0,
   TEXT: 1,
 };
 
@@ -21,14 +21,12 @@ export const FILE_TYPE = {
  * getFileType('.wrg') -> -1 // e.i. invalid
  */
 export function getFileType(extname) {
-  const isTextFile = SUPPORTED_TEXT_FORMATS.includes(extname);
-  if (isTextFile) {
+  if (SUPPORTED_TEXT_FORMATS.includes(extname)) {
     return FILE_TYPE.TEXT;
   }
 
-  const isBinFile = SUPPORTED_BIN_FORMATS.includes(extname);
-  if (isBinFile) {
-    return FILE_TYPE.BIN;
+  if (SUPPORTED_BIN_FORMATS.includes(extname)) {
+    return FILE_TYPE.BINARY;
   }
 
   return FILE_TYPE.INVALID;
@@ -75,6 +73,8 @@ export function getMimeType(extname) {
  * @returns {string} file location (inside `build` directory)
  */
 export function getFilePath(url) {
+  // TODO: isolate function by providing `basePath` argument
+
   const isExtensionSpecified = path.extname(url);
   const addExtension = isExtensionSpecified ? "" : ".html";
 
@@ -91,6 +91,8 @@ const notFoundPagePath = path.join(appDir, "build", "not_found.html");
  * @returns {Promise<boolean>} HTML content
  */
 export async function checkNotFoundPageExists() {
+  // TODO: replace with fs.existsSync()
+
   try {
     await fsPromises.access(notFoundPagePath);
     return true;
@@ -107,5 +109,7 @@ export async function checkNotFoundPageExists() {
  * @returns {Promise<string>} HTML content
  */
 export async function getNotFoundPageHtml() {
+  // TODO: isolate function or generalize it
+
   return fsPromises.readFile(notFoundPagePath, { encoding: "utf-8" });
 }
