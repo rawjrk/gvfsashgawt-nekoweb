@@ -9,6 +9,7 @@
     "clear": "node .neko-ssg/clear.js",
     "start": "node .neko-ssg/server.js --skip-build",
     "dev": "nodemon .neko-ssg/server.js",
+    "test": "node --test",
     "lint": "eslint",
     "format": "prettier . --write"
   },
