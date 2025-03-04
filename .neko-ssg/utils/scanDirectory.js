@@ -1,23 +1,24 @@
 /**
  * @typedef {import('node:fs').Dirent} Dirent
  */
-import path from "node:path";
 import fsPromises from "node:fs/promises";
 
 /**
  * Gets a recursive list of files inside `dirPath`.
  * Returns only files of a type specified in `allowedExtname`.
  * @param {string} dirPath absolute path to a directory
- * @param {string} allowedExtname should start with a dot `.jpeg`
+ * @param {string | RegExp =} pattern should start with a dot `.jpeg`
  * @returns {Promise<Dirent[]>} list of files
  */
-export default async function scanDirectory(dirPath, allowedExtname) {
+export default async function scanDirectory(dirPath, pattern) {
   const dirContent = await fsPromises.readdir(dirPath, {
     recursive: true,
     withFileTypes: true,
   });
 
-  return dirContent.filter(
-    (dirent) => dirent.isFile() && path.extname(dirent.name) === allowedExtname,
-  );
+  if (!pattern) {
+    return dirContent.filter((dirent) => dirent.isFile());
+  }
+
+  return dirContent.filter((dirent) => dirent.isFile() && dirent.name.match(pattern));
 }
