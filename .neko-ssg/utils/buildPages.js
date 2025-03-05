@@ -1,5 +1,6 @@
 /**
  * @typedef {import('node:fs').Dirent} Dirent
+ * @typedef {import('ejs')} ejs
  * @typedef {import('./runBuild.js').CopyOptions} CopyOptions
  * @typedef {import('./runBuild.js').CopyResult} CopyResult
  */
@@ -114,8 +115,8 @@ async function loadModule(absolutePath) {
  * Promisified version of `ejs.renderFile()` method.
  * Root directory for `<%- include('/path/to') is `src` directory.
  * @param {string} filename absolute path to EJS template
- * @param {*} data compilation context
- * @param {*} options configuration object as documented on [EJS page](https://ejs.co/#docs)
+ * @param {ejs.Data} data compilation context
+ * @param {ejs.Options} options configuration object as documented on [EJS page](https://ejs.co/#docs)
  * @returns {Promise<string>} compiled HTML
  */
 async function ejsRenderFile(filename, data, options) {
