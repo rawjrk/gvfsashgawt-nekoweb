@@ -20,9 +20,10 @@ export function formatRateDiff(orig, comp) {
  * Logs statistics about code files compression.
  * @param {Stats} stats statistic object
  * @param {boolean} skipMinification specifies whether to skip minification step
+ * @param {(str: string) => void} logWith _used for test purposes_
  * @returns {void}
  */
-export default function logStats(stats, skipMinification = false) {
+export default function logStats(stats, skipMinification = false, logWith = console.log) {
   /** @type {string[]} */
   const logQueueStrings = [];
 
@@ -42,16 +43,16 @@ export default function logStats(stats, skipMinification = false) {
   }
 
   if (skipMinification) {
-    console.log("Code size (uncompressed):", formatSize(totalOrig));
+    logWith(`Code size (uncompressed): ${formatSize(totalOrig)}`);
     return;
   }
 
-  console.log("Code size (before):", formatSize(totalOrig));
-  console.log("Code size (after):", formatSize(totalComp));
+  logWith(`Code size (before): ${formatSize(totalOrig)}`);
+  logWith(`Code size (after): ${formatSize(totalComp)}`);
 
-  console.log("Compression:", formatRateDiff(totalOrig, totalComp));
+  logWith(`Compression: ${formatRateDiff(totalOrig, totalComp)}`);
 
   for (const str of logQueueStrings) {
-    console.log(str);
+    logWith(str);
   }
 }
