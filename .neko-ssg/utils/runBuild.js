@@ -1,22 +1,27 @@
-import buildPages from "./buildPages.js";
-import {
-  clearBuildDir,
-  copyFaviconIco,
-  copyScripts,
-  copyStaticFiles,
-  copyStyles,
-} from "./fileTasks.js";
-import { formatSize, roundNumber } from "./formatSize.js";
+/**
+ * @typedef {import('./logStats.js').Stats} Stats
+ */
+import path from "node:path";
+import fsPromises from "node:fs/promises";
+import { minify } from "minify";
+import appDir from "./appDir.js"; // TODO: replace with function arguments
+import scanDirectory from "./scanDirectory.js";
+import { ejsRenderFile, loadModule } from "./buildPages.js";
+import minifyJs from "./minifyJs.js";
+import logStats from "./logStats.js";
 
 /**
- * @typedef {object} CopyOptions
- * @property {boolean} skipMinification specifies whether to skip minification step
- * while coppying file's content, defaults to `false`
+ * Generates absolute path for build file (retains structure inside `srcDir` to `buildDir`).
+ * @param {object} options props object
+ * @param {string} options.srcPath source file (absolute path)
+ * @param {string} options.srcDir source folder (absolute path)
+ * @param {string} options.buildDir build folder (absolute path)
+ * @returns {string} build file (absolute path)
  */
-
-/**
- * @typedef {[number, number]} CopyResult
- */
+export function generateBuildPath({ srcPath, srcDir, buildDir }) {
+  const relativePath = srcPath.slice(srcDir.length); // <-- path inside `/src` to retain
+  return path.join(buildDir, relativePath);
+}
 
 /**
  * Runs build: compile EJS to HTML, copy JS/CSS and static files.
@@ -25,56 +30,110 @@ import { formatSize, roundNumber } from "./formatSize.js";
  * @param {boolean} options.hideStats specifies whether to hide compression stats
  */
 export default async function runBuild({ skipMinification = false, hideStats = false } = {}) {
-  await clearBuildDir();
+  // TODO: appDir to be provided from fn args
 
-  const htmlStats = await buildPages({ skipMinification });
-  const cssStats = await copyStyles({ skipMinification });
-  const jsStats = await copyScripts({ skipMinification });
+  const srcDir = path.join(appDir, "src");
+  const buildDir = path.join(appDir, "build");
+  await fsPromises.rm(buildDir, { force: true, recursive: true });
 
-  await copyStaticFiles();
-  await copyFaviconIco();
+  /** @type {Stats} */
+  const stats = {
+    html: [0, 0],
+    css: [0, 0],
+    js: [0, 0],
+  };
+
+  const pagesDir = path.join(srcDir, "pages");
+  const pages = await scanDirectory(pagesDir, ".ejs");
+
+  for (const template of pages) {
+    const templatePath = path.join(template.parentPath, template.name);
+    const configPath = templatePath.replace(/.ejs$/, ".config.js");
+
+    const context = await loadModule(configPath);
+    let html = await ejsRenderFile(templatePath, context);
+
+    stats.html[0] += html.length; // original size
+
+    if (!skipMinification) {
+      html = await minify.html(html);
+      stats.html[1] += html.length; // compressed size
+    }
+
+    const writeToPath = generateBuildPath({
+      srcPath: templatePath.replace(/.ejs$/, ".html"),
+      srcDir: pagesDir,
+      buildDir,
+    });
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, html, "utf-8");
+  }
+
+  const stylesDir = path.join(srcDir, "styles");
+  const styles = await scanDirectory(stylesDir, ".css");
+
+  for (const style of styles) {
+    const stylePath = path.join(style.parentPath, style.name);
+    let css = await fsPromises.readFile(stylePath, "utf-8");
+
+    stats.css[0] += css.length; // original size
+
+    if (!skipMinification) {
+      css = await minify.css(css);
+      stats.css[1] += css.length; // compressed size
+    }
+
+    const writeToPath = generateBuildPath({
+      srcPath: stylePath,
+      srcDir: stylesDir,
+      buildDir: path.join(buildDir, "styles"),
+    });
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, css, "utf-8");
+  }
+
+  const scriptsDir = path.join(srcDir, "scripts");
+  const scripts = await scanDirectory(scriptsDir, ".js");
+
+  for (const script of scripts) {
+    const scriptPath = path.join(script.parentPath, script.name);
+    let js = await fsPromises.readFile(scriptPath, "utf-8");
+
+    stats.js[0] += js.length; // original size
+
+    if (!skipMinification) {
+      js = minifyJs(js);
+      stats.js[1] += js.length; // compressed size
+    }
+
+    const writeToPath = generateBuildPath({
+      srcPath: scriptPath,
+      srcDir: scriptsDir,
+      buildDir: path.join(buildDir, "scripts"),
+    });
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, js, "utf-8");
+  }
+
+  const staticDir = path.join(appDir, "static");
+  const staticFiles = await scanDirectory(staticDir);
+
+  for (const { parentPath, name } of staticFiles) {
+    const copyFrom = path.join(parentPath, name);
+    const isFavicon = name === "favicon.ico";
+
+    const copyTo = generateBuildPath({
+      srcPath: copyFrom,
+      srcDir: staticDir,
+      buildDir: path.join(buildDir, !isFavicon ? "static" : ""),
+    });
+
+    await fsPromises.cp(copyFrom, copyTo);
+  }
 
   if (!hideStats) {
-    logStats({ htmlStats, cssStats, jsStats }, skipMinification);
+    logStats(stats, skipMinification);
   }
 
   console.log("Successfully completed fresh build");
-}
-
-/**
- * Logs statistics about code files compression.
- * @param {object} stats statistic object
- * @param {CopyResult} stats.htmlStats statistics on HTML files
- * @param {CopyResult} stats.cssStats statistics on CSS files
- * @param {CopyResult} stats.jsStats statistics on JS files
- * @param {boolean} skipMinification specifies whether to skip minification step
- * @returns {void}
- */
-function logStats({ htmlStats, cssStats, jsStats }, skipMinification = false) {
-  const [htmlOrig, htmlComp] = htmlStats;
-  const [cssOrig, cssComp] = cssStats;
-  const [jsOrig, jsComp] = jsStats;
-
-  const originalSize = htmlOrig + cssOrig + jsOrig;
-  const compressedSize = htmlComp + cssComp + jsComp;
-
-  if (skipMinification) {
-    console.log("Code size (uncompressed):", formatSize(originalSize));
-    return;
-  }
-
-  console.log("Code size (before):", formatSize(originalSize));
-  console.log("Code size (after):", formatSize(compressedSize));
-
-  const formatRateDiff = (orig, comp) => {
-    const rate = roundNumber(orig / comp, 2);
-    const diff = formatSize(orig - comp);
-    return `x${rate} (${diff})`;
-  };
-
-  console.log("Compression:", formatRateDiff(originalSize, compressedSize));
-
-  console.log(" * HTML\t:", formatRateDiff(htmlOrig, htmlComp));
-  console.log(" * CSS\t:", formatRateDiff(cssOrig, cssComp));
-  console.log(" * JS\t:", formatRateDiff(jsOrig, jsComp));
 }
