@@ -7,7 +7,7 @@ import appDir from "./appDir.js";
 
 /**
  * Loads JS module located at `absolutePath`.
- * If module doesn't exist, returns `{}`.
+ * If module doesn't exist, returns `null`.
  * @param {string} absolutePath file location
  * @returns {Promise<*>} module namespace object
  */
@@ -17,8 +17,8 @@ export async function loadModule(absolutePath) {
     return moduleNamespace;
   } catch (err) {
     if (err.code === "ERR_MODULE_NOT_FOUND") {
-      console.error("Error on exporting config from", absolutePath);
-      return {};
+      console.error("Error on exporting config from", absolutePath); // TODO: move outside
+      return null;
     }
     throw err;
   }
@@ -46,4 +46,17 @@ export async function ejsRenderFile(filename, data, options) {
       resolve(str);
     });
   });
+}
+
+/**
+ * Generates absolute path for build file (retains structure inside `srcDir` to `buildDir`).
+ * @param {object} options props object
+ * @param {string} options.srcPath source file (absolute path)
+ * @param {string} options.srcDir source folder (absolute path)
+ * @param {string} options.buildDir build folder (absolute path)
+ * @returns {string} build file (absolute path)
+ */
+export function generateBuildPath({ srcPath, srcDir, buildDir }) {
+  const relativePath = srcPath.slice(srcDir.length); // <-- path inside `/src` to retain
+  return path.join(buildDir, relativePath);
 }
