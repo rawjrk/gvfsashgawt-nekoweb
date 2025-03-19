@@ -6,22 +6,9 @@ import fsPromises from "node:fs/promises";
 import { minify } from "minify";
 import appDir from "./appDir.js"; // TODO: replace with function arguments
 import scanDirectory from "./scanDirectory.js";
-import { ejsRenderFile, loadModule } from "./buildPages.js";
+import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
 import minifyJs from "./minifyJs.js";
 import logStats from "./logStats.js";
-
-/**
- * Generates absolute path for build file (retains structure inside `srcDir` to `buildDir`).
- * @param {object} options props object
- * @param {string} options.srcPath source file (absolute path)
- * @param {string} options.srcDir source folder (absolute path)
- * @param {string} options.buildDir build folder (absolute path)
- * @returns {string} build file (absolute path)
- */
-export function generateBuildPath({ srcPath, srcDir, buildDir }) {
-  const relativePath = srcPath.slice(srcDir.length); // <-- path inside `/src` to retain
-  return path.join(buildDir, relativePath);
-}
 
 /**
  * Runs build: compile EJS to HTML, copy JS/CSS and static files.
