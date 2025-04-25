@@ -8,7 +8,7 @@ import scanDirectory from "./scanDirectory.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
 import minifyHtml from "./minifiers/html.js";
 import minifyCss from "./minifiers/css.js";
-import minifyJs from "./minifyJs.js";
+import minifyJs from "./minifiers/js.js";
 import logStats from "./logStats.js";
 
 /**
@@ -90,7 +90,7 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     stats.js[0] += js.length; // original size
 
     if (!skipMinification) {
-      js = minifyJs(js);
+      js = await minifyJs(js);
       stats.js[1] += js.length; // compressed size
     }
 
