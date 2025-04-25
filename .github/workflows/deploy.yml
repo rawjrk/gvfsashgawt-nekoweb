@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install dependencies
-        run: yarn install --production --frozen-lockfile
+        run: yarn ci
 
       - name: Prepare build
         run: yarn build

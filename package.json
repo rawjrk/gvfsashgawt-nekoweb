@@ -5,6 +5,7 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
+    "ci": "yarn install --production --frozen-lockfile",
     "build": "node .neko-ssg/build.js",
     "clear": "node .neko-ssg/clear.js",
     "start": "node .neko-ssg/server.js --skip-build",
