@@ -3,10 +3,11 @@
  */
 import path from "node:path";
 import fsPromises from "node:fs/promises";
-import { minify } from "minify";
 import appDir from "./appDir.js"; // TODO: replace with function arguments
 import scanDirectory from "./scanDirectory.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
+import minifyHtml from "./minifiers/html.js";
+import minifyCss from "./minifiers/css.js";
 import minifyJs from "./minifyJs.js";
 import logStats from "./logStats.js";
 
@@ -43,7 +44,7 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     stats.html[0] += html.length; // original size
 
     if (!skipMinification) {
-      html = await minify.html(html);
+      html = await minifyHtml(html);
       stats.html[1] += html.length; // compressed size
     }
 
@@ -66,7 +67,7 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     stats.css[0] += css.length; // original size
 
     if (!skipMinification) {
-      css = await minify.css(css);
+      css = await minifyCss(css);
       stats.css[1] += css.length; // compressed size
     }
 
