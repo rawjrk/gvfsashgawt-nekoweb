@@ -7,7 +7,6 @@
 /** @type {NavLink[]} */
 const navLinks = [
   { href: "/", text: "home" },
-  { href: "/gallery", text: "gall" },
   { href: "/mosh", text: "mosh" },
   { href: "/about", text: "about" },
 ];
