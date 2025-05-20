@@ -44,18 +44,22 @@ class DatamoshedImage {
   generateMoshedBase64() {
     const [fromByte, toByte] = this._moshedBytes;
 
-    const fromChunk = Math.floor(fromByte / 3); // TODO: replace with proper calculations
-    const toChunk = Math.floor(toByte / 3); // TODO: replace with proper calculations
+    // 1 chunk = 4 chars (base64) = 3 chars (ascii)
+    const injectBase64From = Math.floor(fromByte / 3) * 4;
 
-    const injectedAsciiLength = (toChunk - fromChunk) * 3;
-    let randomizedAscii = "";
+    // first chunk BEFORE fromByte
+    const startFrom = this._imageBase64.slice(fromByte - (fromByte % 3), fromByte);
+    // last chunk AFTER toByte
+    const endWith = this._imageBase64.slice(toByte, toByte - (toByte % 3) + 3);
 
-    for (let i = 0; i < injectedAsciiLength; i++) {
+    let randomizedAscii = startFrom;
+    for (let i = 0; i < toByte - fromByte; i++) {
       randomizedAscii += randomASCII();
     }
+    randomizedAscii += endWith;
 
     const randomizedBase64 = window.btoa(randomizedAscii);
-    return injectString(this._imageBase64, fromChunk * 4, randomizedBase64);
+    return injectString(this._imageBase64, injectBase64From, randomizedBase64);
   }
 }
 
