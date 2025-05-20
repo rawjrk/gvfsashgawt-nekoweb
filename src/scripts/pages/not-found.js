@@ -1,16 +1,16 @@
 /**
- * @typedef {import ('../lib/datamosh.js').DatamoshedJpeg} DatamoshedJpeg
+ * @typedef {import ('../lib/datamosh.js').DatamoshedImage} DatamoshedImage
  */
 
 window.onload = async () => {
   const imageUrl = "static/images/apple-tree-color-256px.jpeg";
 
-  const datamoshedJpeg = new DatamoshedJpeg();
-  await datamoshedJpeg.fetchImage(imageUrl);
-  datamoshedJpeg.setDatamoshRange(115, 125);
+  const moshedImage = new DatamoshedImage();
+  await moshedImage.fetchImage(imageUrl);
+  moshedImage.setDatamoshRange(115, 125);
 
   const datamoshBackground = () => {
-    const content = datamoshedJpeg.generateMoshedBase64();
+    const content = moshedImage.generateMoshedBase64();
     const imageData = `url("data:image/jpeg;base64,${content}")`;
     document.body.style.background = imageData;
   };

@@ -1,11 +1,11 @@
 /**
- * @typedef {import ('../lib/datamosh.js').DatamoshedJpeg} DatamoshedJpeg
+ * @typedef {import ('../lib/datamosh.js').DatamoshedImage} DatamoshedImage
  * @typedef {import ('../lib/controls.js').NumericInputRange} NumericInputRange
  * @typedef {import ('../lib/controls.js').Checkbox} Checkbox
  * @typedef {import ('../lib/interval.js').Interval} Interval
  */
 
-const datamoshedJpeg = new DatamoshedJpeg();
+const moshedImage = new DatamoshedImage();
 const animation = new Interval({ intervalMs: 90, initActive: true });
 
 const docBody = document.querySelector("body");
@@ -30,7 +30,7 @@ helpModal.onclick = (event) => {
 
 const controls = {
   chunks: new NumericInputRange("from", "to", (event) => {
-    datamoshedJpeg.setDatamoshRange(...controls.chunks.getRange());
+    moshedImage.setDatamoshRange(...controls.chunks.getRange());
     animation.runOnce();
     event.target.blur();
   }),
@@ -48,7 +48,7 @@ const filePicker = document.getElementById("file-picker");
 
 filePicker.onchange = async (event) => {
   const file = event.target.files[0];
-  await datamoshedJpeg.loadFromBlob(file);
+  await moshedImage.loadFromBlob(file);
 
   const numberOfChunks = Math.floor(file.size / 3);
   controls.chunks.setRangeMax(numberOfChunks);
@@ -61,7 +61,7 @@ filePicker.onchange = async (event) => {
   enableAllControls();
 
   const datamoshBackground = () => {
-    const content = datamoshedJpeg.generateMoshedBase64();
+    const content = moshedImage.generateMoshedBase64();
     const imageData = `url("data:image/jpeg;base64,${content}")`;
     document.body.style.background = imageData;
   };
