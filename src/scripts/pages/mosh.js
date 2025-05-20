@@ -57,6 +57,8 @@ filePicker.onchange = async (event) => {
   const moshFrom = 0; // TODO: calculate to skip metadata
   const moshTo = 1; // TODO: calculate to skip metadata
 
+  moshedImage.setDatamoshRange(moshFrom, moshTo);
+
   controls.bytes.setTo(moshTo);
   controls.bytes.setFrom(moshFrom);
   enableAllControls();

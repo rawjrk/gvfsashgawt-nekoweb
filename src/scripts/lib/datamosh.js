@@ -1,7 +1,7 @@
 /** Class representing interface to load an image and generate its datamoshed version. */
 class DatamoshedImage {
   _imageBase64;
-  _moshedBytes;
+  _moshedBytes = [0, 1];
 
   /** Creates an instance for an image datamosh. */
   constructor() {}
@@ -31,7 +31,7 @@ class DatamoshedImage {
    * @param {number} toByte ending position
    */
   setDatamoshRange(fromByte, toByte) {
-    if (!fromByte || !toByte) {
+    if (isNaN(fromByte) || isNaN(toByte)) {
       return;
     }
     this._moshedBytes = [fromByte, toByte];
