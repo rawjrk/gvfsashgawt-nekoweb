@@ -55,8 +55,8 @@ filePicker.onchange = async (event) => {
   const numberOfChunks = Math.floor(file.size / 3);
   controls.chunks.setRangeMax(numberOfChunks);
 
-  const moshFrom = 115; // TODO: calculate based on file's binary
-  const moshTo = 120; // TODO: calculate based on file's binary
+  const moshFrom = 0; // TODO: calculate to skip metadata
+  const moshTo = 1; // TODO: calculate to skip metadata
 
   controls.chunks.setTo(moshTo);
   controls.chunks.setFrom(moshFrom);
