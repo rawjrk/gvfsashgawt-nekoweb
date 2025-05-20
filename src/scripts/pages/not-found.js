@@ -1,5 +1,5 @@
 /**
- * @typedef {import ('../lib/datamosh-jpeg.js').DatamoshedJpeg} DatamoshedJpeg
+ * @typedef {import ('../lib/datamosh.js').DatamoshedJpeg} DatamoshedJpeg
  */
 
 window.onload = async () => {

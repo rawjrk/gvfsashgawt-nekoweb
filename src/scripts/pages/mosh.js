@@ -1,5 +1,5 @@
 /**
- * @typedef {import ('../lib/datamosh-jpeg.js').DatamoshedJpeg} DatamoshedJpeg
+ * @typedef {import ('../lib/datamosh.js').DatamoshedJpeg} DatamoshedJpeg
  * @typedef {import ('../lib/controls.js').NumericInputRange} NumericInputRange
  * @typedef {import ('../lib/controls.js').Checkbox} Checkbox
  * @typedef {import ('../lib/interval.js').Interval} Interval
