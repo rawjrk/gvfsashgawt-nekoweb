@@ -1,7 +1,7 @@
 /** Class representing interface to load an image and generate its datamoshed version. */
 class DatamoshedImage {
   _imageBase64;
-  _datamoshChunks; // 1 chunk = 4 chars (base64) = 3 raw bytes
+  _moshedBytes;
 
   /** Creates an instance for an image datamosh. */
   constructor() {}
@@ -27,16 +27,14 @@ class DatamoshedImage {
 
   /**
    * Sets range of positions when image values are randomized.
-   * Each chunk represents 3 bytes (chars) when decoded.
-   * Which corresponds to 4 chars sequence after encoded in base64.
-   * @param {number} fromChunk starting position
-   * @param {number} toChunk ending position
+   * @param {number} fromByte starting position
+   * @param {number} toByte ending position
    */
-  setDatamoshRange(fromChunk, toChunk) {
-    if (!fromChunk || !toChunk) {
+  setDatamoshRange(fromByte, toByte) {
+    if (!fromByte || !toByte) {
       return;
     }
-    this._datamoshChunks = [fromChunk, toChunk];
+    this._moshedBytes = [fromByte, toByte];
   }
 
   /**
@@ -44,7 +42,10 @@ class DatamoshedImage {
    * @returns {string} Base64 string
    */
   generateMoshedBase64() {
-    const [fromChunk, toChunk] = this._datamoshChunks;
+    const [fromByte, toByte] = this._moshedBytes;
+
+    const fromChunk = Math.floor(fromByte / 3); // TODO: replace with proper calculations
+    const toChunk = Math.floor(toByte / 3); // TODO: replace with proper calculations
 
     const injectedAsciiLength = (toChunk - fromChunk) * 3;
     let randomizedAscii = "";
