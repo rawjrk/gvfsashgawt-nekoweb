@@ -1,9 +1,9 @@
 /** Class representing interface to load an image and generate its datamoshed version. */
-class DatamoshedJpeg {
+class DatamoshedImage {
   _imageBase64;
   _datamoshChunks; // 1 chunk = 4 chars (base64) = 3 raw bytes
 
-  /** Creates an instance for JPEG image datamosh. */
+  /** Creates an instance for an image datamosh. */
   constructor() {}
 
   /**
