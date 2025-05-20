@@ -29,8 +29,8 @@ helpModal.onclick = (event) => {
 };
 
 const controls = {
-  chunks: new NumericInputRange("from", "to", (event) => {
-    moshedImage.setDatamoshRange(...controls.chunks.getRange());
+  bytes: new NumericInputRange("from", "to", (event) => {
+    moshedImage.setDatamoshRange(...controls.bytes.getRange());
     animation.runOnce();
     event.target.blur();
   }),
@@ -52,14 +52,13 @@ filePicker.onchange = async (event) => {
   const mimeType = getMimeType(file);
   await moshedImage.loadFromBlob(file);
 
-  const numberOfChunks = Math.floor(file.size / 3);
-  controls.chunks.setRangeMax(numberOfChunks);
+  controls.bytes.setRangeMax(file.size);
 
   const moshFrom = 0; // TODO: calculate to skip metadata
   const moshTo = 1; // TODO: calculate to skip metadata
 
-  controls.chunks.setTo(moshTo);
-  controls.chunks.setFrom(moshFrom);
+  controls.bytes.setTo(moshTo);
+  controls.bytes.setFrom(moshFrom);
   enableAllControls();
 
   const datamoshBackground = () => {
@@ -119,25 +118,25 @@ window.onkeydown = (event) => {
     return;
   }
 
-  if (controls.chunks.isFocused()) {
+  if (controls.bytes.isFocused()) {
     return;
   }
 
   switch (event.code) {
     case "Digit9":
-      controls.chunks.decrementFrom();
+      controls.bytes.decrementFrom();
       return;
 
     case "Digit0":
-      controls.chunks.incrementFrom();
+      controls.bytes.incrementFrom();
       return;
 
     case "Minus":
-      controls.chunks.decrementTo();
+      controls.bytes.decrementTo();
       return;
 
     case "Equal":
-      controls.chunks.incrementTo();
+      controls.bytes.incrementTo();
       return;
   }
 };
