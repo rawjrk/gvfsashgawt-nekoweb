@@ -47,7 +47,9 @@ const filePicker = document.getElementById("file-picker");
 // TODO: read query param `?url={imageUrl}` -> fetch image for datamosh if present
 
 filePicker.onchange = async (event) => {
+  /** @type {File} */
   const file = event.target.files[0];
+  const mimeType = getMimeType(file);
   await moshedImage.loadFromBlob(file);
 
   const numberOfChunks = Math.floor(file.size / 3);
@@ -62,7 +64,7 @@ filePicker.onchange = async (event) => {
 
   const datamoshBackground = () => {
     const content = moshedImage.generateMoshedBase64();
-    const imageData = `url("data:image/jpeg;base64,${content}")`;
+    const imageData = `url("data:${mimeType};base64,${content}")`;
     document.body.style.background = imageData;
   };
 
@@ -172,4 +174,19 @@ function enableAllControls() {
       console.error(`Missing "${key}" element`);
     }
   }
+}
+
+/**
+ * Generate MIME type base on file's extension.
+ * @param {File} file
+ * @returns {string} corresponding MIME type
+ */
+function getMimeType(file) {
+  const extension = file.name.split(".").at(-1).toLowerCase();
+
+  if (extension === "jpg") {
+    return "image/jpeg";
+  }
+
+  return `image/${extension}`;
 }
