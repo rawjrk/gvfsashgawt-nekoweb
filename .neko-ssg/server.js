@@ -36,7 +36,9 @@ server.on("request", async (req, res) => {
   }
 
   try {
-    const filePath = getFilePath(req.url);
+    const [url] = req.url.split("?");
+
+    const filePath = getFilePath(url);
     const fileExtension = path.extname(filePath);
 
     const fileType = getFileType(fileExtension);
