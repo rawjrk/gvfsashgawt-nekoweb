@@ -32,32 +32,6 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     js: [0, 0],
   };
 
-  const pagesDir = path.join(srcDir, "pages");
-  const pages = await scanDirectory(pagesDir, ".ejs");
-
-  for (const template of pages) {
-    const templatePath = path.join(template.parentPath, template.name);
-    const configPath = templatePath.replace(/.ejs$/, ".config.js");
-
-    const context = await loadModule(configPath);
-    let html = await ejsRenderFile(templatePath, context);
-
-    stats.html[0] += html.length; // original size
-
-    if (!skipMinification) {
-      html = await minifyHtml(html);
-      stats.html[1] += html.length; // compressed size
-    }
-
-    const writeToPath = generateBuildPath({
-      srcPath: templatePath.replace(/.ejs$/, ".html"),
-      srcDir: pagesDir,
-      buildDir,
-    });
-    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
-    await fsPromises.writeFile(writeToPath, html, "utf-8");
-  }
-
   const stylesDir = path.join(srcDir, "styles");
   const styles = await scanDirectory(stylesDir, ".css");
 
@@ -110,6 +84,32 @@ export default async function runBuild({ skipMinification = false, hideStats = f
 
     await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
     await fsPromises.writeFile(writeToPathWithHash, js, "utf-8");
+  }
+
+  const pagesDir = path.join(srcDir, "pages");
+  const pages = await scanDirectory(pagesDir, ".ejs");
+
+  for (const template of pages) {
+    const templatePath = path.join(template.parentPath, template.name);
+    const configPath = templatePath.replace(/.ejs$/, ".config.js");
+
+    const context = await loadModule(configPath);
+    let html = await ejsRenderFile(templatePath, context);
+
+    stats.html[0] += html.length; // original size
+
+    if (!skipMinification) {
+      html = await minifyHtml(html);
+      stats.html[1] += html.length; // compressed size
+    }
+
+    const writeToPath = generateBuildPath({
+      srcPath: templatePath.replace(/.ejs$/, ".html"),
+      srcDir: pagesDir,
+      buildDir,
+    });
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, html, "utf-8");
   }
 
   const staticDir = path.join(appDir, "static");
