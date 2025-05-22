@@ -13,16 +13,11 @@ export function generateHash(content = "") {
 }
 
 /**
- * Appends hashed value to a file's name.
- * @param {string} fullPath path to the file
+ * Appends URL with version query.
+ * @param {string} fileURL path to the file
  * @param {string} fileHash hashed value
  * @returns {string} file with hashed value in the name
- * @example
- * addHash("/scripts/lib/gib-events.js", "43f352b") -> "/scripts/lib/gib-events-43f352b.js"
  */
-export function addHash(fullPath, fileHash) {
-  const extension = path.extname(fullPath);
-  const mainPart = fullPath.slice(0, fullPath.length - extension.length);
-
-  return `${mainPart}-${fileHash}${extension}`;
+export function addHash(fileURL, fileHash) {
+  return `${fileURL}?v=${fileHash}`;
 }

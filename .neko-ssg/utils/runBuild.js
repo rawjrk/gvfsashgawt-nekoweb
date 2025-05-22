@@ -59,14 +59,13 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     });
 
     const styleHash = generateHash(css);
-    const writeToPathWithHash = addHash(writeToPath, styleHash);
 
     const styleURL = "/" + path.relative(srcDir, stylePath);
     const styleURLWithHash = addHash(styleURL, styleHash);
     linkingMap.set(styleURL, styleURLWithHash);
 
-    await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
-    await fsPromises.writeFile(writeToPathWithHash, css, "utf-8");
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, css, "utf-8");
   }
 
   const scriptsDir = path.join(srcDir, "scripts");
@@ -90,14 +89,13 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     });
 
     const scriptHash = generateHash(js);
-    const writeToPathWithHash = addHash(writeToPath, scriptHash);
 
     const scriptURL = "/" + path.relative(srcDir, scriptPath);
     const scriptURLWithHash = addHash(scriptURL, scriptHash);
     linkingMap.set(scriptURL, scriptURLWithHash);
 
-    await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
-    await fsPromises.writeFile(writeToPathWithHash, js, "utf-8");
+    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
+    await fsPromises.writeFile(writeToPath, js, "utf-8");
   }
 
   const pagesDir = path.join(srcDir, "pages");
