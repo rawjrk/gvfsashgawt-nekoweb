@@ -13,6 +13,12 @@ import minifyJs from "./minifiers/js.js";
 import logStats from "./logStats.js";
 
 /**
+ * `key`: original URL, `value`: updated URL
+ * @type {Map<string, string>}
+ */
+const linkingMap = new Map(); //
+
+/**
  * Runs build: compile EJS to HTML, copy JS/CSS and static files.
  * @param {object} options configuration object
  * @param {boolean} options.skipMinification specifies whether to skip minification step
@@ -55,6 +61,10 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     const styleHash = generateHash(css);
     const writeToPathWithHash = addHash(writeToPath, styleHash);
 
+    const styleURL = "/" + path.relative(srcDir, stylePath);
+    const styleURLWithHash = addHash(styleURL, styleHash);
+    linkingMap.set(styleURL, styleURLWithHash);
+
     await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
     await fsPromises.writeFile(writeToPathWithHash, css, "utf-8");
   }
@@ -82,6 +92,10 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     const scriptHash = generateHash(js);
     const writeToPathWithHash = addHash(writeToPath, scriptHash);
 
+    const scriptURL = "/" + path.relative(srcDir, scriptPath);
+    const scriptURLWithHash = addHash(scriptURL, scriptHash);
+    linkingMap.set(scriptURL, scriptURLWithHash);
+
     await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
     await fsPromises.writeFile(writeToPathWithHash, js, "utf-8");
   }
@@ -94,7 +108,16 @@ export default async function runBuild({ skipMinification = false, hideStats = f
     const configPath = templatePath.replace(/.ejs$/, ".config.js");
 
     const context = await loadModule(configPath);
-    let html = await ejsRenderFile(templatePath, context);
+
+    const { scripts, styles } = context;
+    const linkedScripts = scripts.map((url) => linkingMap.get(url));
+    const linkedStyles = styles.map((url) => linkingMap.get(url));
+
+    let html = await ejsRenderFile(templatePath, {
+      ...context,
+      scripts: linkedScripts,
+      styles: linkedStyles,
+    });
 
     stats.html[0] += html.length; // original size
 
