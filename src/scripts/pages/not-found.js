@@ -7,7 +7,7 @@ window.onload = async () => {
 
   const moshedImage = new DatamoshedImage();
   await moshedImage.fetchImage(imageUrl);
-  moshedImage.setDatamoshRange(115, 125);
+  moshedImage.setDatamoshRange(345, 375);
 
   const datamoshBackground = () => {
     const content = moshedImage.generateMoshedBase64();
