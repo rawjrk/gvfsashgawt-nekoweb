@@ -5,6 +5,7 @@ import path from "node:path";
 import fsPromises from "node:fs/promises";
 import appDir from "./appDir.js"; // TODO: replace with function arguments
 import scanDirectory from "./scanDirectory.js";
+import { addHash, generateHash } from "./fileHash.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
 import minifyHtml from "./minifiers/html.js";
 import minifyCss from "./minifiers/css.js";
@@ -76,8 +77,12 @@ export default async function runBuild({ skipMinification = false, hideStats = f
       srcDir: stylesDir,
       buildDir: path.join(buildDir, "styles"),
     });
-    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
-    await fsPromises.writeFile(writeToPath, css, "utf-8");
+
+    const styleHash = generateHash(css);
+    const writeToPathWithHash = addHash(writeToPath, styleHash);
+
+    await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
+    await fsPromises.writeFile(writeToPathWithHash, css, "utf-8");
   }
 
   const scriptsDir = path.join(srcDir, "scripts");
@@ -99,8 +104,12 @@ export default async function runBuild({ skipMinification = false, hideStats = f
       srcDir: scriptsDir,
       buildDir: path.join(buildDir, "scripts"),
     });
-    await fsPromises.mkdir(path.dirname(writeToPath), { recursive: true });
-    await fsPromises.writeFile(writeToPath, js, "utf-8");
+
+    const scriptHash = generateHash(js);
+    const writeToPathWithHash = addHash(writeToPath, scriptHash);
+
+    await fsPromises.mkdir(path.dirname(writeToPathWithHash), { recursive: true });
+    await fsPromises.writeFile(writeToPathWithHash, js, "utf-8");
   }
 
   const staticDir = path.join(appDir, "static");
