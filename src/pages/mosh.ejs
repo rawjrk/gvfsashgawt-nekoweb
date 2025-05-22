@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <%- include('/partials/head', { title }) %>
-    <link rel="stylesheet" href="/styles/pages/mosh.css" />
+    <%- include('/partials/styles', { styles }) %>
     <%- include('/partials/metadata', { metadata }) %>
   </head>
 
@@ -114,9 +114,6 @@
       </nav>
     </menu>
 
-    <script src="/scripts/lib/datamosh.js"></script>
-    <script src="/scripts/lib/controls.js"></script>
-    <script src="/scripts/lib/interval.js"></script>
-    <script src="/scripts/pages/mosh.js"></script>
+    <%- include('/partials/scripts', { scripts }) %>
   </body>
 </html>

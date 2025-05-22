@@ -2,8 +2,7 @@
 <html lang="en">
   <head>
     <%- include('/partials/head', { title }) %>
-    <link rel="stylesheet" href="/styles/global.css" />
-    <link rel="stylesheet" href="/styles/pages/about.css" />
+    <%- include('/partials/styles', { styles }) %>
     <%- include('/partials/metadata', { metadata }) %>
   </head>
 
@@ -31,7 +30,6 @@
 
     <%- include('/partials/navigation', { navigation }) %>
 
-    <script src="/scripts/lib/gib-core.js"></script>
-    <script src="/scripts/lib/gib-events.js"></script>
+    <%- include('/partials/scripts', { scripts }) %>
   </body>
 </html>
