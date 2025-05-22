@@ -1,5 +1,6 @@
 import sharedMetadata, { HOST_URL } from "../sharedMetadata.js";
 import navLinks from "../navLinks.js";
+import { cssHref, jsSrc } from "../linking.js";
 
 export const title = "Destroy Data, Not People!";
 
@@ -14,3 +15,6 @@ export const metadata = {
 };
 
 export const navigation = navLinks.filter((l) => l.text !== "mosh");
+
+export const styles = cssHref(["pages/mosh"]);
+export const scripts = jsSrc(["lib/datamosh", "lib/controls", "lib/interval", "pages/mosh"]);
