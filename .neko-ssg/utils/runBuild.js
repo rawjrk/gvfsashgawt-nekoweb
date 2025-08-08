@@ -7,6 +7,7 @@ import appDir from "./appDir.js"; // TODO: replace with function arguments
 import scanDirectory from "./scanDirectory.js";
 import { addHash, generateHash } from "./fileHash.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
+import { platformSafeUrl } from "./platformSafeUrl.js";
 import minifyHtml from "./minifiers/html.js";
 import minifyCss from "./minifiers/css.js";
 import minifyJs from "./minifiers/js.js";
@@ -60,7 +61,7 @@ export default async function runBuild({ skipMinification = false, hideStats = f
 
     const styleHash = generateHash(css);
 
-    const styleURL = "/" + path.relative(srcDir, stylePath);
+    const styleURL = platformSafeUrl("/" + path.relative(srcDir, stylePath));
     const styleURLWithHash = addHash(styleURL, styleHash);
     linkingMap.set(styleURL, styleURLWithHash);
 
@@ -90,7 +91,7 @@ export default async function runBuild({ skipMinification = false, hideStats = f
 
     const scriptHash = generateHash(js);
 
-    const scriptURL = "/" + path.relative(srcDir, scriptPath);
+    const scriptURL = platformSafeUrl("/" + path.relative(srcDir, scriptPath));
     const scriptURLWithHash = addHash(scriptURL, scriptHash);
     linkingMap.set(scriptURL, scriptURLWithHash);
 
