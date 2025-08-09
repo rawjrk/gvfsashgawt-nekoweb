@@ -1,14 +1,19 @@
 /** Class representing interface to control `<input type="number">` element. */
 class NumericInput {
+  /** @type {HTMLElement} */
   _inputElem;
 
   /**
    * Creates an instance of controllable numeric input.
-   * @param {string} elemId DOM id to search an element by
-   * @param {(event: Event) => any} onChange callback to be executed on input change
+   * @param {object} props {...properties}
+   * @param {HTMLElement} props.elem input as DOM element
+   * @param {(event: Event) => void} props.onChange callback to be executed on input change
    */
-  constructor(elemId, onChange) {
-    this._inputElem = document.getElementById(elemId);
+  constructor({ elem, onChange }) {
+    if (!elem) {
+      throw TypeError('"elem" prop of NumericInput should be defined');
+    }
+    this._inputElem = elem;
     this._inputElem.onchange = onChange;
   }
 
@@ -69,14 +74,23 @@ class NumericInputRange {
    * @param {(event: Event) => any} onChange callback to be executed on input change
    */
   constructor(fromId, toId, onChange) {
-    this._fromInput = new NumericInput(fromId, (event) => {
-      this.setFrom(event.target.value, true);
-      onChange(event);
+    const fromElem = document.getElementById(fromId);
+    const toElem = document.getElementById(toId);
+
+    this._fromInput = new NumericInput({
+      elem: fromElem,
+      onChange: (event) => {
+        this.setFrom(event.target.value, true);
+        onChange(event);
+      },
     });
 
-    this._toInput = new NumericInput(toId, (event) => {
-      this.setTo(event.target.value, true);
-      onChange(event);
+    this._toInput = new NumericInput({
+      elem: toElem,
+      onChange: (event) => {
+        this.setTo(event.target.value, true);
+        onChange(event);
+      },
     });
 
     this._incrementFromBtn = document.getElementById(`increment-${fromId}`);
