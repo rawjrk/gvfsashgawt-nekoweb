@@ -2,6 +2,11 @@ on:
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/deploy.yml"
+      - ".neko-ssg/**"
+      - "src/**"
+      - "static/**"
 
 jobs:
   test:
@@ -18,9 +23,10 @@ jobs:
         run: yarn build
 
       - name: deploy2nekoweb
-        uses: deploy2nekoweb/deploy2nekoweb@v4
+        uses: indiefellas/deploy2nekoweb@main
         with:
           nekoweb-api-key: ${{ secrets.NEKOWEB_API_KEY }}
           nekoweb-cookie: ${{ secrets.NEKOWEB_COOKIE }}
-          nekoweb-folder: "deploy"
+          nekoweb-domain: "gvfsashgawt.zip"
+          nekoweb-username: "gvfsashgawt"
           directory: "build"
