@@ -196,15 +196,20 @@ class NumericInputRange {
 
 /** Class representing interface to control `<input type="checkbox">` element. */
 class Checkbox {
+  /** @type {HTMLElement} */
   _inputElem;
 
   /**
    * Creates an instance of controllable checkbox.
-   * @param {string} elemId DOM id to search an element by
-   * @param {(event: Event) => any} onChange callback to be executed on input change
+   * @param {object} props {...properties}
+   * @param {HTMLElement} props.elem controlled checkbox as a DOM element
+   * @param {(event: Event) => void} props.onChange callback to be executed on input change
    */
-  constructor(elemId, onChange) {
-    this._inputElem = document.getElementById(elemId);
+  constructor({ elem, onChange }) {
+    if (!elem) {
+      throw TypeError('"elem" prop of Checkbox should be defined');
+    }
+    this._inputElem = elem;
     this._inputElem.onchange = onChange;
   }
 
