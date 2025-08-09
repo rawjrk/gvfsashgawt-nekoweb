@@ -61,11 +61,6 @@ class NumericInputRange {
   _rangeMin = 0;
   _rangeMax = 1;
 
-  _incrementFromBtn;
-  _decrementFromBtn;
-  _incrementToBtn;
-  _decrementToBtn;
-
   /**
    * Binds "from" and "to" inputs (upper and lower boundaries of the range respectively).
    * Also binds all related buttons to control increment/decrement of each input.
@@ -92,16 +87,6 @@ class NumericInputRange {
         onChange(event);
       },
     });
-
-    this._incrementFromBtn = document.getElementById(`increment-${fromId}`);
-    this._decrementFromBtn = document.getElementById(`decrement-${fromId}`);
-    this._incrementToBtn = document.getElementById(`increment-${toId}`);
-    this._decrementToBtn = document.getElementById(`decrement-${toId}`);
-
-    this._incrementFromBtn.onclick = () => this.incrementFrom();
-    this._decrementFromBtn.onclick = () => this.decrementFrom();
-    this._incrementToBtn.onclick = () => this.incrementTo();
-    this._decrementToBtn.onclick = () => this.decrementTo();
   }
 
   /**
@@ -138,10 +123,6 @@ class NumericInputRange {
   enable() {
     this._fromInput.enable();
     this._toInput.enable();
-    this._incrementFromBtn.disabled = false;
-    this._decrementFromBtn.disabled = false;
-    this._incrementToBtn.disabled = false;
-    this._decrementToBtn.disabled = false;
   }
 
   /**

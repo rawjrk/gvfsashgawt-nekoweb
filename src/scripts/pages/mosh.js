@@ -34,6 +34,9 @@ const controls = {
     animation.runOnce();
     event.target.blur();
   }),
+
+  bytesSideEffectButtons: { enable: () => {} },
+
   animated: new Checkbox({
     elem: document.getElementById("animated"),
     onChange: (event) => {
@@ -45,6 +48,34 @@ const controls = {
     },
   }),
 };
+
+{
+  // side-effect buttons for bytes range
+
+  const btns = [
+    document.getElementById("increment-from"),
+    document.getElementById("decrement-from"),
+    document.getElementById("increment-to"),
+    document.getElementById("decrement-to"),
+  ];
+
+  btns.forEach((btn) => {
+    if (!btn) {
+      throw TypeError("all side-effect buttons should be defined");
+    }
+  });
+
+  btns[0].onclick = () => controls.bytes.incrementFrom();
+  btns[1].onclick = () => controls.bytes.decrementFrom();
+  btns[2].onclick = () => controls.bytes.incrementTo();
+  btns[3].onclick = () => controls.bytes.decrementTo();
+
+  controls.bytesSideEffectButtons.enable = () => {
+    for (const btn of btns) {
+      btn.disabled = false;
+    }
+  };
+}
 
 const filePicker = document.getElementById("file-picker");
 // TODO: read query param `?url={imageUrl}` -> fetch image for datamosh if present
