@@ -19,8 +19,8 @@ const options = {
 
 /**
  * Minifies HTML code.
- * @param {string} code input
- * @returns {Promise<string>} output
+ * @param {string} code source code
+ * @returns {Promise<string>} compressed
  */
 export function minifyHtml(code) {
   return minify(code, options);

@@ -217,7 +217,7 @@ function enableAllControls() {
 
 /**
  * Generate MIME type base on file's extension.
- * @param {File} file
+ * @param {File} file interface
  * @returns {string} corresponding MIME type
  */
 function getMimeType(file) {
