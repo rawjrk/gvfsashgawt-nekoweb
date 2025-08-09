@@ -34,12 +34,15 @@ const controls = {
     animation.runOnce();
     event.target.blur();
   }),
-  animated: new Checkbox("animated", (event) => {
-    if (event.target.checked) {
-      animation.run();
-    } else {
-      animation.stop();
-    }
+  animated: new Checkbox({
+    elem: document.getElementById("animated"),
+    onChange: (event) => {
+      if (event.target.checked) {
+        animation.run();
+      } else {
+        animation.stop();
+      }
+    },
   }),
 };
 
