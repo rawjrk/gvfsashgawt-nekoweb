@@ -19,14 +19,10 @@ const srcScriptsConfig = {
 };
 
 export default [
-  jsdoc.configs["flat/recommended"],
   {
-    files: ["**/*.js"],
     ignores: ["build/*", "static/*"],
-    rules: {
-      "jsdoc/require-description": "warn",
-    },
   },
+  jsdoc.configs["flat/recommended"],
   bundlerScriptsConfig,
   srcScriptsConfig,
   // Any other config should be placed at the top
