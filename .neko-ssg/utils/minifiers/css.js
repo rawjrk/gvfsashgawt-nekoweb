@@ -7,8 +7,8 @@ const options = {
 
 /**
  * Minifies CSS code.
- * @param {string} code input
- * @returns {Promise<string>} ouput
+ * @param {string} code source code
+ * @returns {Promise<string>} compressed
  */
 export async function minifyCss(code) {
   const { styles, errors } = await new CleanCSS(options).minify(code);

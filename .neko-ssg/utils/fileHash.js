@@ -5,7 +5,7 @@ import path from "node:path";
  * Calculates SHA-1 hash of the `content`.
  * Returns a shorter version of hash (first 7 chars).
  * @param {string} content file content
- * @returns hash
+ * @returns {string} file hash
  */
 export function generateHash(content = "") {
   const sha1Hash = crypto.hash("sha1", content);

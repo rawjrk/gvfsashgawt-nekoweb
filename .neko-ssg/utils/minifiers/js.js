@@ -5,8 +5,8 @@ const options = {};
 
 /**
  * Minifies JS code.
- * @param {string} code
- * @returns {Promise<string>}
+ * @param {string} code source code
+ * @returns {Promise<string>} compressed
  */
 export async function minifyJs(code) {
   const { code: output } = await minify(code, options);
