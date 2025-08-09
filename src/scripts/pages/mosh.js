@@ -29,10 +29,14 @@ helpModal.onclick = (event) => {
 };
 
 const controls = {
-  bytes: new NumericInputRange("from", "to", (event) => {
-    moshedImage.setDatamoshRange(...controls.bytes.getRange());
-    animation.runOnce();
-    event.target.blur();
+  bytes: new NumericInputRange({
+    fromElem: document.getElementById("from"),
+    toElem: document.getElementById("to"),
+    onChange: (event) => {
+      moshedImage.setDatamoshRange(...controls.bytes.getRange());
+      animation.runOnce();
+      event.target.blur();
+    },
   }),
 
   bytesSideEffectButtons: { enable: () => {} },
