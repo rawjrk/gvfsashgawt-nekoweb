@@ -7,6 +7,8 @@
     <%- include('/partials/styles', { styles }) %>
   </head>
   <body>
+    <canvas></canvas>
+
     <menu>
       <div>
         <!-- displays -->
@@ -19,6 +21,10 @@
         <!-- sliders -->
         <input id="bytes-from" type="range" disabled />
         <input id="bytes-to" type="range" disabled />
+      </div>
+
+      <div>
+        <input id="file-picker" type="file" accept=".jpeg, .jpg" />
       </div>
     </menu>
 
