@@ -9,32 +9,19 @@ body {
   width: 100vw;
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
 
-#container {
+menu {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  gap: 1rem;
 }
 
-#double-slider {
+.double-slider {
   display: flex;
   flex-direction: column;
   width: 200px;
-}
-
-#bytes-from {
-  direction: rtl;
-
-  /* doesn't work for some reason */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-#bytes-to {
-  /* doesn't work for some reason */
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
