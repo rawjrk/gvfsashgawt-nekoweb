@@ -56,21 +56,30 @@ class NumericInput {
 
 /** Class representing interface to control two related numeric inputs and validate their values. */
 class NumericInputRange {
+  /** @type {HTMLElement} */
   _fromInput;
+  /** @type {HTMLElement} */
   _toInput;
+  /** @type {number} */
   _rangeMin = 0;
+  /** @type {number} */
   _rangeMax = 1;
 
   /**
    * Binds "from" and "to" inputs (upper and lower boundaries of the range respectively).
    * Also binds all related buttons to control increment/decrement of each input.
-   * @param {string} fromId DOM id to search for an element (and related buttons)
-   * @param {string} toId DOM id to search for an element (and related buttons)
-   * @param {(event: Event) => any} onChange callback to be executed on input change
+   * @param {object} props {...properties}
+   * @param {HTMLElement} props.fromElem from input as DOM element
+   * @param {HTMLElement} props.toElem to input as DOM element
+   * @param {(event: Event) => void} props.onChange callback to be executed on input change
    */
-  constructor(fromId, toId, onChange) {
-    const fromElem = document.getElementById(fromId);
-    const toElem = document.getElementById(toId);
+  constructor({ fromElem, toElem, onChange }) {
+    if (!fromElem) {
+      throw TypeError('"fromElem" prop of NumericInputRange should be defined');
+    }
+    if (!toElem) {
+      throw TypeError('"toElem" prop of NumericInputRange should be defined');
+    }
 
     this._fromInput = new NumericInput({
       elem: fromElem,
