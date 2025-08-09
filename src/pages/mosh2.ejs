@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mosh-v2</title>
+    <%- include('/partials/styles', { styles }) %>
+  </head>
+  <body>
+    <div id="container">
+      <div style="width: 100px">
+        <!-- displays -->
+        <p>from: <span id="bytes-from-display">0</span></p>
+        <p>to: <span id="bytes-to-display">1</span></p>
+      </div>
+
+      <!-- sliders -->
+      <div id="double-slider">
+        <input id="bytes-from" type="range" min="-1" max="0" value="0" disabled />
+        <input id="bytes-to" type="range" min="0" max="1" value="1" disabled />
+      </div>
+    </div>
+
+    <%- include('/partials/scripts', { scripts }) %>
+  </body>
+</html>

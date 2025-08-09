@@ -1,0 +1,40 @@
+html,
+body {
+  background-color: black;
+  color: white;
+}
+
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#container {
+  display: flex;
+  flex-direction: row;
+}
+
+#double-slider {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+
+#bytes-from {
+  direction: rtl;
+
+  /* doesn't work for some reason */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+#bytes-to {
+  /* doesn't work for some reason */
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
