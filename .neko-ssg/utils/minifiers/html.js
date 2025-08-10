@@ -22,6 +22,6 @@ const options = {
  * @param {string} code input
  * @returns {Promise<string>} output
  */
-export default function minifyHtml(code) {
+export function minifyHtml(code) {
   return minify(code, options);
 }

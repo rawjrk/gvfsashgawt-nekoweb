@@ -10,7 +10,7 @@ const options = {
  * @param {string} code input
  * @returns {Promise<string>} ouput
  */
-export default async function minifyCss(code) {
+export async function minifyCss(code) {
   const { styles, errors } = await new CleanCSS(options).minify(code);
   const [error] = errors;
 

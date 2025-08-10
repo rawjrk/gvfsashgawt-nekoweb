@@ -8,7 +8,7 @@ const options = {};
  * @param {string} code
  * @returns {Promise<string>}
  */
-export default async function minifyJs(code) {
+export async function minifyJs(code) {
   const { code: output } = await minify(code, options);
   return output;
 }
