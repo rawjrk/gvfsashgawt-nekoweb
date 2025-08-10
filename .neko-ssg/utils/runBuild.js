@@ -8,9 +8,7 @@ import scanDirectory from "./scanDirectory.js";
 import { addHash, generateHash } from "./fileHash.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
 import { platformSafeUrl } from "./platformSafeUrl.js";
-import minifyHtml from "./minifiers/html.js";
-import minifyCss from "./minifiers/css.js";
-import minifyJs from "./minifiers/js.js";
+import { minifyHtml, minifyCss, minifyJs } from "./minifiers/index.js";
 import logStats from "./logStats.js";
 
 /**
