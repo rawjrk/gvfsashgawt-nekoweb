@@ -30,6 +30,10 @@ export default async function runBuild({ skipMinification = false, hideStats = f
   const buildDir = path.join(appDir, "build");
   await fsPromises.rm(buildDir, { force: true, recursive: true });
 
+  const buildLogPath = path.join(buildDir, "build.log");
+  await fsPromises.mkdir(path.dirname(buildLogPath), { recursive: true });
+  await fsPromises.writeFile(buildLogPath, "", "utf-8");
+
   /** @type {Stats} */
   const stats = {
     html: [0, 0],
@@ -151,6 +155,9 @@ export default async function runBuild({ skipMinification = false, hideStats = f
   if (!hideStats) {
     logStats(stats, skipMinification);
   }
+
+  const dateStr = new Date().toISOString();
+  await fsPromises.appendFile(path.join(buildDir, "build.log"), `FINISHED_AT: ${dateStr}`, "utf-8");
 
   console.log("Successfully completed fresh build");
 }
