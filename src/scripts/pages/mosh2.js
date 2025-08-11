@@ -1,18 +1,51 @@
-const fileLength = 1000;
-
 const fromDisplay = document.getElementById("bytes-from-display");
 const toDisplay = document.getElementById("bytes-to-display");
 
-const bytes = new RangeSlider({
-  fromElem: document.getElementById("bytes-from"),
-  toElem: document.getElementById("bytes-to"),
-  onChange: (_, [from, to]) => {
-    fromDisplay.innerText = from;
-    toDisplay.innerText = to;
-  },
-});
+const controls = {
+  bytes: new RangeSlider({
+    fromElem: document.getElementById("bytes-from"),
+    toElem: document.getElementById("bytes-to"),
+    onChange: (_, [from, to]) => {
+      fromDisplay.innerText = from;
+      toDisplay.innerText = to;
+    },
+  }),
+};
 
-bytes.enable();
-bytes.setMax(2000);
+const filePicker = document.getElementById("file-picker");
+const moshedImage = new DatamoshedFile();
+const canvas = document.getElementById("image-canvas");
 
-console.log("Hi!");
+filePicker.onchange = async (event) => {
+  /** @type {File} */
+  const file = event.target.files[0];
+  if (!file) {
+    console.warn("User canceled file upload");
+    return;
+  }
+
+  await moshedImage.loadFromBlob(file);
+
+  controls.bytes.setMax(file.size);
+
+  const moshFrom = 100;
+  const moshTo = 110;
+
+  moshedImage.setDatamoshRange(moshFrom, moshTo);
+
+  controls.bytes.setTo(moshTo);
+  controls.bytes.setFrom(moshFrom);
+  controls.bytes.enable();
+
+  const mimeType = moshedImage.getMimeType();
+
+  const datamoshCanvas = async () => {
+    const bytes = moshedImage.generateMoshedBytes();
+    await loadBytesToCanvas(canvas, bytes, mimeType);
+  };
+
+  moshedImage.generateMoshedBytes();
+
+  await datamoshCanvas();
+  setInterval(datamoshCanvas, 90);
+};
