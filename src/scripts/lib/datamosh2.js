@@ -62,17 +62,32 @@ async function loadBytesToCanvas(canvas, bytes, type) {
   });
 }
 
-function getImageMimeType(file) {
-  const ext = file.name.split(".").at(-1).toLowerCase();
+function getImageMimeType(fileOrBlob) {
+  if (fileOrBlob instanceof Blob) {
+    const { type: mimeType } = fileOrBlob;
 
-  switch (ext) {
-    case "jpeg":
-      return `image/${ext}`;
+    const isImage = /^image\/jpeg$/.test(mimeType);
+    if (isImage) {
+      return mimeType;
+    }
 
-    case "jpg":
-      return "image/jpg";
-
-    default:
-      throw Error(`Unable to get MIME-type for extension ${ext}`);
+    throw Error(`Invalid MIME-type ${mimeType}`);
   }
+
+  if (fileOrBlob instanceof File) {
+    const ext = fileOrBlob.name.split(".").at(-1).toLowerCase();
+
+    switch (ext) {
+      case "jpeg":
+        return `image/${ext}`;
+
+      case "jpg":
+        return "image/jpg";
+
+      default:
+        throw Error(`Unable to get MIME-type for extension ${ext}`);
+    }
+  }
+
+  throw TypeError("Accepting only Blob or File interfaces");
 }
