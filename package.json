@@ -12,7 +12,7 @@
     "start": "node .neko-ssg/server.js --skip-build",
     "dev": "nodemon .neko-ssg/server.js",
     "test": "node --test",
-    "lint": "eslint",
+    "lint": "eslint --fix",
     "format": "prettier . --write"
   },
   "dependencies": {
@@ -28,6 +28,7 @@
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-jsdoc": "^50.6.2",
+    "eslint-plugin-simple-import-sort": "^12.1.1",
     "globals": "^15.14.0",
     "nodemon": "^3.1.9",
     "prettier": "3.4.2",
