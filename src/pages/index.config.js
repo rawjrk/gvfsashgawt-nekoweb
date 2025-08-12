@@ -1,6 +1,6 @@
-import sharedMetadata from "../sharedMetadata.js";
-import navLinks from "../navLinks.js";
 import { cssHref, jsSrc } from "../linking.js";
+import navLinks from "../navLinks.js";
+import sharedMetadata from "../sharedMetadata.js";
 
 export const title = "F*ck it! Nothing...";
 

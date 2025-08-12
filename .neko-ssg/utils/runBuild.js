@@ -1,15 +1,16 @@
 /**
  * @typedef {import('./logStats.js').Stats} Stats
  */
-import path from "node:path";
 import fsPromises from "node:fs/promises";
+import path from "node:path";
+
 import appDir from "./appDir.js"; // TODO: replace with function arguments
-import scanDirectory from "./scanDirectory.js";
-import { addHash, generateHash } from "./fileHash.js";
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
-import { platformSafeUrl } from "./platformSafeUrl.js";
-import { minifyHtml, minifyCss, minifyJs } from "./minifiers/index.js";
+import { addHash, generateHash } from "./fileHash.js";
 import logStats from "./logStats.js";
+import { minifyCss, minifyHtml, minifyJs } from "./minifiers/index.js";
+import { platformSafeUrl } from "./platformSafeUrl.js";
+import scanDirectory from "./scanDirectory.js";
 
 /**
  * `key`: original URL, `value`: updated URL

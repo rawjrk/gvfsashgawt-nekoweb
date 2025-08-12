@@ -1,7 +1,8 @@
 import assert from "node:assert";
-import { afterEach, beforeEach, describe, it } from "node:test";
-import path from "node:path";
 import fs from "node:fs";
+import path from "node:path";
+import { afterEach, beforeEach, describe, it } from "node:test";
+
 import { ejsRenderFile, generateBuildPath, loadModule } from "./buildPages.js";
 
 describe("ejsRenderFile()", () => {
