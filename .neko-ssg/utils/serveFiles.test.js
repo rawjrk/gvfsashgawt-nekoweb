@@ -1,5 +1,6 @@
 import assert from "node:assert";
 import { describe, it } from "node:test";
+
 import { FILE_TYPE, getFileType, getMimeType } from "./serveFiles.js";
 
 describe("FILE_TYPE", () => {

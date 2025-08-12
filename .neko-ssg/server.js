@@ -1,6 +1,7 @@
+import fsPromises from "node:fs/promises";
 import http from "node:http";
 import path from "node:path";
-import fsPromises from "node:fs/promises";
+
 import runBuild from "./utils/runBuild.js";
 import {
   checkNotFoundPageExists,

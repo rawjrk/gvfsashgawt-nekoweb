@@ -1,5 +1,6 @@
-import path from "node:path";
 import fsPromises from "node:fs/promises";
+import path from "node:path";
+
 import appDir from "./utils/appDir.js";
 
 (async () => {

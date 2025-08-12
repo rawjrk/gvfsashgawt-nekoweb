@@ -1,7 +1,8 @@
 import assert from "node:assert";
-import { afterEach, beforeEach, describe, it } from "node:test";
-import path from "node:path";
 import fsPromises from "node:fs/promises";
+import path from "node:path";
+import { afterEach, beforeEach, describe, it } from "node:test";
+
 import scanDirectory from "./scanDirectory.js";
 
 describe("scanDirectory()", () => {

@@ -2,7 +2,9 @@
  * @typedef {import('ejs')} ejs
  */
 import path from "node:path";
+
 import ejs from "ejs";
+
 import appDir from "./appDir.js";
 
 /**
