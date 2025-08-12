@@ -8,6 +8,11 @@ class DatamoshedFile {
 
   constructor() {}
 
+  async fetchFile(url) {
+    const blob = await fetchBlob(url);
+    await this.loadFromBlob(blob);
+  }
+
   async loadFromBlob(file) {
     const buf = await file.arrayBuffer();
     this._bytes = new Uint8Array(buf);
