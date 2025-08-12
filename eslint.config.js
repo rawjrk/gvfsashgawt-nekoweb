@@ -21,7 +21,7 @@ const srcScriptsConfig = {
 
 export default [
   {
-    ignores: ["build/*", "static/*"],
+    ignores: ["build/*", "static/*", "bench/lib/*"],
   },
   jsdoc.configs["flat/recommended"],
   bundlerScriptsConfig,
