@@ -21,13 +21,13 @@ class RangeSlider {
 
     this._fromSlider.oninput = (event) => {
       const value = event.target.value;
-      this.setFrom({ value, ignoreDispatch: true });
+      this.setFrom(value, true);
       onRangeChange(event, this.getRange());
     };
 
     this._toSlider.oninput = (event) => {
       const value = event.target.value;
-      this.setTo({ value, ignoreDispatch: true });
+      this.setTo(value, true);
       onRangeChange(event, this.getRange());
     };
   }
@@ -68,7 +68,7 @@ class RangeSlider {
     return +this._toSlider.value;
   }
 
-  setFrom({ value, ignoreDispatch = false }) {
+  setFrom(value, ignoreDispatch = false) {
     const from = this._withinBoundaries(-value, this._rangeMin, this._rangeMax - 1);
     const to = Math.max(from + 1, this._getToValue());
 
@@ -80,7 +80,7 @@ class RangeSlider {
     }
   }
 
-  setTo({ value, ignoreDispatch = false }) {
+  setTo(value, ignoreDispatch = false) {
     const to = this._withinBoundaries(value, this._rangeMin + 1, this._rangeMax);
     const from = Math.min(to - 1, this._getFromValue());
 

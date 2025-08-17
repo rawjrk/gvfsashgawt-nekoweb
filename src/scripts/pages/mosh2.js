@@ -1,3 +1,5 @@
+const moshedImage = new DatamoshedFile();
+
 const fromDisplay = document.getElementById("bytes-from-display");
 const toDisplay = document.getElementById("bytes-to-display");
 
@@ -8,12 +10,12 @@ const controls = {
     onChange: (_, [from, to]) => {
       fromDisplay.innerText = from;
       toDisplay.innerText = to;
+      moshedImage.setDatamoshRange(from, to);
     },
   }),
 };
 
 const filePicker = document.getElementById("file-picker");
-const moshedImage = new DatamoshedFile();
 const canvas = document.getElementById("image-canvas");
 
 filePicker.onchange = async (event) => {
@@ -33,8 +35,8 @@ filePicker.onchange = async (event) => {
 
   moshedImage.setDatamoshRange(moshFrom, moshTo);
 
-  controls.bytes.setTo(moshTo);
   controls.bytes.setFrom(moshFrom);
+  controls.bytes.setTo(moshTo);
   controls.bytes.enable();
 
   const mimeType = moshedImage.getMimeType();
