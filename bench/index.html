@@ -4,10 +4,29 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Benchmarking</title>
+    <style>
+      #test-container {
+        display: flex;
+        flex-direction: row;
+        gap: 1rem;
+      }
+
+      #test-div,
+      #test-canvas {
+        width: 256px;
+        height: 256px;
+        background-color: blue;
+      }
+    </style>
   </head>
   <body>
     <h1>Benchmarking</h1>
     <p>Open up the Console in the browser's DevTools.</p>
+
+    <div id="test-container">
+      <div id="test-div"></div>
+      <canvas id="test-canvas"></canvas>
+    </div>
 
     <!-- dependencies -->
     <script src="bench/lib/lodash.js"></script>
