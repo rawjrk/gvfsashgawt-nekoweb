@@ -1,3 +1,4 @@
+/** Class representing interface to load a file and generate its datamoshed version. */
 class DatamoshedFile {
   /** @type {Uint8Array} */
   _bytes;
@@ -6,23 +7,43 @@ class DatamoshedFile {
   /** @type {[number, number]} */
   _moshedRange = [0, 1];
 
+  /** Creates an instance for a file datamosh. */
   constructor() {}
 
+  /**
+   * Fetches file content from `url`, and saves its content as Base64 string.
+   * @param {string} url web location
+   * @returns {Promise<void>}
+   */
   async fetchFile(url) {
     const blob = await fetchBlob(url);
     await this.loadFromBlob(blob);
   }
 
+  /**
+   * Loads file content from `file`, and saves its content as Base64 string.
+   * @param {Blob} file file interface
+   * @returns {Promise<void>}
+   */
   async loadFromBlob(file) {
     const buf = await file.arrayBuffer();
     this._bytes = new Uint8Array(buf);
     this._mimeType = getImageMimeType(file);
   }
 
+  /**
+   * Gives the current file's MIME-type.
+   * @returns {string} a MIME-type
+   */
   getMimeType() {
     return this._mimeType;
   }
 
+  /**
+   * Sets range of positions when file values are randomized.
+   * @param {number} fromByte lower boundary (inclusive)
+   * @param {number} toByte upper boundary (exclusive)
+   */
   setDatamoshRange(fromByte, toByte) {
     if (isNaN(fromByte)) {
       throw TypeError('Value of "fromByte" should be numeric');
@@ -33,7 +54,12 @@ class DatamoshedFile {
     this._moshedRange = [+fromByte, +toByte];
   }
 
+  /**
+   * Genarates a datamoshed version (i.e. with randomized bits) of the image.
+   * @returns {string} Base64 string
+   */
   generateMoshedBytes() {
+    // TODO: get rid of unnecessary copies
     const moshedBytes = new Uint8Array(this._bytes);
 
     const [from, to] = this._moshedRange;
@@ -47,7 +73,14 @@ class DatamoshedFile {
   }
 }
 
-async function loadBytesToCanvas(canvas, bytes, type) {
+/**
+ * Loads bytes as an image to a given `canvas` element.
+ * @param {HTMLCanvasElement} canvas element
+ * @param {Uint8Array} bytes raw bytes
+ * @param {string} type MIME-type
+ * @returns {Promise<void>}
+ */
+function loadBytesToCanvas(canvas, bytes, type) {
   return new Promise((resolve) => {
     const blob = new Blob([bytes], { type });
     const url = URL.createObjectURL(blob);
@@ -67,6 +100,12 @@ async function loadBytesToCanvas(canvas, bytes, type) {
   });
 }
 
+/**
+ * Returns the given file's MIME-type.
+ * Works either with instances of `File` or `Blob`.
+ * @param {unknown} fileOrBlob file interface
+ * @returns {string} a MIME-type
+ */
 function getImageMimeType(fileOrBlob) {
   if (fileOrBlob instanceof Blob) {
     const { type: mimeType } = fileOrBlob;
