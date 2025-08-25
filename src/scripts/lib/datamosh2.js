@@ -80,24 +80,15 @@ class DatamoshedFile {
  * @param {string} type MIME-type
  * @returns {Promise<void>}
  */
-function loadBytesToCanvas(canvas, bytes, type) {
-  return new Promise((resolve) => {
-    const blob = new Blob([bytes], { type });
-    const url = URL.createObjectURL(blob);
+async function loadBytesToCanvas(canvas, bytes, type) {
+  const blob = new Blob([bytes], { type });
+  const bitmap = await createImageBitmap(blob);
 
-    const img = new Image();
+  const ctx = canvas.getContext("2d");
+  canvas.width = bitmap.width;
+  canvas.height = bitmap.height;
 
-    img.onload = () => {
-      const ctx = canvas.getContext("2d");
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      ctx.drawImage(img, 0, 0);
-      resolve();
-    };
-
-    img.src = url;
-  });
+  ctx.drawImage(bitmap, 0, 0);
 }
 
 /**
