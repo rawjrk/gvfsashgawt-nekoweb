@@ -1,4 +1,4 @@
-const moshedImage = new DatamoshedFile();
+const moshedImage = new DatamoshedImage();
 
 const fromDisplay = document.getElementById("bytes-from-display");
 const toDisplay = document.getElementById("bytes-to-display");
@@ -42,11 +42,11 @@ filePicker.onchange = async (event) => {
   const mimeType = moshedImage.getMimeType();
 
   const datamoshCanvas = async () => {
-    const bytes = moshedImage.generateMoshedBytes();
-    await loadBytesToCanvas(canvas, bytes, mimeType);
+    const content = moshedImage.generateMoshedBase64();
+    await loadBase64ToCanvas(canvas, content, mimeType);
   };
 
-  moshedImage.generateMoshedBytes();
+  moshedImage.generateMoshedBase64();
 
   await datamoshCanvas();
   setInterval(datamoshCanvas, 90);

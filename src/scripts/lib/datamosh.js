@@ -1,6 +1,10 @@
 /** Class representing interface to load an image and generate its datamoshed version. */
 class DatamoshedImage {
+  /** @type {string} */
   _imageBase64;
+  /** @type {string} */
+  _mimeType;
+  /** @type {[number, number]} */
   _moshedBytes = [0, 1];
 
   /** Creates an instance for an image datamosh. */
@@ -23,6 +27,15 @@ class DatamoshedImage {
    */
   async loadFromBlob(imageBlob) {
     this._imageBase64 = await blobToBase64(imageBlob);
+    this._mimeType = getImageMimeType(imageBlob);
+  }
+
+  /**
+   * Gives the current file's MIME-type.
+   * @returns {string} a MIME-type
+   */
+  getMimeType() {
+    return this._mimeType;
   }
 
   /**
@@ -92,6 +105,42 @@ async function fetchBlob(path) {
 }
 
 /**
+ * Returns the given file's MIME-type.
+ * Works either with instances of `File` or `Blob`.
+ * @param {unknown} fileOrBlob file interface
+ * @returns {string} a MIME-type
+ */
+function getImageMimeType(fileOrBlob) {
+  if (fileOrBlob instanceof Blob) {
+    const { type: mimeType } = fileOrBlob;
+
+    const isImage = /^image\/jpeg$/.test(mimeType);
+    if (isImage) {
+      return mimeType;
+    }
+
+    throw Error(`Invalid MIME-type ${mimeType}`);
+  }
+
+  if (fileOrBlob instanceof File) {
+    const ext = fileOrBlob.name.split(".").at(-1).toLowerCase();
+
+    switch (ext) {
+      case "jpeg":
+        return `image/${ext}`;
+
+      case "jpg":
+        return "image/jpg";
+
+      default:
+        throw Error(`Unable to get MIME-type for extension ${ext}`);
+    }
+  }
+
+  throw TypeError("Accepting only Blob or File interfaces");
+}
+
+/**
  * Places `injectedStr` inside `orinalStr` at a given `from` position.
  * String length is retained.
  * @param {string} originalStr initial value
@@ -118,4 +167,27 @@ function injectString(originalStr, from, injectedStr) {
 function randomASCII() {
   const charCode = Math.floor(Math.random() * 256);
   return String.fromCharCode(charCode);
+}
+
+/**
+ * Loads base64 encoded image to a given `canvas` element.
+ * @param {HTMLCanvasElement} canvas element
+ * @param {string} content raw bytes
+ * @param {string} mimeType MIME-type
+ * @returns {Promise<void>}
+ */
+async function loadBase64ToCanvas(canvas, content, mimeType) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = `data:${mimeType};base64,${content}`;
+
+    img.onload = () => {
+      const ctx = canvas.getContext("2d");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      ctx.drawImage(img, 0, 0);
+      resolve();
+    };
+  });
 }
