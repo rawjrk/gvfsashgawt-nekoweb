@@ -3,6 +3,10 @@ const moshedImage = new DatamoshedImage();
 const fromDisplay = document.getElementById("bytes-from-display");
 const toDisplay = document.getElementById("bytes-to-display");
 
+const rangeDisplay = document.getElementById("bytes-range-display");
+const removeError = () => (rangeDisplay.style.color = "");
+const highlightError = () => (rangeDisplay.style.color = "red");
+
 const controls = {
   bytes: new RangeSlider({
     fromElem: document.getElementById("bytes-from"),
@@ -40,10 +44,21 @@ filePicker.onchange = async (event) => {
   controls.bytes.enable();
 
   const mimeType = moshedImage.getMimeType();
+  const fallback = moshedImage.getOriginalBase64();
 
   const datamoshCanvas = async () => {
     const content = moshedImage.generateMoshedBase64();
-    await loadBase64ToCanvas(canvas, content, mimeType);
+    await loadBase64ToCanvas(canvas, content, mimeType)
+      .then(() => {
+        // remove error from UI
+        removeError();
+      })
+      .catch(async () => {
+        // render original image as a fallback
+        await loadBase64ToCanvas(canvas, fallback, mimeType);
+        // highlight error in UI
+        highlightError();
+      });
   };
 
   moshedImage.generateMoshedBase64();

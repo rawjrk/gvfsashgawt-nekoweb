@@ -51,7 +51,15 @@ class DatamoshedImage {
   }
 
   /**
-   * Genarates a datamoshed version (i.e. with randomized bits) of the image.
+   * Gives the original file's content in base64 encoding.
+   * @returns {string} content
+   */
+  getOriginalBase64() {
+    return this._imageBase64;
+  }
+
+  /**
+   * Generates a datamoshed version (i.e. with randomized bits) of the image.
    * @returns {string} Base64 string
    */
   generateMoshedBase64() {
@@ -177,7 +185,7 @@ function randomASCII() {
  * @returns {Promise<void>}
  */
 async function loadBase64ToCanvas(canvas, content, mimeType) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const img = new Image();
     img.src = `data:${mimeType};base64,${content}`;
 
@@ -188,6 +196,10 @@ async function loadBase64ToCanvas(canvas, content, mimeType) {
 
       ctx.drawImage(img, 0, 0);
       resolve();
+    };
+
+    img.onerror = (err) => {
+      reject(err);
     };
   });
 }
