@@ -32,6 +32,7 @@ filePicker.onchange = async (event) => {
 
   await moshedImage.loadFromBlob(file);
 
+  controls.bytes.setMin(0);
   controls.bytes.setMax(file.size);
 
   const moshFrom = 100;

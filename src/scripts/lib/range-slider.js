@@ -164,6 +164,17 @@ class RangeSlider {
   }
 
   /**
+   * Sets a lower boundary of the range.
+   * @param {number} value new value to be set
+   */
+  setMin(value) {
+    this._rangeMin = value;
+
+    this._fromSlider.max = -value;
+    this._toSlider.min = value;
+  }
+
+  /**
    * Sets an upper boundary of the range.
    * @param {number} value new value to be set
    */
