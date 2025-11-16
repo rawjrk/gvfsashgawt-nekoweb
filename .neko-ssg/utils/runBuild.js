@@ -27,7 +27,7 @@ const linkingMap = new Map(); //
 export default async function runBuild({ skipMinification = false, hideStats = false } = {}) {
   // TODO: appDir to be provided from fn args
 
-  const srcDir = path.join(appDir, "src");
+  const srcDir = path.join(appDir, "src/legacy");
   const buildDir = path.join(appDir, "build");
   await fsPromises.rm(buildDir, { force: true, recursive: true });
 

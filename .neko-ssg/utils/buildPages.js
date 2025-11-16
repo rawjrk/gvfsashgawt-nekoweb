@@ -36,7 +36,7 @@ export async function loadModule(absolutePath) {
  */
 export async function ejsRenderFile(filename, data, options) {
   const customOptions = {
-    root: path.join(appDir, "src"),
+    root: path.join(appDir, "src/legacy"),
     ...options,
   };
 
