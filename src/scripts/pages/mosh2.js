@@ -8,16 +8,14 @@ const removeError = () => (rangeDisplay.style.color = "");
 const highlightError = () => (rangeDisplay.style.color = "red");
 
 const controls = {
-  bytes: new RangeSlider({
-    fromElem: document.getElementById("bytes-from"),
-    toElem: document.getElementById("bytes-to"),
-    onChange: (_, [from, to]) => {
-      fromDisplay.innerText = from;
-      toDisplay.innerText = to;
-      moshedImage.setDatamoshRange(from, to);
-    },
-  }),
+  bytes: document.getElementById("bytes-range-slider"),
 };
+
+controls.bytes.setOnChange((_, [from, to]) => {
+  fromDisplay.innerText = from;
+  toDisplay.innerText = to;
+  moshedImage.setDatamoshRange(from, to);
+});
 
 const filePicker = document.getElementById("file-picker");
 const canvas = document.getElementById("image-canvas");
