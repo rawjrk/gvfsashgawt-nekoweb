@@ -12,7 +12,7 @@ Built using custom `neko-ssg` bundler.
 
 Webtooling for creating animated glitch from static images.
 
-- available at: [`/mosh`](https://gvfsashgawt.nekoweb.org/mosh)
+- available at: [`/mosh`](https://gvfsashgawt.zip/mosh)
 - promo video: [`/demo`](https://youtu.be/oIumCl0mnGw)
 - introduction: [`/manual`](doc/MOSH_MANUAL.md)
 

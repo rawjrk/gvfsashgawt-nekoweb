@@ -1,4 +1,4 @@
-export const HOST_URL = "https://gvfsashgawt.nekoweb.org";
+export const HOST_URL = "https://gvfsashgawt.zip";
 
 export default {
   "og:title": "GVFSASHGWAT's PAGE",

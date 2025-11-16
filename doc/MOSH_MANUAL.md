@@ -1,6 +1,6 @@
 # Destroy Data, Not People!
 
-Webtooling for animated glitch. [`https://gvfsashgawt.nekoweb.org/mosh`](https://gvfsashgawt.nekoweb.org/mosh)
+Webtooliwng for animated glitch. [`https://gvfsashgawt.zip/mosh`](https://gvfsashgawt.zip/mosh)
 
 > _**Kind warning: do not use Firefox.**_
 >
